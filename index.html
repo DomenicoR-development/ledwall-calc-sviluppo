@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calcolatore LED Wall — FORM Enhanced</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#BEA050;--gold2:#d4b86a;--dark:#0f0f1a;--card:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.09);--tp:#e8e8e8;--tm:#9a9ab0;--ts:#5a5a75;--suc:#4ade80;--war:#f59e0b;--dan:#f43f5e;--inf:#60a5fa}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color:var(--tp);min-height:100vh}
+.app{max-width:880px;margin:0 auto;padding-bottom:3rem}
+/* HEADER */
+.hdr{background:rgba(15,15,26,0.97);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:100;backdrop-filter:blur(8px)}
+.hdr img{width:44px;height:44px;border-radius:10px;object-fit:cover}
+.hdr h1{font-size:17px;font-weight:600;background:linear-gradient(135deg,#d4b86a,#BEA050);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hdr p{font-size:12px;color:var(--tm)}
+.hdr-r{margin-left:auto;display:flex;gap:8px;align-items:center}
+.btn{padding:7px 13px;border-radius:8px;border:1px solid rgba(190,160,80,0.4);background:rgba(190,160,80,0.12);color:#d4b86a;cursor:pointer;font-size:13px;display:inline-flex;align-items:center;gap:6px;font-weight:500}
+.btn:hover{background:rgba(190,160,80,0.22)}
+.btn-ghost{border-color:transparent;background:transparent;color:var(--tm);font-weight:400}
+.btn-ghost:hover{background:rgba(255,255,255,0.06);border-color:var(--border);color:var(--tp)}
+/* CONTENT */
+.cnt{padding:14px 18px}
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;margin-bottom:12px;overflow:hidden}
+.ch{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between}
+.ct{font-size:14px;font-weight:500}
+.cb{padding:14px 16px}
+/* INPUTS */
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fld label{font-size:12px;color:var(--tm);margin-bottom:5px;display:block}
+.fld input,.fld select{width:100%;background:rgba(255,255,255,0.07);border:1px solid var(--border);border-radius:8px;padding:9px 11px;color:var(--tp);font-size:14px}
+.fld input:focus,.fld select:focus{outline:none;border-color:var(--gold)}
+.fld select option{background:#1a1a2e}
+.chk-row{display:flex;align-items:center;gap:9px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.06)}
+/* METRIC ROWS */
+.mrow{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.mrow:last-child{border-bottom:none}
+.ml{font-size:13px;color:var(--tm)}
+.mv{font-size:14px;font-weight:500}
+.mv.hi{font-size:16px;color:var(--gold)}
+.rbar{background:rgba(190,160,80,0.1);border:1px solid rgba(190,160,80,0.22);border-radius:10px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.rbar .rl{font-size:13px;color:var(--tm)}
+.rbar .rv{font-size:15px;font-weight:600;color:var(--gold)}
+.divider{height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);margin:18px 0;opacity:0.35}
+/* LOTTI */
+.lg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.lc{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:11px;opacity:0.45;transition:all 0.2s}
+.lc.act{border-color:var(--gold);opacity:1;background:rgba(190,160,80,0.07)}
+.lbadge{display:inline-block;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:600;margin-bottom:5px}
+.ba{background:var(--gold);color:#000}
+.bi{background:rgba(255,255,255,0.1);color:var(--tm)}
+.lp{font-size:10px;color:var(--ts);margin-bottom:7px}
+.lr{display:flex;justify-content:space-between;font-size:11px;padding:2px 0;color:var(--tm)}
+.lr span:last-child{color:var(--tp);font-weight:500}
+
+
+
+/* ELETTRONICA */
+.ep{background:rgba(190,160,80,0.07);border:1.5px solid rgba(190,160,80,0.25);border-radius:12px;padding:13px;margin-bottom:10px}
+.el{font-size:10px;color:var(--gold);font-weight:600;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px}
+.en{font-size:17px;font-weight:600;margin-bottom:3px}
+.ea{font-size:12px;color:var(--tm)}
+.ew{font-size:11px;color:#f87171;margin-top:5px;font-weight:500}
+.es{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;padding:9px 11px;margin-bottom:5px}
+.es .ename{font-size:13px;font-weight:500;margin-bottom:2px}
+.es .eacc{font-size:12px;color:var(--tm)}
+/* LT WARN — NUOVO */
+.lt-warn{display:none;padding:8px 10px;border-radius:8px;font-size:12px;margin-top:8px}
+.lt-warn.show{display:block}
+.lt-warn.ok{background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.2);color:#4ade80}
+.lt-warn.caution{background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);color:#f59e0b}
+.lt-warn.danger{background:rgba(244,63,94,0.08);border:1px solid rgba(244,63,94,0.2);color:#f43f5e}
+/* ASPECT RATIO */
+.arb{position:relative;height:7px;border-radius:4px;background:rgba(255,255,255,0.1);margin:8px 0 3px;overflow:hidden}
+.arbf{height:100%;border-radius:4px;transition:width 0.4s}
+.arm{position:relative;height:13px;margin-bottom:3px}
+.arm span{position:absolute;font-size:9px;color:var(--ts);transform:translateX(-50%)}
+.arg{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:9px 11px;margin-top:9px}
+.argr{display:flex;align-items:center;gap:7px;margin-bottom:3px}
+.ard{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.aw{background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.18);border-radius:8px;padding:9px;margin-top:7px;font-size:11px;color:rgba(245,158,11,0.85)}
+.sb{background:rgba(74,222,128,0.07);border:1px solid rgba(74,222,128,0.18);border-radius:10px;padding:9px 13px;font-size:12px;color:rgba(74,222,128,0.85);margin-top:9px}
+/* NOME PROGETTO */
+.proj-bar{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:12px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.proj-bar input{flex:1;background:transparent;border:none;color:var(--tp);font-size:14px;outline:none}
+.proj-bar input::placeholder{color:var(--ts)}
+/* LOTTO 5 */
+.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.sc{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;padding:9px}
+.sc .sl{font-size:10px;color:var(--tm);display:flex;align-items:center;gap:4px;margin-bottom:3px}
+.sc .sv{font-size:15px;font-weight:700}
+.sc.shi{border-color:rgba(96,165,250,0.3);background:rgba(96,165,250,0.07)}
+.sc.shi .sv{color:var(--inf)}
+.fvw{border:1px solid var(--border);border-radius:10px;padding:11px;background:rgba(255,255,255,0.02);margin-bottom:14px;overflow-x:auto}
+.fvw h4,.pvw h4{font-size:12px;font-weight:500;margin-bottom:9px;color:var(--tm)}
+.pvw{border:1px solid var(--border);border-radius:10px;padding:11px;background:rgba(255,255,255,0.02);margin-bottom:14px}
+.leg{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:9px}
+.li{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--tm)}
+.ld{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+/* LINEE TECNICHE */
+.lcards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.lcard{border-radius:14px;padding:18px;position:relative;overflow:hidden;color:white}
+.lcard .lbg{position:absolute;top:8px;right:8px;opacity:0.18;font-size:44px}
+.lcard .llbl{font-size:12px;font-weight:500;opacity:0.9;margin-bottom:7px}
+.lcard .lnum{font-size:48px;font-weight:700;line-height:1}
+.lcard .lsub{font-size:11px;opacity:0.65;margin-top:3px}
+.lcard.rete{background:linear-gradient(135deg,#06b6d4,#3b82f6)}
+.lcard.alim{background:linear-gradient(135deg,#d946ef,#ec4899)}
+.mig{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:11px}
+.mc{background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:10px;padding:9px}
+.mc .mcl{font-size:11px;color:var(--gold);margin-bottom:3px}
+.mc .mcv{font-size:15px;font-weight:600}
+.notebox{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:14px;padding:14px}
+.notebox h4{font-size:14px;font-weight:500;display:flex;align-items:center;gap:7px;margin-bottom:11px}
+.ng{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.ni .nb{font-size:11px;padding:3px 9px;border:1px solid rgba(190,160,80,0.3);border-radius:20px;color:var(--gold);display:inline-block;margin-bottom:5px}
+.ni .nl{font-size:12px;color:var(--tm)}
+.ni .nv{font-size:15px;font-weight:600}
+</style>
+</head>
+<body>
+<div class="app">
+<!-- HEADER -->
+<div class="hdr">
+  <img id="logo" src="" alt="FORM">
+  <div>
+    <h1>FORM.THE CREATIVE GROUP</h1>
+    <p>Calcolatore ledwall</p>
+  </div>
+  <div class="hdr-r"></div>
+</div>
+
+<div class="cnt">
+
+<!-- NOME PROGETTO (NUOVO) -->
+<div class="proj-bar">
+  <span style="font-size:18px">📁</span>
+  <input type="text" id="nome-progetto" placeholder="Nome progetto (opzionale — apparirà nel PDF)">
+</div>
+
+<!-- CONFIGURAZIONE -->
+<div class="card">
+  <div class="ch"><div class="ct">⚙️ Configurazione LED Wall</div><div style="display:flex;gap:8px"><button class="btn" onclick="exportPDFMain()">📄 Esporta PDF</button><button class="btn btn-ghost" onclick="doReset()">↺ Reset</button></div></div>
+  <div class="cb">
+    <div class="g3">
+      <div class="fld"><label>Larghezza (metri)</label><input type="text" id="inp-larg" value="9" inputmode="decimal" placeholder="es. 9,5" oninput="onInput()"></div>
+      <div class="fld"><label>Altezza (metri)</label><input type="text" id="inp-alt" value="3" inputmode="decimal" placeholder="es. 3,5" oninput="onInput()"></div>
+      <div class="fld"><label>Passo LED</label>
+        <select id="sel-passo" onchange="onInput()">
+          <option value="2.6">2.6mm</option>
+          <option value="3.9">3.9mm</option>
+        </select>
+      </div>
+    </div>
+    <div class="chk-row">
+      <input type="checkbox" id="chk-america" style="width:17px;height:17px;accent-color:#ef4444;cursor:pointer" onchange="onInput()">
+      <label id="lbl-america" for="chk-america" style="font-size:13px;cursor:pointer;color:var(--tm)">Flaggare se il ledwall è installato in America</label>
+    </div>
+  </div>
+</div>
+
+<!-- DIMENSIONI -->
+<div class="card">
+  <div class="ch"><div class="ct">📏 Dimensioni e Superficie</div></div>
+  <div class="cb">
+    <div class="rbar"><span class="rl">Superficie totale:</span><span class="rv" id="res-mq">27.00 mq</span></div>
+  </div>
+</div>
+
+<!-- SPECIFICHE VIDEO -->
+<div class="card">
+  <div class="ch"><div class="ct">🎥 Specifiche Video</div></div>
+  <div class="cb">
+    <div class="mrow"><span class="ml">Risoluzione orizzontale:</span><span class="mv" id="res-x">3.456 px</span></div>
+    <div class="mrow"><span class="ml">Risoluzione verticale:</span><span class="mv" id="res-y">1.152 px</span></div>
+    <div class="rbar" style="margin-top:8px"><span class="rl">Pixel totali:</span><span class="rv" id="res-tot">3.981.312</span></div>
+
+
+    <!-- ASPECT RATIO -->
+    <div style="margin-top:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <span class="ml">Rapporto rispetto al 1920×1080:</span>
+        <span id="ar-ratio-text" style="font-size:13px;font-weight:500"></span>
+      </div>
+      <div class="arb"><div class="arbf" id="ar-bar"></div></div>
+      <div class="arm">
+        <span style="left:80%">80%</span><span style="left:90%">90%</span><span style="left:98%">98%</span>
+      </div>
+      <div style="display:flex;justify-content:flex-end"><span id="ar-label" style="font-size:12px;font-weight:600"></span></div>
+      <div class="arg">
+        <p style="font-size:11px;font-weight:500;margin-bottom:6px;color:var(--tp)">Tolleranza stretch video:</p>
+        <div class="argr"><div class="ard" style="background:#4ade80"></div><span style="font-size:11px;color:var(--tm)"><strong style="color:#4ade80">&lt;2%</strong> — Praticamente perfetto</span></div>
+        <div class="argr"><div class="ard" style="background:#eab308"></div><span style="font-size:11px;color:var(--tm)"><strong style="color:#eab308">2–10%</strong> — Accettabile per video e animazioni</span></div>
+        <div class="argr"><div class="ard" style="background:#f97316"></div><span style="font-size:11px;color:var(--tm)"><strong style="color:#f97316">10–20%</strong> — Accettabile, verificare loghi rotondi</span></div>
+        <div class="argr"><div class="ard" style="background:#ef4444"></div><span style="font-size:11px;color:var(--tm)"><strong style="color:#ef4444">&gt;20%</strong> — Stretch evidente</span></div>
+      </div>
+      <div class="aw">⚠ <strong>Loghi e grafiche fisse:</strong> anche uno stretch del 2% è visibile su forme geometriche e caratteri tipografici.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ELETTRONICA -->
+<div class="card">
+  <div class="ch"><div class="ct">🔌 Elettronica Abbinata</div></div>
+  <div class="cb">
+    <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:10px;margin-bottom:12px;font-size:12px;color:var(--tm)">
+      Risoluzione analizzata: <span id="elett-res" style="font-weight:600;color:var(--tp)"></span>
+    </div>
+    <div class="ep">
+      <div class="el">⭐ Prima scelta</div>
+      <div class="en" id="elett-nome"></div>
+      <div class="ea" id="elett-acc"></div>
+      <div class="ew" id="elett-warn" style="display:none"></div>
+    </div>
+    <div style="font-size:12px;color:var(--tm);margin-bottom:6px">Seconda scelta</div>
+    <div id="elett-sec"></div>
+
+    <div style="background:rgba(96,165,250,0.07);border:1px solid rgba(96,165,250,0.18);border-radius:10px;padding:10px 14px;margin-top:10px;font-size:12px;color:rgba(96,165,250,0.85)">
+      ℹ️ I suggerimenti si aggiornano automaticamente quando modifichi le dimensioni del display.
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- PARAMETRI VIDEO -->
+<div class="card">
+  <div class="ch"><div class="ct">📹 Parametri Video Consigliati</div></div>
+  <div class="cb">
+    <div class="mrow"><span class="ml">Formato file:</span><span class="mv">MP4</span></div>
+    <div class="mrow"><span class="ml">Codec:</span><span class="mv">H.264</span></div>
+    <div class="mrow"><span class="ml">Bitrate:</span><span class="mv" id="param-bitrate">15 Mbps</span></div>
+    <div class="mrow"><span class="ml">Frame rate:</span><span class="mv" id="param-fps">25 fps</span></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- LOTTI -->
+<div class="card">
+  <div class="ch"><div class="ct">📦 Configurazioni Lotti Disponibili</div></div>
+  <div class="cb">
+    <div class="lg" id="lotti-grid"></div>
+    <div class="sb">✨ <strong>Aggiornamento Automatico:</strong> Tutti i valori si ricalcolano istantaneamente quando modifichi le dimensioni</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- LEDWALL AD ANGOLO LOTTO 5 -->
+<div class="card">
+  <div class="ch">
+    <div class="ct">📐 Ledwall ad Angolo Lotto 5</div>
+    <div style="display:flex;gap:8px">
+      <button class="btn" id="btn-exp-l5" style="display:none" onclick="exportPDFLotto5()">📄 Esporta PDF</button>
+      <button class="btn btn-ghost" onclick="resetLotto5()">↺ Reset</button>
+    </div>
+  </div>
+  <div class="cb">
+    <div class="g3">
+      <div class="fld"><label>Segmento 1 (metri)</label><input type="text" id="l5-s1" inputmode="decimal" placeholder="es. 4" oninput="renderL5()"></div>
+      <div class="fld"><label>Segmento 2 <span style="font-size:10px;color:var(--ts)">— vuoto = dritto</span></label><input type="text" id="l5-s2" inputmode="decimal" placeholder="es. 2" oninput="renderL5()"></div>
+      <div class="fld"><label>Altezza (metri)</label><input type="text" id="l5-alt" inputmode="decimal" placeholder="es. 2" oninput="renderL5()"></div>
+    </div>
+    <div class="chk-row">
+      <input type="checkbox" id="chk-solo50" style="width:17px;height:17px;accent-color:#f59e0b;cursor:pointer" onchange="renderL5()">
+      <label id="lbl-solo50" for="chk-solo50" style="font-size:13px;cursor:pointer;color:var(--tm)">Flaggare per usare solo moduli 50×50</label>
+    </div>
+  </div>
+</div>
+<div id="l5-result" style="display:none">
+  <div class="card">
+    <div class="ch"><div class="ct" id="l5-title">📊 Risultato</div></div>
+    <div class="cb">
+      <div class="sg" id="l5-summary"></div>
+      <div class="leg" id="l5-legend"></div>
+      <div class="fvw"><h4>📐 Vista Frontale</h4><div id="front-svg" style="overflow-x:auto"></div></div>
+      <div id="plan-wrap"></div>
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+        <div style="font-size:12px;font-weight:500;color:var(--tm);margin-bottom:10px">📦 Specifiche LOTTO 5</div>
+        <div class="lc act" id="l5-spec"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CALCOLO LINEE TECNICHE -->
+<div class="card">
+  <div class="ch"><div class="ct">⚡ Calcolo Linee Tecniche</div></div>
+  <div class="cb">
+    <div style="text-align:center;margin-bottom:18px">
+      <div style="font-size:22px;font-weight:700;background:linear-gradient(135deg,#60a5fa,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent">Calcolo Linee Tecniche</div>
+      <div style="font-size:13px;color:var(--tm);margin-top:4px">Calcolo linee di rete e alimentazione per ledwall (VX1000 / VX1000pro)</div>
+    </div>
+    <div class="g2">
+      <div class="card" style="padding:14px;margin-bottom:0">
+        <div style="font-size:14px;font-weight:500;margin-bottom:12px">Configura il tuo Wall</div>
+        <div class="fld" style="margin-bottom:10px">
+          <label style="color:var(--gold)">Seleziona Passo (mm)</label>
+          <select id="lt-passo" onchange="updateLtModuli()"><option value="">Seleziona passo</option><option value="2.6">2.6 mm</option><option value="3.9">3.9 mm</option></select>
+        </div>
+        <div class="fld" style="margin-bottom:10px">
+          <label style="color:var(--gold)">Seleziona Lotto / Modulo</label>
+          <select id="lt-modulo" onchange="renderLt()"><option value="">Seleziona configurazione</option></select>
+        </div>
+        <div class="g2" style="gap:8px">
+          <div class="fld"><label style="color:var(--gold)">Larghezza (m)</label><input type="number" id="lt-larg" min="0" step="0.5" placeholder="0" oninput="renderLt()"></div>
+          <div class="fld"><label style="color:var(--gold)">Altezza (m)</label><input type="number" id="lt-alt" min="0" step="0.5" placeholder="0" oninput="renderLt()"></div>
+        </div>
+      </div>
+      <div class="card" style="padding:14px;margin-bottom:0;border-color:rgba(190,160,80,0.25)">
+        <div style="font-size:14px;font-weight:500;margin-bottom:12px">Risultati</div>
+        <div id="lt-results">
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:160px;color:var(--tm);text-align:center">
+            <div style="font-size:36px;opacity:0.4;margin-bottom:8px">ℹ️</div>
+            <p style="font-size:13px">Seleziona passo, lotto/modulo<br>e inserisci le dimensioni</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="notebox" style="margin-top:14px">
+      <h4>ℹ️ Note di Riferimento</h4>
+      <div class="ng">
+        <div class="ni"><div class="nb">2K</div><div class="nl">Risoluzione</div><div class="nv">1920 × 1080</div></div>
+        <div class="ni"><div class="nb">4K</div><div class="nl">Risoluzione</div><div class="nv">3840 × 2160</div></div>
+        <div class="ni"><div class="nb">VX1000</div><div class="nl">Porta singola</div><div class="nv">650.000 pixel</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="divider"></div>
+
+<!-- SIMULATORE PASSO LIBERO -->
+<div class="card">
+  <div class="ch"><div class="ct">🔭 Simulatore Passo Libero</div></div>
+  <div class="cb">
+    <p style="font-size:13px;color:var(--tm);margin-bottom:14px">Calcola risoluzione ed elettronica per qualsiasi passo LED — utile per valutare materiale non in stock o offerte di terzi.</p>
+    <div class="g3">
+      <div class="fld"><label>Larghezza (metri)</label><input type="text" id="sim-larg" inputmode="decimal" placeholder="es. 6" oninput="renderSim()"></div>
+      <div class="fld"><label>Altezza (metri)</label><input type="text" id="sim-alt" inputmode="decimal" placeholder="es. 3" oninput="renderSim()"></div>
+      <div class="fld"><label>Passo LED libero (mm)</label><input type="text" id="sim-passo" inputmode="decimal" placeholder="es. 1.9" oninput="renderSim()"></div>
+    </div>
+    <div id="sim-result" style="display:none;margin-top:16px">
+      <div class="g3" style="margin-bottom:12px">
+        <div style="background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;padding:12px">
+          <div style="font-size:11px;color:var(--tm);margin-bottom:4px">Risoluzione orizzontale</div>
+          <div style="font-size:20px;font-weight:700" id="sim-rx">—</div>
+          <div style="font-size:11px;color:var(--ts)">pixel</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;padding:12px">
+          <div style="font-size:11px;color:var(--tm);margin-bottom:4px">Risoluzione verticale</div>
+          <div style="font-size:20px;font-weight:700" id="sim-ry">—</div>
+          <div style="font-size:11px;color:var(--ts)">pixel</div>
+        </div>
+        <div style="background:rgba(190,160,80,0.1);border:1px solid rgba(190,160,80,0.25);border-radius:10px;padding:12px">
+          <div style="font-size:11px;color:var(--tm);margin-bottom:4px">Pixel totali</div>
+          <div style="font-size:20px;font-weight:700;color:var(--gold)" id="sim-tot">—</div>
+
+        </div>
+      </div>
+      <!-- ASPECT RATIO SEMPLIFICATO -->
+      <div class="mrow">
+        <span class="ml">Rapporto vs 16:9:</span>
+        <span id="sim-ar" style="font-size:13px;font-weight:600"></span>
+      </div>
+      <div class="mrow">
+        <span class="ml">Superficie:</span>
+        <span class="mv" id="sim-mq"></span>
+      </div>
+      <!-- ELETTRONICA -->
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+        <div style="font-size:12px;color:var(--tm);margin-bottom:8px">Elettronica consigliata per questa configurazione:</div>
+        <div id="sim-elett-prima" class="ep"></div>
+        <div id="sim-elett-sec"></div>
+      </div>
+    </div>
+    <div id="sim-empty" style="padding:20px 0;text-align:center;color:var(--ts);font-size:13px">Inserisci larghezza, altezza e passo per simulare</div>
+  </div>
+</div>
+
+</div><!-- /cnt -->
+</div><!-- /app -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+// ===== LOGO BASE64 =====
+document.getElementById('logo').src = 'data:image/png;base64,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';
+
+// ===== DATI MODULI =====
+const MODS = [
+  {id:'2-3',lotto:'2-3',passo:'3.9',modulo:'100x50',mW:50,mH:100,pxX:128,pxY:256,pixel:'256x128',reteMax:'18/19',alimMax:'14'},
+  {id:'0',lotto:'0',passo:'2.6',modulo:'100x50',mW:50,mH:100,pxX:192,pxY:384,pixel:'384x192',reteMax:'8',alimMax:'14'},
+  {id:'4',lotto:'4',passo:'2.6',modulo:'50x50',mW:50,mH:50,pxX:192,pxY:192,pixel:'192x192',reteMax:'16',alimMax:'16'},
+  {id:'5-50x50',lotto:'5',passo:'2.6',modulo:'50x50',mW:50,mH:50,pxX:192,pxY:192,pixel:'192x192',reteMax:'16',alimMax:'24'},
+  {id:'5-100x50',lotto:'5',passo:'2.6',modulo:'100x50',mW:50,mH:100,pxX:192,pxY:384,pixel:'384x192',reteMax:'8',alimMax:'12'},
+];
+const COL={'50x100FLAT':'#6b7280','50x50FLAT':'#f43f5e','50x50TAGLIATO':'#4ade80'};
+const TR=1920/1080;
+
+// ===== STATE =====
+let larg=9,alt=3,passo=2.6,isAmerica=false;
+let l5s1=0,l5s2=0,l5alt=0,solo50=false;
+
+// ===== PARSE DECIMAL =====
+function pd(s){return parseFloat((s||'').replace(',','.'))||0;}
+
+// ===== MAIN CALC =====
+function onInput(){
+  larg=pd(document.getElementById('inp-larg').value);
+  alt=pd(document.getElementById('inp-alt').value);
+  passo=parseFloat(document.getElementById('sel-passo').value)||2.6;
+  isAmerica=document.getElementById('chk-america').checked;
+  const lbl=document.getElementById('lbl-america');
+  lbl.textContent=isAmerica?'Ledwall installato in America':'Flaggare se il ledwall è installato in America';
+  lbl.style.color=isAmerica?'#ef4444':'var(--tm)';
+  calculate();
+}
+
+function calculate(){
+  const vl=Math.max(0.1,larg||1),va=Math.max(0.1,alt||1),vp=passo;
+  const mq=Math.round(vl*va*100)/100;
+  const ppm=Math.floor(1000/vp);
+  const rx=Math.floor(ppm*vl),ry=Math.floor(ppm*va),tot=rx*ry;
+
+  document.getElementById('res-mq').textContent=mq.toFixed(2)+' mq';
+  document.getElementById('res-x').textContent=rx.toLocaleString('it-IT')+' px';
+  document.getElementById('res-y').textContent=ry.toLocaleString('it-IT')+' px';
+  document.getElementById('res-tot').textContent=tot.toLocaleString('it-IT');
+
+
+
+
+
+  // ASPECT RATIO
+  const cr=rx/ry,dev=Math.abs(cr-TR),norm=Math.min(dev/2,1),pct=Math.round((1-norm)*100);
+  const bar=document.getElementById('ar-bar');
+  const bc=pct>=98?'#4ade80':pct>=90?'#eab308':pct>=80?'#f97316':'#ef4444';
+  bar.style.width=pct+'%';bar.style.background=bc;
+  document.getElementById('ar-ratio-text').innerHTML=cr.toFixed(2)+' <span style="color:var(--gold);font-size:12px">(rif. '+TR.toFixed(2)+')</span>';
+  const arl=document.getElementById('ar-label');
+  arl.textContent=pct+'% — '+(norm<0.02?'≈ 16:9':norm<0.10?'Vicino al 16:9':norm<0.20?'Accettabile':'Stretch elevato');
+  arl.style.color=bc;
+
+  // PARAMS VIDEO
+  document.getElementById('param-fps').textContent=isAmerica?'30 fps':'25 fps';
+  document.getElementById('param-bitrate').textContent=tot>4000000?'25 Mbps':'15 Mbps';
+
+  // ELETTRONICA
+  document.getElementById('elett-res').textContent=rx.toLocaleString('it-IT')+' × '+ry.toLocaleString('it-IT')+' px';
+  const prod=rx*ry;
+  let prima,sec=[];
+  if(prod<6500000){prima={nome:'VX1000pro',acc:'preparare la chiave usb con i filmati',warn:'⚠️ In caso di regia o palinsesto interattivo rivolgersi ai tecnici.',tipo:'pro'};sec=[{nome:'VX1000',acc:'BrightSign o Player'},{nome:'SENDER 4K',acc:'BrightSign o Player'},{nome:'VX2000PRO',acc:'preparare la chiave usb con i filmati'}];}
+  else if(prod<8800000){prima={nome:'SENDER 4K',acc:'BrightSign o Player',warn:'',tipo:'std'};sec=[{nome:'VX2000PRO',acc:'preparare la chiave usb con i filmati'}];}
+  else if(prod<13000000){prima={nome:'VX2000PRO',acc:'preparare la chiave usb con i filmati',warn:'⚠️ In caso di regia o palinsesto interattivo rivolgersi ai tecnici.',tipo:'pro'};sec=[];}
+  else{prima={nome:'Configurazione personalizzata',acc:'Contattare il supporto tecnico',warn:'',tipo:'custom'};sec=[];}
+  if(prod<=2073600)sec.push({nome:'SENDER 2K',acc:'BrightSign o Player'});
+  document.getElementById('elett-nome').textContent=prima.nome;
+  document.getElementById('elett-acc').innerHTML='<strong>Accessorio:</strong> '+prima.acc;
+  const ew=document.getElementById('elett-warn');
+  ew.textContent=prima.warn||'';ew.style.display=prima.warn?'block':'none';
+  document.getElementById('elett-sec').innerHTML=sec.map(s=>`<div class="es"><div class="ename">${s.nome}</div><div class="eacc"><strong>Accessorio:</strong> ${s.acc}</div></div>`).join('');
+
+
+
+  // LOTTI
+  const lotti=[
+    {nome:'LOTTO 0',passo:2.6,kw:Math.round(mq*0.2*2*100)/100,linee:Math.ceil((mq*0.2*2)/3),lat:80,sotto:70},
+    {nome:'LOTTO 1',passo:3.9,kw:Math.round(mq*0.2*2*100)/100,linee:Math.ceil((mq*0.2*2)/3),lat:80,sotto:70},
+    {nome:'LOTTO 2',passo:3.9,kw:Math.round(mq*0.2*2*100)/100,linee:Math.ceil((mq*0.2*2)/3),lat:80,sotto:70},
+    {nome:'LOTTO 3',passo:3.9,kw:Math.round(mq*0.2*2*100)/100,linee:Math.ceil((mq*0.2*2)/3),lat:80,sotto:70},
+    {nome:'LOTTO 4',passo:2.6,kw:Math.round(mq*0.17*4*100)/100,linee:Math.ceil((mq*0.17*4)/3),lat:70,sotto:'no'},
+    {nome:'LOTTO 5',passo:2.6,kw:Math.round((mq*0.25)*2*100)/100,linee:Math.ceil(((mq*0.25)*2)/3),lat:74,sotto:'no'},
+  ];
+  const lG=document.getElementById('lotti-grid');
+  lG.innerHTML=lotti.map(l=>{
+    const active=Math.abs(l.passo-vp)<0.01;
+    const lineeShow=isAmerica?l.linee*2:l.linee;
+    return`<div class="lc${active?' act':''}">
+      <div class="lbadge ${active?'ba':'bi'}">${l.nome}${active?' ✓':''}</div>
+      <div class="lp">PASSO: ${l.passo} mm</div>
+      <div class="lr"><span>📐 Superficie:</span><span>${active?l.mq?l.mq.toFixed(2)+' mq':'—':'—'}</span></div>
+      <div class="lr"><span>⚡ Linee:</span><span>${active?lineeShow:'—'}</span></div>
+      <div class="lr"><span>📦 Fasc. lat.:</span><span>${active?l.lat+'mm':'—'}</span></div>
+      <div class="lr"><span>📏 Fasc. sotto:</span><span>${active?(typeof l.sotto==='number'?l.sotto+'mm':l.sotto):'—'}</span></div>
+      <div class="lr"><span>💡 Potenza:</span><span>${active?l.kw+' kW':'—'}</span></div>
+    </div>`;
+  }).join('');
+}
+
+// ===== LOTTO 5 ANGOLO =====
+function buildSeq(segM,isBefore,solo){
+  const blocks=[],segCm=Math.round(segM*100),transC=100;
+  if(segCm<transC)return[];
+  const linC=segCm-transC,numLin=Math.floor(linC/50);
+  const ft=solo?'50x50FLAT':'50x100FLAT';
+  if(isBefore){for(let i=0;i<numLin;i++)blocks.push({type:ft});blocks.push({type:'50x50FLAT'});blocks.push({type:'50x50TAGLIATO'});}
+  else{blocks.push({type:'50x50TAGLIATO'});blocks.push({type:'50x50FLAT'});for(let i=0;i<numLin;i++)blocks.push({type:ft});}
+  return blocks;
+}
+function colH(h){const n100=Math.floor(h),rem=Math.max(0,h-n100),n50ex=Math.round(rem/0.5),n50=Math.round(h/0.5);return{n100,n50ex,n50};}
+
+function renderL5(){
+  l5s1=pd(document.getElementById('l5-s1').value);
+  l5s2=pd(document.getElementById('l5-s2').value);
+  l5alt=pd(document.getElementById('l5-alt').value);
+  solo50=document.getElementById('chk-solo50').checked;
+  const lbl=document.getElementById('lbl-solo50');
+  lbl.textContent=solo50?'Solo moduli 50×50 attivo':'Flaggare per usare solo moduli 50×50';
+  lbl.style.color=solo50?'#f59e0b':'var(--tm)';
+  const res=document.getElementById('l5-result');
+  if(!l5s1||!l5alt){res.style.display='none';document.getElementById('btn-exp-l5').style.display='none';return;}
+  res.style.display='block';document.getElementById('btn-exp-l5').style.display='inline-flex';
+
+  const hasAngle=l5s2>0;
+  let seq,totalMq,mq100,mq50f,mq50t;
+  if(hasAngle){
+    const s1=buildSeq(l5s1,true,solo50),s2=buildSeq(l5s2,false,solo50);seq=[...s1,...s2];
+    totalMq=(l5s1+l5s2)*l5alt;
+    const c100=seq.filter(b=>b.type==='50x100FLAT').length,c50f=seq.filter(b=>b.type==='50x50FLAT').length,c50t=seq.filter(b=>b.type==='50x50TAGLIATO').length;
+    const {n100,n50ex,n50}=colH(l5alt);
+    mq100=c100*n100*0.5;mq50f=(c50f*n50+c100*n50ex)*0.25;mq50t=c50t*n50*0.25;
+  }else{
+    const nc=Math.round(l5s1/0.5),ft=solo50?'50x50FLAT':'50x100FLAT';
+    seq=Array.from({length:nc},()=>({type:ft}));totalMq=l5s1*l5alt;
+    const {n100,n50ex,n50}=colH(l5alt);
+    if(solo50){mq100=0;mq50f=nc*n50*0.25;mq50t=0;}else{mq100=nc*n100*0.5;mq50f=nc*n50ex*0.25;mq50t=0;}
+  }
+
+  const label=hasAngle?`angolo ${l5s1}+${l5s2} h${l5alt}${solo50?' (solo 50×50)':''}`:`dritto ${l5s1}m h${l5alt}${solo50?' (solo 50×50)':''}`;
+  document.getElementById('l5-title').textContent='📊 Risultato: '+label;
+
+  // Summary
+  const items=[];
+  if(!solo50)items.push({c:'#6b7280',l:'50x100 FLAT',v:mq100+' mq'});
+  items.push({c:'#f43f5e',l:'50x50 FLAT',v:mq50f+' mq'});
+  items.push({c:'#4ade80',l:'50x50 TAGLIATO',v:mq50t+' mq'});
+  items.push({c:null,l:'TOTALE',v:totalMq+' mq',hi:true});
+  document.getElementById('l5-summary').innerHTML=items.map(it=>`<div class="sc${it.hi?' shi':''}"><div class="sl">${it.c?`<div class="ld" style="background:${it.c}"></div>`:''}<span>${it.l}</span></div><div class="sv">${it.v}</div></div>`).join('');
+
+  // Legend
+  const legItems=[{c:'#6b7280',l:'50x100 FLAT'},{c:'#f43f5e',l:'50x50 FLAT'},{c:'#4ade80',l:'50x50 TAGLIATO'}];
+  document.getElementById('l5-legend').innerHTML=legItems.filter(li=>!solo50||li.c!=='#6b7280').map(li=>`<div class="li"><div class="ld" style="background:${li.c}"></div><span>${li.l}</span></div>`).join('');
+
+  // Front view — FIX: 50x50 FLAT rosso IN ALTO
+  const bW=54,bH100=110,bH50=55,pad=8;
+  const svgW=seq.length*bW+pad*2,svgH=Math.ceil(l5alt)*bH100+pad*2+20;
+  let rects='';
+  seq.forEach((b,ci)=>{
+    const x=pad+ci*bW;
+    const {n100,n50ex,n50}=colH(l5alt);
+    if(b.type==='50x100FLAT'){
+      // PRIMA i moduli 50x50 FLAT rossi IN ALTO (fix!), poi i 100 grigi in basso
+      for(let i=0;i<n50ex;i++){
+        const y=pad+i*bH50;
+        rects+=`<rect x="${x}" y="${y}" width="${bW-1}" height="${bH50-1}" fill="${COL['50x50FLAT']}" rx="2"/>`;
+      }
+      for(let i=0;i<n100;i++){
+        const y=pad+n50ex*bH50+i*bH100;
+        rects+=`<rect x="${x}" y="${y}" width="${bW-1}" height="${bH100-1}" fill="${COL['50x100FLAT']}" rx="2"/>`;
+      }
+    }else{
+      // moduli 50x50: tutti uguali, dall'alto verso il basso
+      for(let i=0;i<n50;i++){
+        const y=pad+i*bH50;
+        rects+=`<rect x="${x}" y="${y}" width="${bW-1}" height="${bH50-1}" fill="${COL[b.type]||'#888'}" rx="2"/>`;
+      }
+    }
+  });
+  document.getElementById('front-svg').innerHTML=`<svg viewBox="0 0 ${svgW} ${svgH}" width="100%" style="max-height:280px">${rects}</svg>`;
+
+  // Plan view
+  const planC=document.getElementById('plan-wrap');
+  if(hasAngle&&seq.length>=4){
+    const cols1=Math.round(l5s1/0.5),s1b=seq.slice(0,cols1),s2b=seq.slice(cols1);
+    const hLin=s1b.slice(0,-2),hFlat=s1b[s1b.length-2],hTag=s1b[s1b.length-1];
+    const vTag=s2b[0],vFlat=s2b[1],vLin=s2b.slice(2);
+    const cW=40,d=16,gap=1,oy=10,ox=10;
+    const hLinEnd=ox+hLin.length*(cW+gap),hFlatEnd=hLinEnd+cW+gap,outerX=hFlatEnd+cW;
+    const innerX=outerX-d,innerY=oy+d,vTagH=cW-d,vTagBot=innerY+vTagH;
+    const svgW2=outerX+50,svgH2=vTagBot+(vLin.length+2)*(40+gap)+40;
+    const stroke='rgba(255,255,255,0.3)';
+    let out='';
+    hLin.forEach((b,i)=>{out+=`<rect x="${ox+i*(cW+gap)}" y="${oy}" width="${cW}" height="${d}" fill="${COL[b.type]||'#888'}" stroke="${stroke}" stroke-width="0.8" rx="1"/>`;});
+    if(hFlat)out+=`<rect x="${hLinEnd}" y="${oy}" width="${cW}" height="${d}" fill="${COL[hFlat.type]||'#888'}" stroke="${stroke}" stroke-width="0.8" rx="1"/>`;
+    if(hTag)out+=`<polygon points="${hFlatEnd},${oy} ${outerX},${oy} ${innerX},${innerY} ${hFlatEnd},${innerY}" fill="${COL[hTag.type]||'#888'}" stroke="${stroke}" stroke-width="0.8"/>`;
+    if(vTag)out+=`<polygon points="${innerX},${innerY} ${outerX},${oy} ${outerX},${vTagBot} ${innerX},${vTagBot}" fill="${COL[vTag.type]||'#888'}" stroke="${stroke}" stroke-width="0.8"/>`;
+    if(vFlat)out+=`<rect x="${innerX}" y="${vTagBot+gap}" width="${d}" height="40" fill="${COL[vFlat.type]||'#888'}" stroke="${stroke}" stroke-width="0.8" rx="1"/>`;
+    vLin.forEach((b,i)=>{out+=`<rect x="${innerX}" y="${vTagBot+(i+1)*(40+gap)+gap}" width="${d}" height="40" fill="${COL[b.type]||'#888'}" stroke="${stroke}" stroke-width="0.8" rx="1"/>`;});
+    out+=`<text x="${ox+(hLin.length*(cW+gap)+cW)/2}" y="${oy+d+14}" text-anchor="middle" font-size="10" fill="rgba(96,165,250,0.8)" font-weight="600">${l5s1}m</text>`;
+    planC.innerHTML=`<div class="pvw"><h4>🗺️ Vista in Pianta (dall'alto)</h4><div style="overflow-x:auto"><svg viewBox="0 0 ${svgW2} ${svgH2}" width="100%" style="max-height:400px">${out}</svg></div></div>`;
+  }else{planC.innerHTML='';}
+
+  // Lotto 5 spec
+  const kw=Math.round((totalMq*0.25)*2*100)/100,linee=Math.ceil(((totalMq*0.25)*2)/3);
+  document.getElementById('l5-spec').innerHTML=`
+    <div class="lbadge ba" style="margin-bottom:5px">LOTTO 5</div>
+    <div class="lp">PASSO: 2.6 mm</div>
+    <div class="lr"><span>📐 Superficie:</span><span>${totalMq.toFixed(2)} mq</span></div>
+    <div class="lr"><span>⚡ Linee:</span><span>${linee}</span></div>
+    <div class="lr"><span>📦 Fascetta lat.:</span><span>74mm</span></div>
+    <div class="lr"><span>📏 Fasc. solo a terra:</span><span>no</span></div>
+    <div class="lr"><span>💡 Potenza:</span><span>${kw} kW</span></div>`;
+}
+
+// ===== LINEE TECNICHE =====
+function updateLtModuli(){
+  const p=document.getElementById('lt-passo').value;
+  const sel=document.getElementById('lt-modulo');
+  sel.innerHTML='<option value="">Seleziona configurazione</option>';
+  if(p){MODS.filter(m=>m.passo===p).forEach(m=>{const o=document.createElement('option');o.value=m.id;o.textContent=`Lotto ${m.lotto} - ${m.modulo}`;sel.appendChild(o);});}
+  renderLt();
+}
+function renderLt(){
+  const mid=document.getElementById('lt-modulo').value;
+  const lw=parseFloat(document.getElementById('lt-larg').value)||0;
+  const lh=parseFloat(document.getElementById('lt-alt').value)||0;
+  const res=document.getElementById('lt-results');
+  const mod=MODS.find(m=>m.id===mid);
+  if(!mod||!lw||!lh){res.innerHTML=`<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:160px;color:var(--tm);text-align:center"><div style="font-size:36px;opacity:0.4;margin-bottom:8px">ℹ️</div><p style="font-size:13px">Seleziona passo, lotto/modulo<br>e inserisci le dimensioni</p></div>`;return;}
+  const altC=lh*100,largC=lw*100;
+  const mO=Math.ceil(largC/mod.mW),mV=Math.ceil(altC/mod.mH),totMod=mO*mV;
+  const ptX=mO*mod.pxX,ptY=mV*mod.pxY,ptot=ptX*ptY;
+  const linRete=Math.ceil(ptot/650000);
+  let linAlim;
+  if(mod.lotto==='4'){linAlim=Math.ceil((lw*lh*0.17*4)/3);}
+  else{const av=parseInt(mod.alimMax.includes('/')?mod.alimMax.split('/')[0]:mod.alimMax);linAlim=Math.ceil(totMod/av);}
+
+  let warnHtml='';
+
+  res.innerHTML=`
+    <div class="mig">
+      <div class="mc"><div class="mcl">Passo (mm)</div><div class="mcv">${mod.passo}</div></div>
+      <div class="mc"><div class="mcl">Modulo (cm)</div><div class="mcv">${mod.modulo}</div></div>
+      <div class="mc"><div class="mcl">Pixel</div><div class="mcv">${mod.pixel}</div></div>
+    </div>
+    <div class="g2" style="gap:8px;margin-bottom:10px">
+      <div class="mc"><div class="mcl">Moduli totali</div><div class="mcv">${totMod}</div><div style="font-size:11px;color:var(--tm)">${mO} × ${mV}</div></div>
+      <div class="mc"><div class="mcl">Max Alim./linea</div><div class="mcv" style="color:var(--gold)">${mod.alimMax}</div></div>
+    </div>
+    <div style="background:rgba(190,160,80,0.08);border:1px solid rgba(190,160,80,0.18);border-radius:10px;padding:10px;margin-bottom:10px">
+      <div style="font-size:11px;color:var(--gold);margin-bottom:3px">Risoluzione Wall</div>
+      <div style="font-size:15px;font-weight:600">${ptX.toLocaleString('it-IT')} × ${ptY.toLocaleString('it-IT')}</div>
+      <div style="font-size:12px;color:var(--tm);margin-top:2px">Pixel totali: <strong style="color:var(--tp)">${ptot.toLocaleString('it-IT')}</strong></div>
+    </div>
+    ${warnHtml}
+    <div style="font-size:13px;font-weight:500;margin:12px 0 8px">Linee Richieste</div>
+    <div class="lcards">
+      <div class="lcard rete"><div class="lbg">🌐</div><div class="llbl">Porte / Linee di Rete</div><div class="lnum">${linRete}</div><div class="lsub">650.000 px/porta</div></div>
+      <div class="lcard alim"><div class="lbg">⚡</div><div class="llbl">Linee di Alimentazione</div><div class="lnum">${linAlim}</div><div class="lsub">max ${mod.alimMax} moduli/linea</div></div>
+    </div>`;
+}
+
+// ===== RESET =====
+function doReset(){
+  larg=9;alt=3;passo=2.6;isAmerica=false;
+  document.getElementById('inp-larg').value=9;
+  document.getElementById('inp-alt').value=3;
+  document.getElementById('sel-passo').value='2.6';
+  document.getElementById('chk-america').checked=false;
+  document.getElementById('lbl-america').textContent='Flaggare se il ledwall è installato in America';
+  document.getElementById('lbl-america').style.color='var(--tm)';
+  calculate();
+}
+function resetLotto5(){
+  l5s1=0;l5s2=0;l5alt=0;solo50=false;
+  ['l5-s1','l5-s2','l5-alt'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('chk-solo50').checked=false;
+  document.getElementById('lbl-solo50').textContent='Flaggare per usare solo moduli 50×50';
+  document.getElementById('lbl-solo50').style.color='var(--tm)';
+  renderL5();
+}
+
+// ===== PDF MAIN =====
+function exportPDFMain(){
+  try{
+    const {jsPDF}=window.jspdf;
+    const doc=new jsPDF('p','mm','a4');
+    const pw=doc.internal.pageSize.getWidth(),ph=doc.internal.pageSize.getHeight();
+    const mg=18,cw=pw-2*mg;
+    const gold={r:190,g:160,b:80},dk={r:40,g:40,b:45},sub={r:120,g:120,b:130},lb={r:248,g:248,b:252};
+    const date=new Date().toLocaleDateString('it-IT',{day:'2-digit',month:'long',year:'numeric'});
+    const nomeProg=document.getElementById('nome-progetto').value||'';
+    let y=mg;
+    const addHeader=()=>{
+      doc.setFillColor(gold.r,gold.g,gold.b);doc.rect(0,0,pw,2,'F');
+      doc.setFillColor(255,255,255);doc.rect(0,2,pw,26,'F');
+      doc.setDrawColor(230,230,235);doc.setLineWidth(0.3);doc.line(mg,28,pw-mg,28);
+      doc.setTextColor(dk.r,dk.g,dk.b);doc.setFontSize(14);doc.setFont('helvetica','bold');
+      doc.text('FORM.THE CREATIVE GROUP',mg,13);
+      doc.setFontSize(9);doc.setFont('helvetica','normal');doc.setTextColor(sub.r,sub.g,sub.b);
+      const subtitle='Calcolatore LED Wall'+(nomeProg?' — '+nomeProg:'')+'  |  Report tecnico';
+      doc.text(subtitle,mg,19);
+      doc.setFontSize(8);doc.text(date,pw-mg,13,{align:'right'});
+      y=36;
+    };
+    const chk=(n)=>{if(y+n>ph-20){doc.addPage();addHeader();}};
+    const addSec=(t)=>{chk(18);doc.setFillColor(gold.r,gold.g,gold.b);doc.rect(mg,y,3,9,'F');doc.setFillColor(lb.r,lb.g,lb.b);doc.rect(mg+3,y,cw-3,9,'F');doc.setFontSize(11);doc.setFont('helvetica','bold');doc.setTextColor(dk.r,dk.g,dk.b);doc.text(t,mg+7,y+6.5);y+=14;};
+    const addRow=(l,v,hi=false)=>{chk(8);doc.setFontSize(9.5);if(hi){doc.setFillColor(245,248,255);doc.rect(mg+2,y-4,cw-4,7,'F');}doc.setDrawColor(235,235,240);doc.setLineWidth(0.15);doc.line(mg+4,y+1.5,pw-mg-4,y+1.5);doc.setFont('helvetica','normal');doc.setTextColor(sub.r,sub.g,sub.b);doc.text(l,mg+6,y);doc.setFont('helvetica',hi?'bold':'normal');doc.setTextColor(dk.r,dk.g,dk.b);doc.text(v,pw-mg-6,y,{align:'right'});y+=7;};
+    addHeader();
+    if(nomeProg){addSec('Progetto');addRow('Nome',nomeProg);y+=4;}
+    const vl=Math.max(0.1,larg||1),va=Math.max(0.1,alt||1),vp=passo;
+    const mq=Math.round(vl*va*100)/100,ppm=Math.floor(1000/vp),rx=Math.floor(ppm*vl),ry=Math.floor(ppm*va),tot=rx*ry;
+    addSec('Configurazione LED Wall');
+    addRow('Larghezza',vl+' m');addRow('Altezza',va+' m');addRow('Passo LED',vp+' mm');
+    if(isAmerica)addRow('Modalità','America (60Hz)');y+=4;
+    addSec('Dimensioni e Superficie');addRow('Superficie totale',mq.toFixed(2)+' mq',true);y+=4;
+    addSec('Specifiche Video');
+    addRow('Risoluzione orizzontale',rx.toLocaleString('it-IT')+' px');
+    addRow('Risoluzione verticale',ry.toLocaleString('it-IT')+' px');
+    addRow('Pixel totali',tot.toLocaleString('it-IT'),true);y+=4;
+    const prod=rx*ry;
+    let primaName='VX1000pro',primaAcc='preparare la chiave usb con i filmati',secNames=[];
+    if(prod<6500000){primaName='VX1000pro';secNames=['VX1000','SENDER 4K','VX2000PRO'];}
+    else if(prod<8800000){primaName='SENDER 4K';primaAcc='BrightSign o Player';secNames=['VX2000PRO'];}
+    else if(prod<13000000){primaName='VX2000PRO';secNames=[];}
+    else{primaName='Configurazione personalizzata';primaAcc='Contattare il supporto tecnico';}
+    if(prod<=2073600)secNames.push('SENDER 2K');
+    addSec('Elettronica Abbinata');
+    addRow('Risoluzione analizzata',rx.toLocaleString('it-IT')+' × '+ry.toLocaleString('it-IT')+' px');
+    y+=2;doc.setFontSize(9);doc.setFont('helvetica','bold');doc.setTextColor(gold.r,gold.g,gold.b);doc.text('PRIMA SCELTA',mg+6,y);y+=5;
+    addRow(primaName,'Accessorio: '+primaAcc);y+=2;
+    if(secNames.length){doc.setFontSize(9);doc.setFont('helvetica','bold');doc.setTextColor(sub.r,sub.g,sub.b);doc.text('ALTERNATIVE',mg+6,y);y+=5;secNames.forEach(n=>addRow(n,'Accessorio: BrightSign o Player'));}
+    y+=4;
+    addSec('Parametri Video Consigliati');
+    addRow('Formato file','MP4');addRow('Codec','H.264');
+    addRow('Bitrate',tot>4000000?'25 Mbps':'15 Mbps');
+    addRow('Frame rate',isAmerica?'30 fps':'25 fps');y+=4;
+    const lottiPDF=[
+      {nome:'LOTTO 0',p:2.6,kw:Math.round(mq*0.2*2*100)/100,l:Math.ceil((mq*0.2*2)/3),lat:80,sotto:70},
+      {nome:'LOTTO 4',p:2.6,kw:Math.round(mq*0.17*4*100)/100,l:Math.ceil((mq*0.17*4)/3),lat:70,sotto:'N/A'},
+      {nome:'LOTTO 5',p:2.6,kw:Math.round((mq*0.25)*2*100)/100,l:Math.ceil(((mq*0.25)*2)/3),lat:74,sotto:'N/A'},
+      {nome:'LOTTO 1',p:3.9,kw:Math.round(mq*0.2*2*100)/100,l:Math.ceil((mq*0.2*2)/3),lat:80,sotto:70},
+    ].filter(l=>Math.abs(l.p-vp)<0.01);
+    if(lottiPDF.length){
+      addSec('Configurazioni Lotti Disponibili');
+      lottiPDF.forEach(l=>{
+        chk(40);doc.setFillColor(245,247,255);doc.rect(mg+2,y-4,cw-4,38,'F');
+        doc.setFontSize(11);doc.setFont('helvetica','bold');doc.setTextColor(dk.r,dk.g,dk.b);doc.text(l.nome,mg+6,y);y+=6;
+        const lnShow=isAmerica?l.l*2:l.l;
+        addRow('Superficie',mq.toFixed(2)+' mq');addRow('Potenza',l.kw+' kW');addRow('N. Linee',''+lnShow);
+        addRow('Spessore laterale',l.lat+' mm');addRow('Spessore sotto',(typeof l.sotto==='number'?l.sotto+' mm':l.sotto));
+        y+=4;
+      });
+    }
+    const total=doc.getNumberOfPages();
+    for(let i=1;i<=total;i++){doc.setPage(i);doc.setDrawColor(230,230,235);doc.setLineWidth(0.3);doc.line(mg,ph-15,pw-mg,ph-15);doc.setFontSize(7.5);doc.setTextColor(sub.r,sub.g,sub.b);doc.setFont('helvetica','normal');doc.text('FORM.THE CREATIVE GROUP'+(nomeProg?' — '+nomeProg:'')+'  |  Calcolatore LED Wall',mg,ph-10);doc.text(i+' / '+total,pw-mg,ph-10,{align:'right'});}
+    doc.save('LED_Wall_Report_'+(nomeProg?nomeProg.replace(/\s/g,'_')+'_':'')+new Date().toISOString().split('T')[0]+'.pdf');
+  }catch(e){alert('Attendere il caricamento della libreria PDF e riprovare.');}
+}
+
+// ===== PDF LOTTO 5 =====
+function exportPDFLotto5(){
+  if(!l5s1||!l5alt)return;
+  try{
+    const {jsPDF}=window.jspdf;
+    const doc=new jsPDF('p','mm','a4');
+    const pw=doc.internal.pageSize.getWidth(),ph=doc.internal.pageSize.getHeight();
+    const mg=18,cw=pw-2*mg;
+    const gold={r:190,g:160,b:80},dk={r:40,g:40,b:45},sub={r:120,g:120,b:130},lb={r:248,g:248,b:252};
+    const date=new Date().toLocaleDateString('it-IT',{day:'2-digit',month:'long',year:'numeric'});
+    const nomeProg=document.getElementById('nome-progetto').value||'';
+    let y=mg;
+    const addHeader=()=>{doc.setFillColor(gold.r,gold.g,gold.b);doc.rect(0,0,pw,2,'F');doc.setFillColor(255,255,255);doc.rect(0,2,pw,26,'F');doc.setDrawColor(230,230,235);doc.setLineWidth(0.3);doc.line(mg,28,pw-mg,28);doc.setTextColor(dk.r,dk.g,dk.b);doc.setFontSize(14);doc.setFont('helvetica','bold');doc.text('FORM.THE CREATIVE GROUP',mg,13);doc.setFontSize(9);doc.setFont('helvetica','normal');doc.setTextColor(sub.r,sub.g,sub.b);doc.text('Ledwall ad Angolo Lotto 5'+(nomeProg?' — '+nomeProg:'')+'  |  Report tecnico',mg,19);doc.setFontSize(8);doc.text(date,pw-mg,13,{align:'right'});y=36;};
+    const chk=(n)=>{if(y+n>ph-20){doc.addPage();addHeader();}};
+    const addSec=(t)=>{chk(18);doc.setFillColor(gold.r,gold.g,gold.b);doc.rect(mg,y,3,9,'F');doc.setFillColor(lb.r,lb.g,lb.b);doc.rect(mg+3,y,cw-3,9,'F');doc.setFontSize(11);doc.setFont('helvetica','bold');doc.setTextColor(dk.r,dk.g,dk.b);doc.text(t,mg+7,y+6.5);y+=14;};
+    const addRow=(l,v,hi=false)=>{chk(8);doc.setFontSize(9.5);if(hi){doc.setFillColor(245,248,255);doc.rect(mg+2,y-4,cw-4,7,'F');}doc.setDrawColor(235,235,240);doc.setLineWidth(0.15);doc.line(mg+4,y+1.5,pw-mg-4,y+1.5);doc.setFont('helvetica','normal');doc.setTextColor(sub.r,sub.g,sub.b);doc.text(l,mg+6,y);doc.setFont('helvetica',hi?'bold':'normal');doc.setTextColor(dk.r,dk.g,dk.b);doc.text(v,pw-mg-6,y,{align:'right'});y+=7;};
+    addHeader();
+    const hasAngle=l5s2>0;
+    let seq,totalMq,mq100,mq50f,mq50t;
+    if(hasAngle){const s1b=buildSeq(l5s1,true,solo50),s2b=buildSeq(l5s2,false,solo50);seq=[...s1b,...s2b];totalMq=(l5s1+l5s2)*l5alt;const c100=seq.filter(b=>b.type==='50x100FLAT').length,c50f=seq.filter(b=>b.type==='50x50FLAT').length,c50t=seq.filter(b=>b.type==='50x50TAGLIATO').length;const {n100,n50ex,n50}=colH(l5alt);mq100=c100*n100*0.5;mq50f=(c50f*n50+c100*n50ex)*0.25;mq50t=c50t*n50*0.25;}
+    else{const nc=Math.round(l5s1/0.5),ft=solo50?'50x50FLAT':'50x100FLAT';seq=Array.from({length:nc},()=>({type:ft}));totalMq=l5s1*l5alt;const {n100,n50ex,n50}=colH(l5alt);if(solo50){mq100=0;mq50f=nc*n50*0.25;mq50t=0;}else{mq100=nc*n100*0.5;mq50f=nc*n50ex*0.25;mq50t=0;}}
+    if(nomeProg){addSec('Progetto');addRow('Nome',nomeProg);y+=4;}
+    addSec('Configurazione Angolo');
+    addRow('Segmento 1',l5s1+' m');
+    if(hasAngle)addRow('Segmento 2',l5s2+' m');
+    addRow('Altezza',l5alt+' m');
+    addRow('Tipo',hasAngle?'Angolo '+l5s1+'+'+l5s2:'Dritto '+l5s1+'m');
+    if(solo50)addRow('Modalità','Solo moduli 50×50');y+=4;
+    addSec('Impegno Moduli');
+    if(!solo50)addRow('50x100 FLAT',mq100+' mq');
+    addRow('50x50 FLAT',mq50f+' mq');
+    if(mq50t>0)addRow('50x50 TAGLIATO',mq50t+' mq');
+    addRow('Superficie totale',totalMq+' mq',true);y+=4;
+    const cols100=seq.filter(b=>b.type==='50x100FLAT').length,cols50f=seq.filter(b=>b.type==='50x50FLAT').length,cols50t=seq.filter(b=>b.type==='50x50TAGLIATO').length;
+    const r100=Math.floor(l5alt),r50ex=Math.round(Math.max(0,l5alt-r100)/0.5),r50=Math.round(l5alt/0.5);
+    const cab100=cols100*r100,cab50f=cols50f*r50+cols100*r50ex,cab50t=cols50t*r50,cabTot=cab100+cab50f+cab50t;
+    addSec('Conteggio Cabinet');
+    if(!solo50&&cab100>0)addRow('Cabinet 50x100 FLAT',''+cab100);
+    if(cab50f>0)addRow('Cabinet 50x50 FLAT',''+cab50f);
+    if(cab50t>0)addRow('Cabinet 50x50 TAGLIATO',''+cab50t);
+    addRow('Totale cabinet',''+cabTot,true);y+=4;
+    const kw=Math.round((totalMq*0.25)*2*100)/100,linee=Math.ceil(((totalMq*0.25)*2)/3);
+    addSec('Specifiche LOTTO 5');
+    addRow('Superficie',totalMq.toFixed(2)+' mq');addRow('Potenza',kw+' kW');addRow('N. Linee',''+linee);
+    addRow('Fascetta laterale','74 mm');addRow('Fascetta solo con ledwall a terra','N/A');addRow('Passo','2.6 mm');
+    // Vista frontale semplificata nel PDF
+    doc.addPage();addHeader();addSec('Vista Frontale');
+    const bW=6,bH100=11,bH50=5.5,pad2=2;
+    const {n100:fn100,n50ex:fn50ex,n50:fn50}=colH(l5alt);
+    seq.forEach((b,ci)=>{
+      const x=mg+ci*bW*0.75;
+      if(b.type==='50x100FLAT'){
+        doc.setFillColor(244,63,94);for(let i=0;i<fn50ex;i++)doc.rect(x,y+i*bH50*0.5,bW*0.75-0.3,bH50*0.5-0.2,'F');
+        doc.setFillColor(107,114,128);for(let i=0;i<fn100;i++)doc.rect(x,y+fn50ex*bH50*0.5+i*bH100*0.5,bW*0.75-0.3,bH100*0.5-0.2,'F');
+      }else{
+        const fc=b.type==='50x50FLAT'?[244,63,94]:[74,222,128];
+        doc.setFillColor(fc[0],fc[1],fc[2]);for(let i=0;i<fn50;i++)doc.rect(x,y+i*bH50*0.5,bW*0.75-0.3,bH50*0.5-0.2,'F');
+      }
+    });
+    const total=doc.getNumberOfPages();
+    for(let i=1;i<=total;i++){doc.setPage(i);doc.setDrawColor(230,230,235);doc.setLineWidth(0.3);doc.line(mg,ph-15,pw-mg,ph-15);doc.setFontSize(7.5);doc.setTextColor(sub.r,sub.g,sub.b);doc.setFont('helvetica','normal');doc.text('FORM.THE CREATIVE GROUP  |  Ledwall ad Angolo Lotto 5'+(nomeProg?' — '+nomeProg:''),mg,ph-10);doc.text(i+' / '+total,pw-mg,ph-10,{align:'right'});}
+    const cfg=hasAngle?`angolo_${l5s1}+${l5s2}`:`dritto_${l5s1}m`;
+    doc.save('Ledwall_Angolo_Lotto5_'+cfg+'_'+new Date().toISOString().split('T')[0]+'.pdf');
+  }catch(e){alert('Attendere il caricamento della libreria PDF e riprovare.');}
+}
+
+// ===== SIMULATORE PASSO LIBERO =====
+function renderSim(){
+  const vl=pd(document.getElementById('sim-larg').value);
+  const va=pd(document.getElementById('sim-alt').value);
+  const vp=pd(document.getElementById('sim-passo').value);
+  const res=document.getElementById('sim-result');
+  const empty=document.getElementById('sim-empty');
+  if(!vl||!va||!vp||vp<0.5||vp>20){res.style.display='none';empty.style.display='block';return;}
+  res.style.display='block';empty.style.display='none';
+
+  const ppm=Math.floor(1000/vp);
+  const rx=Math.floor(ppm*vl),ry=Math.floor(ppm*va),tot=rx*ry;
+  const mq=Math.round(vl*va*100)/100;
+
+  document.getElementById('sim-rx').textContent=rx.toLocaleString('it-IT');
+  document.getElementById('sim-ry').textContent=ry.toLocaleString('it-IT');
+  document.getElementById('sim-tot').textContent=tot.toLocaleString('it-IT');
+
+
+
+  // Aspect ratio
+  const cr=rx/ry,dev=Math.abs(cr-1.7778),norm=Math.min(dev/2,1),pct=Math.round((1-norm)*100);
+  const bc=pct>=98?'#4ade80':pct>=90?'#eab308':pct>=80?'#f97316':'#ef4444';
+  const arEl=document.getElementById('sim-ar');
+  arEl.textContent=cr.toFixed(2)+' ('+pct+'% vs 16:9)';
+  arEl.style.color=bc;
+
+  document.getElementById('sim-mq').textContent=mq.toFixed(2)+' mq';
+
+  // Elettronica
+  const prod=rx*ry;
+  let prima,sec=[];
+  if(prod<6500000){prima={nome:'VX1000pro',acc:'preparare la chiave usb con i filmati',warn:'⚠️ In caso di regia o palinsesto interattivo rivolgersi ai tecnici.',tipo:'pro'};sec=[{nome:'VX1000',acc:'BrightSign o Player'},{nome:'SENDER 4K',acc:'BrightSign o Player'},{nome:'VX2000PRO',acc:'preparare la chiave usb con i filmati'}];}
+  else if(prod<8800000){prima={nome:'SENDER 4K',acc:'BrightSign o Player',warn:'',tipo:'std'};sec=[{nome:'VX2000PRO',acc:'preparare la chiave usb con i filmati'}];}
+  else if(prod<13000000){prima={nome:'VX2000PRO',acc:'preparare la chiave usb con i filmati',warn:'⚠️ In caso di regia o palinsesto interattivo rivolgersi ai tecnici.',tipo:'pro'};sec=[];}
+  else{prima={nome:'Configurazione personalizzata',acc:'Contattare il supporto tecnico',warn:'',tipo:'custom'};sec=[];}
+  if(prod<=2073600)sec.push({nome:'SENDER 2K',acc:'BrightSign o Player'});
+
+  document.getElementById('sim-elett-prima').innerHTML=`<div class="el">⭐ Prima scelta</div><div class="en">${prima.nome}</div><div class="ea"><strong>Accessorio:</strong> ${prima.acc}</div>${prima.warn?'<div class="ew">'+prima.warn+'</div>':''}`;
+  document.getElementById('sim-elett-sec').innerHTML=sec.length?'<div style="font-size:12px;color:var(--tm);margin-bottom:6px;margin-top:8px">Seconda scelta</div>'+sec.map(s=>`<div class="es"><div class="ename">${s.nome}</div><div class="eacc"><strong>Accessorio:</strong> ${s.acc}</div></div>`).join(''):'';
+}
+
+// ===== INIT =====
+calculate();
+</script>
+</body>
+</html>
