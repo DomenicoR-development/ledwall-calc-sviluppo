@@ -118,6 +118,110 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
 .ni .nb{font-size:11px;padding:3px 9px;border:1px solid rgba(190,160,80,0.3);border-radius:20px;color:var(--gold);display:inline-block;margin-bottom:5px}
 .ni .nl{font-size:12px;color:var(--tm)}
 .ni .nv{font-size:15px;font-weight:600}
+/* ===== MOBILE RESPONSIVE ===== */
+@media(max-width:768px){
+  .cnt{padding:10px 12px}
+  .hdr{padding:10px 14px;gap:10px}
+  .hdr img{width:36px;height:36px;border-radius:8px}
+  .hdr h1{font-size:14px}
+  .hdr p{font-size:11px}
+  .hdr-r .btn{padding:5px 10px;font-size:11px}
+  .card{border-radius:12px;margin-bottom:10px}
+  .ch{padding:10px 12px;flex-wrap:wrap;gap:8px}
+  .ct{font-size:13px}
+  .cb{padding:12px}
+  .proj-bar{padding:8px 12px}
+  .proj-bar input{font-size:13px}
+  /* GRIDS: stack su mobile */
+  .g3{grid-template-columns:1fr;gap:8px}
+  .g2{grid-template-columns:1fr;gap:8px}
+  /* INPUT sizing per touch */
+  .fld input,.fld select{padding:12px;font-size:16px;border-radius:10px}
+  .fld label{font-size:11px;margin-bottom:4px}
+  /* METRIC ROWS */
+  .mrow{padding:8px 0;flex-wrap:wrap;gap:4px}
+  .ml{font-size:12px}
+  .mv{font-size:13px}
+  .mv.hi{font-size:15px}
+  .rbar{padding:10px 12px;flex-wrap:wrap;gap:4px}
+  .rbar .rl{font-size:12px}
+  .rbar .rv{font-size:14px}
+  /* LOTTI GRID: 2 colonne su mobile */
+  .lg{grid-template-columns:1fr 1fr;gap:6px}
+  .lc{padding:9px}
+  .lbadge{font-size:9px;padding:2px 6px}
+  .lp{font-size:9px}
+  .lr{font-size:10px}
+  /* ASPECT RATIO */
+  .arb{height:6px;margin:6px 0 2px}
+  .arm{height:12px}
+  .arm span{font-size:8px}
+  .arg{padding:8px 10px}
+  .argr{margin-bottom:2px}
+  .ard{width:6px;height:6px}
+  .aw{padding:8px;font-size:10px}
+  /* ELETTRONICA */
+  .ep{padding:11px}
+  .en{font-size:15px}
+  .ea{font-size:11px}
+  .ew{font-size:10px}
+  .es{padding:8px 10px}
+  .es .ename{font-size:12px}
+  .es .eacc{font-size:11px}
+  /* LOTTO 5 SUMMARY */
+  .sg{grid-template-columns:1fr 1fr;gap:6px}
+  .sc .sv{font-size:14px}
+  .leg{gap:8px}
+  /* LINEE TECNICHE */
+  .lcards{grid-template-columns:1fr;gap:8px}
+  .lcard{padding:16px}
+  .lcard .lnum{font-size:40px}
+  .lcard .llbl{font-size:11px}
+  .lcard .lsub{font-size:10px}
+  .mig{grid-template-columns:1fr 1fr 1fr;gap:6px}
+  .mc{padding:8px}
+  .mc .mcl{font-size:10px}
+  .mc .mcv{font-size:14px}
+  /* NOTES */
+  .notebox{padding:12px}
+  .notebox h4{font-size:13px}
+  .ng{grid-template-columns:1fr;gap:8px}
+  .ni .nv{font-size:14px}
+  /* SVG VIEWS: scrollabili */
+  .svgwrap,.fvw,.pvw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  /* BUTTONS */
+  .btn{padding:8px 12px;font-size:12px}
+  .btn-ghost{font-size:12px}
+  .btn-add{font-size:12px;padding:10px 14px}
+  .btn-del{padding:8px 10px}
+  /* SEG WRAP */
+  .seg-wrap{padding:8px 10px}
+  .seg-label{font-size:10px}
+  /* CHECKBOX */
+  .chk-row{padding-top:10px;margin-top:10px}
+  /* SUCCESS/INFO BOXES */
+  .sb{padding:8px 12px;font-size:11px}
+  /* DIVIDER */
+  .divider{margin:14px 0}
+  /* SIMULATORE */
+  .sum-card,.tot-card{padding:8px}
+  .sum-lbl,.tot-label{font-size:10px}
+  .sum-val,.tot-val{font-size:16px}
+  .cab-grid{grid-template-columns:1fr 1fr;gap:6px}
+}
+
+@media(max-width:400px){
+  .cnt{padding:8px 10px}
+  .hdr{padding:8px 12px}
+  .hdr h1{font-size:13px}
+  .hdr-r .btn{padding:4px 8px;font-size:10px;gap:4px}
+  .lg{grid-template-columns:1fr;gap:6px}
+  .sg{grid-template-columns:1fr;gap:6px}
+  .mig{grid-template-columns:1fr 1fr;gap:6px}
+  .g3{grid-template-columns:1fr}
+  .lcard .lnum{font-size:36px}
+  .fld input,.fld select{font-size:16px;padding:11px}
+}
 </style>
 </head>
 <body>
