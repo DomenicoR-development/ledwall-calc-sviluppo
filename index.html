@@ -697,6 +697,7 @@ function renderL5(){
     if(vFlat)out+=`<rect x="${innerX}" y="${vTagBot+gap}" width="${d}" height="40" fill="${COL[vFlat.type]||'#888'}" stroke="${stroke}" stroke-width="0.8" rx="1"/>`;
     vLin.forEach((b,i)=>{out+=`<rect x="${innerX}" y="${vTagBot+(i+1)*(40+gap)+gap}" width="${d}" height="40" fill="${COL[b.type]||'#888'}" stroke="${stroke}" stroke-width="0.8" rx="1"/>`;});
     out+=`<text x="${ox+(hLin.length*(cW+gap)+cW)/2}" y="${oy+d+14}" text-anchor="middle" font-size="10" fill="rgba(96,165,250,0.8)" font-weight="600">${l5s1}m</text>`;
+    if(vLin.length>0){const vMidY=(vTagBot+vTagBot+(vLin.length)*(40+gap))/2;out+=`<text x="${outerX+14}" y="${vMidY}" text-anchor="middle" font-size="10" fill="rgba(96,165,250,0.8)" font-weight="600" transform="rotate(90,${outerX+14},${vMidY})">${l5s2}m</text>`;}
     planC.innerHTML=`<div class="pvw"><h4>🗺️ Vista in Pianta (dall'alto)</h4><div style="overflow-x:auto"><svg viewBox="0 0 ${svgW2} ${svgH2}" width="100%" style="max-height:400px">${out}</svg></div></div>`;
   }else{planC.innerHTML='';}
 
@@ -903,20 +904,68 @@ function exportPDFLotto5(){
     addSec('Specifiche LOTTO 5');
     addRow('Superficie',totalMq.toFixed(2)+' mq');addRow('Potenza',kw+' kW');addRow('N. Linee',''+linee);
     addRow('Fascetta laterale','74 mm');addRow('Fascetta solo con ledwall a terra','N/A');addRow('Passo','2.6 mm');
-    // Vista frontale semplificata nel PDF
+    // Vista frontale nel PDF — dimensionamento proporzionale
     doc.addPage();addHeader();addSec('Vista Frontale');
-    const bW=6,bH100=11,bH50=5.5,pad2=2;
+    const maxPdfW=cw-4;
+    const numCols=seq.length;
+    const pBW=Math.min(12,Math.floor(maxPdfW/numCols));
+    const pBH100=pBW*2;
+    const pBH50=pBW;
     const {n100:fn100,n50ex:fn50ex,n50:fn50}=colH(l5alt);
     seq.forEach((b,ci)=>{
-      const x=mg+ci*bW*0.75;
+      const x=mg+2+ci*pBW;
       if(b.type==='50x100FLAT'){
-        doc.setFillColor(244,63,94);for(let i=0;i<fn50ex;i++)doc.rect(x,y+i*bH50*0.5,bW*0.75-0.3,bH50*0.5-0.2,'F');
-        doc.setFillColor(107,114,128);for(let i=0;i<fn100;i++)doc.rect(x,y+fn50ex*bH50*0.5+i*bH100*0.5,bW*0.75-0.3,bH100*0.5-0.2,'F');
+        doc.setFillColor(244,63,94);for(let i=0;i<fn50ex;i++)doc.rect(x,y+i*pBH50,pBW-0.5,pBH50-0.5,'F');
+        doc.setFillColor(107,114,128);for(let i=0;i<fn100;i++)doc.rect(x,y+fn50ex*pBH50+i*pBH100,pBW-0.5,pBH100-0.5,'F');
       }else{
         const fc=b.type==='50x50FLAT'?[244,63,94]:[74,222,128];
-        doc.setFillColor(fc[0],fc[1],fc[2]);for(let i=0;i<fn50;i++)doc.rect(x,y+i*bH50*0.5,bW*0.75-0.3,bH50*0.5-0.2,'F');
+        doc.setFillColor(fc[0],fc[1],fc[2]);for(let i=0;i<fn50;i++)doc.rect(x,y+i*pBH50,pBW-0.5,pBH50-0.5,'F');
       }
     });
+    // Altezza vista frontale nel PDF
+    const frontH=Math.max(fn100*pBH100+fn50ex*pBH50,fn50*pBH50);
+    y+=frontH+8;
+    // Vista in pianta nel PDF (solo se angolo)
+    if(hasAngle){
+      chk(80);addSec('Vista in Pianta');
+      const cols1P=Math.round(l5s1/0.5),seqP1=seq.slice(0,cols1P),seqP2=seq.slice(cols1P);
+      const hLinP=seqP1.slice(0,-2);
+      const pCW=Math.min(10,Math.floor(maxPdfW/(cols1P+4)));
+      const pD=Math.max(4,pCW*0.4);
+      const pGap=0.3;
+      const pOx=mg+2,pOy=y;
+      // Horizontal blocks
+      const hLinEndP=pOx+hLinP.length*(pCW+pGap);
+      const hFlatEndP=hLinEndP+pCW+pGap;
+      const outerXP=hFlatEndP+pCW;
+      const innerXP=outerXP-pD;
+      const innerYP=pOy+pD;
+      // Draw horizontal linear
+      hLinP.forEach((b,i)=>{
+        const fc=b.type==='50x100FLAT'?[107,114,128]:b.type==='50x50FLAT'?[244,63,94]:[74,222,128];
+        doc.setFillColor(fc[0],fc[1],fc[2]);
+        doc.rect(pOx+i*(pCW+pGap),pOy,pCW,pD,'F');
+      });
+      // FLAT before corner
+      doc.setFillColor(244,63,94);doc.rect(hLinEndP,pOy,pCW,pD,'F');
+      // TAGLIATO trapezoid (simplified as rectangle in PDF)
+      doc.setFillColor(74,222,128);doc.rect(hFlatEndP,pOy,pCW,pD,'F');
+      // Vertical blocks
+      const vLinP=seqP2.slice(2);
+      doc.setFillColor(74,222,128);doc.rect(innerXP,innerYP,pD,pCW-pD,'F');
+      doc.setFillColor(244,63,94);doc.rect(innerXP,innerYP+pCW-pD+pGap,pD,pCW,'F');
+      vLinP.forEach((b,i)=>{
+        const fc=b.type==='50x100FLAT'?[107,114,128]:b.type==='50x50FLAT'?[244,63,94]:[74,222,128];
+        doc.setFillColor(fc[0],fc[1],fc[2]);
+        doc.rect(innerXP,innerYP+(i+1)*(pCW+pGap)+pCW,pD,pCW,'F');
+      });
+      // Labels
+      doc.setFontSize(9);doc.setTextColor(100,160,240);doc.setFont('helvetica','bold');
+      doc.text(l5s1+'m',pOx+(hLinP.length*(pCW+pGap)+pCW)/2,pOy+pD+8,{align:'center'});
+      const vTotalH=(vLinP.length+2)*(pCW+pGap)+pCW;
+      doc.text(l5s2+'m',outerXP+8,innerYP+vTotalH/2,{angle:90});
+      y+=pD+vTotalH+14;
+    }
     const total=doc.getNumberOfPages();
     for(let i=1;i<=total;i++){doc.setPage(i);doc.setDrawColor(230,230,235);doc.setLineWidth(0.3);doc.line(mg,ph-15,pw-mg,ph-15);doc.setFontSize(7.5);doc.setTextColor(sub.r,sub.g,sub.b);doc.setFont('helvetica','normal');doc.text('FORM.THE CREATIVE GROUP  |  Ledwall ad Angolo Lotto 5'+(nomeProg?' — '+nomeProg:''),mg,ph-10);doc.text(i+' / '+total,pw-mg,ph-10,{align:'right'});}
     const cfg=hasAngle?`angolo_${l5s1}+${l5s2}`:`dritto_${l5s1}m`;
