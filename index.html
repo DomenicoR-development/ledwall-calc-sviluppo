@@ -118,109 +118,111 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
 .ni .nb{font-size:11px;padding:3px 9px;border:1px solid rgba(190,160,80,0.3);border-radius:20px;color:var(--gold);display:inline-block;margin-bottom:5px}
 .ni .nl{font-size:12px;color:var(--tm)}
 .ni .nv{font-size:15px;font-weight:600}
-/* ===== MOBILE RESPONSIVE ===== */
+/* ===== MOBILE RESPONSIVE — STILE LOVABLE ===== */
 @media(max-width:768px){
-  .cnt{padding:10px 12px}
-  .hdr{padding:10px 14px;gap:10px}
-  .hdr img{width:36px;height:36px;border-radius:8px}
-  .hdr h1{font-size:14px}
-  .hdr p{font-size:11px}
-  .hdr-r .btn{padding:5px 10px;font-size:11px}
-  .card{border-radius:12px;margin-bottom:10px}
-  .ch{padding:10px 12px;flex-wrap:wrap;gap:8px}
-  .ct{font-size:13px}
-  .cb{padding:12px}
-  .proj-bar{padding:8px 12px}
-  .proj-bar input{font-size:13px}
-  /* GRIDS: stack su mobile */
-  .g3{grid-template-columns:1fr;gap:8px}
-  .g2{grid-template-columns:1fr;gap:8px}
-  /* INPUT sizing per touch */
-  .fld input,.fld select{padding:12px;font-size:16px;border-radius:10px}
-  .fld label{font-size:11px;margin-bottom:4px}
+  .cnt{padding:12px 14px}
+  /* HEADER */
+  .hdr{padding:14px 16px;gap:12px}
+  .hdr img{width:48px;height:48px}
+  .hdr h1{font-size:18px}
+  .hdr p{font-size:13px}
+  /* CARDS */
+  .card{border-radius:14px;margin-bottom:14px}
+  .ch{padding:14px 16px;flex-wrap:wrap;gap:8px}
+  .ct{font-size:16px;font-weight:600}
+  .cb{padding:18px 16px}
+  /* PROGETTO */
+  .proj-bar{padding:12px 14px;border-radius:14px}
+  .proj-bar input{font-size:15px}
+  /* GRIDS: tutto impilato come Lovable */
+  .g3{grid-template-columns:1fr !important;gap:16px !important}
+  .g2{grid-template-columns:1fr !important;gap:16px !important}
+  /* INPUT grandi touch-friendly come Lovable */
+  .fld label{font-size:14px;color:var(--tm);margin-bottom:8px;font-weight:500}
+  .fld input,.fld select{padding:16px 14px;font-size:18px;border-radius:12px;min-height:54px;background:rgba(255,255,255,0.08)}
   /* METRIC ROWS */
-  .mrow{padding:8px 0;flex-wrap:wrap;gap:4px}
-  .ml{font-size:12px}
-  .mv{font-size:13px}
-  .mv.hi{font-size:15px}
-  .rbar{padding:10px 12px;flex-wrap:wrap;gap:4px}
-  .rbar .rl{font-size:12px}
-  .rbar .rv{font-size:14px}
-  /* LOTTI GRID: 2 colonne su mobile */
-  .lg{grid-template-columns:1fr 1fr;gap:6px}
-  .lc{padding:9px}
-  .lbadge{font-size:9px;padding:2px 6px}
-  .lp{font-size:9px}
-  .lr{font-size:10px}
+  .mrow{padding:12px 0}
+  .ml{font-size:14px}
+  .mv{font-size:16px}
+  .mv.hi{font-size:18px}
+  .rbar{padding:14px 16px;border-radius:12px}
+  .rbar .rl{font-size:14px}
+  .rbar .rv{font-size:18px}
+  /* LOTTI: scroll orizzontale snap come Lovable */
+  .lg{display:flex !important;overflow-x:auto;gap:10px;padding-bottom:8px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory}
+  .lc{min-width:260px;flex-shrink:0;scroll-snap-align:center;padding:14px}
+  .lbadge{font-size:11px;padding:3px 10px}
+  .lp{font-size:12px;margin-bottom:10px}
+  .lr{font-size:13px;padding:4px 0}
   /* ASPECT RATIO */
-  .arb{height:6px;margin:6px 0 2px}
-  .arm{height:12px}
-  .arm span{font-size:8px}
-  .arg{padding:8px 10px}
-  .argr{margin-bottom:2px}
-  .ard{width:6px;height:6px}
-  .aw{padding:8px;font-size:10px}
+  .arb{height:8px;margin:10px 0 4px}
+  .arm span{font-size:10px}
+  .arg{padding:12px 14px}
+  .argr{margin-bottom:5px}
+  .ard{width:8px;height:8px}
+  .aw{padding:12px;font-size:12px}
   /* ELETTRONICA */
-  .ep{padding:11px}
-  .en{font-size:15px}
-  .ea{font-size:11px}
-  .ew{font-size:10px}
-  .es{padding:8px 10px}
-  .es .ename{font-size:12px}
-  .es .eacc{font-size:11px}
+  .ep{padding:16px;border-radius:14px}
+  .el{font-size:12px}
+  .en{font-size:20px}
+  .ea{font-size:14px}
+  .ew{font-size:13px}
+  .es{padding:14px;border-radius:12px;margin-bottom:8px}
+  .es .ename{font-size:16px}
+  .es .eacc{font-size:14px}
   /* LOTTO 5 SUMMARY */
-  .sg{grid-template-columns:1fr 1fr;gap:6px}
-  .sc .sv{font-size:14px}
-  .leg{gap:8px}
+  .sg{grid-template-columns:1fr 1fr !important;gap:8px}
+  .sc{padding:14px}
+  .sc .sl{font-size:12px}
+  .sc .sv{font-size:18px}
+  .leg{gap:12px}
+  .li{font-size:13px}
+  .ld{width:12px;height:12px}
+  /* SVG */
+  .fvw,.pvw{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:14px}
+  .fvw h4,.pvw h4{font-size:15px;margin-bottom:12px}
   /* LINEE TECNICHE */
-  .lcards{grid-template-columns:1fr;gap:8px}
-  .lcard{padding:16px}
-  .lcard .lnum{font-size:40px}
-  .lcard .llbl{font-size:11px}
-  .lcard .lsub{font-size:10px}
-  .mig{grid-template-columns:1fr 1fr 1fr;gap:6px}
-  .mc{padding:8px}
-  .mc .mcl{font-size:10px}
-  .mc .mcv{font-size:14px}
+  .lcards{grid-template-columns:1fr !important;gap:10px}
+  .lcard{padding:20px}
+  .lcard .lnum{font-size:48px}
+  .lcard .llbl{font-size:14px}
+  .lcard .lsub{font-size:12px}
+  .mig{grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .mc{padding:12px}
+  .mc .mcl{font-size:12px}
+  .mc .mcv{font-size:16px}
   /* NOTES */
-  .notebox{padding:12px}
-  .notebox h4{font-size:13px}
-  .ng{grid-template-columns:1fr;gap:8px}
-  .ni .nv{font-size:14px}
-  /* SVG VIEWS: scrollabili */
-  .svgwrap,.fvw,.pvw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .notebox{padding:16px}
+  .notebox h4{font-size:16px}
+  .ng{grid-template-columns:1fr !important;gap:12px}
+  .ni .nb{font-size:12px;padding:4px 12px}
+  .ni .nl{font-size:14px}
+  .ni .nv{font-size:18px}
   /* BUTTONS */
-  .btn{padding:8px 12px;font-size:12px}
-  .btn-ghost{font-size:12px}
-  .btn-add{font-size:12px;padding:10px 14px}
-  .btn-del{padding:8px 10px}
-  /* SEG WRAP */
-  .seg-wrap{padding:8px 10px}
-  .seg-label{font-size:10px}
+  .btn{padding:10px 14px;font-size:14px;border-radius:10px}
+  .btn-ghost{font-size:14px}
   /* CHECKBOX */
-  .chk-row{padding-top:10px;margin-top:10px}
-  /* SUCCESS/INFO BOXES */
-  .sb{padding:8px 12px;font-size:11px}
+  .chk-row{padding-top:14px;margin-top:14px}
+  .chk-row label{font-size:14px !important}
+  .chk-row input[type=checkbox]{width:22px !important;height:22px !important}
+  /* SUCCESS/INFO */
+  .sb{padding:14px;font-size:14px;border-radius:12px}
   /* DIVIDER */
-  .divider{margin:14px 0}
-  /* SIMULATORE */
-  .sum-card,.tot-card{padding:8px}
-  .sum-lbl,.tot-label{font-size:10px}
-  .sum-val,.tot-val{font-size:16px}
-  .cab-grid{grid-template-columns:1fr 1fr;gap:6px}
+  .divider{margin:20px 0}
+  /* SIMULATORE RESULTS */
+  #sim-result .g3>div{padding:16px !important}
+  #sim-result .g3>div>div:nth-child(2){font-size:24px !important}
 }
 
 @media(max-width:400px){
-  .cnt{padding:8px 10px}
-  .hdr{padding:8px 12px}
-  .hdr h1{font-size:13px}
-  .hdr-r .btn{padding:4px 8px;font-size:10px;gap:4px}
-  .lg{grid-template-columns:1fr;gap:6px}
-  .sg{grid-template-columns:1fr;gap:6px}
+  .hdr h1{font-size:16px}
+  .hdr img{width:40px;height:40px}
+  .ct{font-size:14px}
+  .fld input,.fld select{font-size:16px;padding:14px 12px;min-height:50px}
+  .fld label{font-size:13px}
+  .lc{min-width:240px}
+  .lcard .lnum{font-size:40px}
   .mig{grid-template-columns:1fr 1fr;gap:6px}
-  .g3{grid-template-columns:1fr}
-  .lcard .lnum{font-size:36px}
-  .fld input,.fld select{font-size:16px;padding:11px}
 }
 </style>
 </head>
