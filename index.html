@@ -224,6 +224,29 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
   .lcard .lnum{font-size:40px}
   .mig{grid-template-columns:1fr 1fr;gap:6px}
 }
+/* MODAL EXPORT */
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-overlay.show{display:flex}
+.modal{background:#1a1a2e;border:1px solid var(--border);border-radius:16px;width:90%;max-width:520px;max-height:85vh;overflow-y:auto;padding:0}
+.modal-head{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-head h3{font-size:16px;font-weight:500;display:flex;align-items:center;gap:8px}
+.modal-close{background:none;border:none;color:var(--tm);cursor:pointer;font-size:20px;padding:4px}
+.modal-body{padding:16px 20px}
+.modal-footer{padding:14px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px}
+.modal-sub{font-size:13px;color:var(--tm);margin-bottom:14px}
+.exp-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.exp-item:last-child{border-bottom:none}
+.exp-item input[type=checkbox]{width:20px;height:20px;accent-color:#60a5fa;cursor:pointer;flex-shrink:0}
+.exp-item label{font-size:14px;cursor:pointer;flex:1;color:var(--tp)}
+.exp-item label.disabled{color:var(--ts);font-style:italic}
+.exp-sub{padding-left:30px}
+.exp-sub .exp-item{padding:5px 0}
+.exp-sub .exp-item label{font-size:13px}
+.exp-toggle{background:none;border:none;color:var(--tm);cursor:pointer;font-size:14px;padding:2px 6px}
+.btn-export{padding:9px 18px;border-radius:8px;border:none;background:var(--gold);color:#000;cursor:pointer;font-size:14px;font-weight:500}
+.btn-export:hover{background:var(--gold2)}
+.btn-cancel{padding:9px 18px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--tm);cursor:pointer;font-size:14px}
+.btn-cancel:hover{background:rgba(255,255,255,0.06)}
 </style>
 </head>
 <body>
@@ -248,7 +271,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
 
 <!-- CONFIGURAZIONE -->
 <div class="card">
-  <div class="ch"><div class="ct">⚙️ Configurazione LED Wall</div><div style="display:flex;gap:8px"><button class="btn" onclick="exportPDFMain()">📄 Esporta PDF</button><button class="btn btn-ghost" onclick="doReset()">↺ Reset</button></div></div>
+  <div class="ch"><div class="ct">⚙️ Configurazione LED Wall</div><div style="display:flex;gap:8px"><button class="btn" onclick="openExportModal()">📄 Esporta PDF</button><button class="btn btn-ghost" onclick="doReset()">↺ Reset</button></div></div>
   <div class="cb">
     <div class="g3">
       <div class="fld"><label>Larghezza (metri)</label><input type="text" id="inp-larg" value="9" inputmode="decimal" placeholder="es. 9,5" oninput="onInput()"></div>
@@ -491,6 +514,64 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
 </div>
 
 </div><!-- /cnt -->
+
+<!-- MODAL EXPORT PDF -->
+<div class="modal-overlay" id="export-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>📄 Esporta PDF</h3>
+      <button class="modal-close" onclick="closeExportModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-sub">Seleziona le sezioni da includere nel PDF</div>
+
+      <div class="exp-item">
+        <input type="checkbox" id="exp-config" checked>
+        <label for="exp-config">Configurazione LED Wall</label>
+      </div>
+      <div class="exp-item">
+        <input type="checkbox" id="exp-dim" checked>
+        <label for="exp-dim">Dimensioni e Superficie</label>
+      </div>
+      <div class="exp-item">
+        <input type="checkbox" id="exp-video" checked>
+        <label for="exp-video">Specifiche Video</label>
+      </div>
+      <div class="exp-item">
+        <input type="checkbox" id="exp-elett" checked>
+        <label for="exp-elett">Elettronica Abbinata</label>
+        <button class="exp-toggle" onclick="toggleExpSub('elett-sub')">▼</button>
+      </div>
+      <div class="exp-sub" id="elett-sub" style="display:none">
+        <div class="exp-item">
+          <input type="checkbox" id="exp-elett-prima" checked>
+          <label for="exp-elett-prima">⭐ <span id="exp-elett-prima-name">VX1000pro</span></label>
+        </div>
+        <div id="exp-elett-sec-list"></div>
+      </div>
+      <div class="exp-item">
+        <input type="checkbox" id="exp-params" checked>
+        <label for="exp-params">Parametri Video Consigliati</label>
+      </div>
+      <div class="exp-item">
+        <input type="checkbox" id="exp-lotti" checked>
+        <label for="exp-lotti">Configurazioni Lotti Disponibili</label>
+        <button class="exp-toggle" onclick="toggleExpSub('lotti-sub')">▼</button>
+      </div>
+      <div class="exp-sub" id="lotti-sub" style="display:none">
+        <div id="exp-lotti-list"></div>
+      </div>
+      <div class="exp-item">
+        <input type="checkbox" id="exp-linee" disabled>
+        <label for="exp-linee" class="disabled" id="exp-linee-label">Calcolo Linee Tecniche <span style="font-size:11px;color:var(--ts)">(non compilato)</span></label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeExportModal()">Annulla</button>
+      <button class="btn-export" onclick="doExportPDF()">Esporta PDF</button>
+    </div>
+  </div>
+</div>
 </div><!-- /app -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -783,84 +864,6 @@ function resetLotto5(){
   renderL5();
 }
 
-// ===== PDF MAIN =====
-function exportPDFMain(){
-  try{
-    const {jsPDF}=window.jspdf;
-    const doc=new jsPDF('p','mm','a4');
-    const pw=doc.internal.pageSize.getWidth(),ph=doc.internal.pageSize.getHeight();
-    const mg=18,cw=pw-2*mg;
-    const gold={r:190,g:160,b:80},dk={r:40,g:40,b:45},sub={r:120,g:120,b:130},lb={r:248,g:248,b:252};
-    const date=new Date().toLocaleDateString('it-IT',{day:'2-digit',month:'long',year:'numeric'});
-    const nomeProg=document.getElementById('nome-progetto').value||'';
-    let y=mg;
-    const addHeader=()=>{
-      doc.setFillColor(gold.r,gold.g,gold.b);doc.rect(0,0,pw,2,'F');
-      doc.setFillColor(255,255,255);doc.rect(0,2,pw,26,'F');
-      doc.setDrawColor(230,230,235);doc.setLineWidth(0.3);doc.line(mg,28,pw-mg,28);
-      doc.setTextColor(dk.r,dk.g,dk.b);doc.setFontSize(14);doc.setFont('helvetica','bold');
-      doc.text('FORM.THE CREATIVE GROUP',mg,13);
-      doc.setFontSize(9);doc.setFont('helvetica','normal');doc.setTextColor(sub.r,sub.g,sub.b);
-      const subtitle='Calcolatore LED Wall'+(nomeProg?' — '+nomeProg:'')+'  |  Report tecnico';
-      doc.text(subtitle,mg,19);
-      doc.setFontSize(8);doc.text(date,pw-mg,13,{align:'right'});
-      y=36;
-    };
-    const chk=(n)=>{if(y+n>ph-20){doc.addPage();addHeader();}};
-    const addSec=(t)=>{chk(18);doc.setFillColor(gold.r,gold.g,gold.b);doc.rect(mg,y,3,9,'F');doc.setFillColor(lb.r,lb.g,lb.b);doc.rect(mg+3,y,cw-3,9,'F');doc.setFontSize(11);doc.setFont('helvetica','bold');doc.setTextColor(dk.r,dk.g,dk.b);doc.text(t,mg+7,y+6.5);y+=14;};
-    const addRow=(l,v,hi=false)=>{chk(8);doc.setFontSize(9.5);if(hi){doc.setFillColor(245,248,255);doc.rect(mg+2,y-4,cw-4,7,'F');}doc.setDrawColor(235,235,240);doc.setLineWidth(0.15);doc.line(mg+4,y+1.5,pw-mg-4,y+1.5);doc.setFont('helvetica','normal');doc.setTextColor(sub.r,sub.g,sub.b);doc.text(l,mg+6,y);doc.setFont('helvetica',hi?'bold':'normal');doc.setTextColor(dk.r,dk.g,dk.b);doc.text(v,pw-mg-6,y,{align:'right'});y+=7;};
-    addHeader();
-    if(nomeProg){addSec('Progetto');addRow('Nome',nomeProg);y+=4;}
-    const vl=Math.max(0.1,larg||1),va=Math.max(0.1,alt||1),vp=passo;
-    const mq=Math.round(vl*va*100)/100,ppm=Math.floor(1000/vp),rx=Math.floor(ppm*vl),ry=Math.floor(ppm*va),tot=rx*ry;
-    addSec('Configurazione LED Wall');
-    addRow('Larghezza',vl+' m');addRow('Altezza',va+' m');addRow('Passo LED',vp+' mm');
-    if(isAmerica)addRow('Modalità','America (60Hz)');y+=4;
-    addSec('Dimensioni e Superficie');addRow('Superficie totale',mq.toFixed(2)+' mq',true);y+=4;
-    addSec('Specifiche Video');
-    addRow('Risoluzione orizzontale',rx.toLocaleString('it-IT')+' px');
-    addRow('Risoluzione verticale',ry.toLocaleString('it-IT')+' px');
-    addRow('Pixel totali',tot.toLocaleString('it-IT'),true);y+=4;
-    const prod=rx*ry;
-    let primaName='VX1000pro',primaAcc='preparare la chiave usb con i filmati',secNames=[];
-    if(prod<6500000){primaName='VX1000pro';secNames=['VX1000','SENDER 4K','VX2000PRO'];}
-    else if(prod<8800000){primaName='SENDER 4K';primaAcc='BrightSign o Player';secNames=['VX2000PRO'];}
-    else if(prod<13000000){primaName='VX2000PRO';secNames=[];}
-    else{primaName='Configurazione personalizzata';primaAcc='Contattare il supporto tecnico';}
-    if(prod<=2073600)secNames.push('SENDER 2K');
-    addSec('Elettronica Abbinata');
-    addRow('Risoluzione analizzata',rx.toLocaleString('it-IT')+' × '+ry.toLocaleString('it-IT')+' px');
-    y+=2;doc.setFontSize(9);doc.setFont('helvetica','bold');doc.setTextColor(gold.r,gold.g,gold.b);doc.text('PRIMA SCELTA',mg+6,y);y+=5;
-    addRow(primaName,'Accessorio: '+primaAcc);y+=2;
-    if(secNames.length){doc.setFontSize(9);doc.setFont('helvetica','bold');doc.setTextColor(sub.r,sub.g,sub.b);doc.text('ALTERNATIVE',mg+6,y);y+=5;secNames.forEach(n=>addRow(n,'Accessorio: BrightSign o Player'));}
-    y+=4;
-    addSec('Parametri Video Consigliati');
-    addRow('Formato file','MP4');addRow('Codec','H.264');
-    addRow('Bitrate',tot>4000000?'25 Mbps':'15 Mbps');
-    addRow('Frame rate',isAmerica?'30 fps':'25 fps');y+=4;
-    const lottiPDF=[
-      {nome:'LOTTO 0',p:2.6,kw:Math.round(mq*0.2*2*100)/100,l:Math.ceil((mq*0.2*2)/3),lat:80,sotto:70},
-      {nome:'LOTTO 4',p:2.6,kw:Math.round(mq*0.17*4*100)/100,l:Math.ceil((mq*0.17*4)/3),lat:70,sotto:'N/A'},
-      {nome:'LOTTO 5',p:2.6,kw:Math.round((mq*0.25)*2*100)/100,l:Math.ceil(((mq*0.25)*2)/3),lat:74,sotto:'N/A'},
-      {nome:'LOTTO 1',p:3.9,kw:Math.round(mq*0.2*2*100)/100,l:Math.ceil((mq*0.2*2)/3),lat:80,sotto:70},
-    ].filter(l=>Math.abs(l.p-vp)<0.01);
-    if(lottiPDF.length){
-      addSec('Configurazioni Lotti Disponibili');
-      lottiPDF.forEach(l=>{
-        chk(40);doc.setFillColor(245,247,255);doc.rect(mg+2,y-4,cw-4,38,'F');
-        doc.setFontSize(11);doc.setFont('helvetica','bold');doc.setTextColor(dk.r,dk.g,dk.b);doc.text(l.nome,mg+6,y);y+=6;
-        const lnShow=isAmerica?l.l*2:l.l;
-        addRow('Superficie',mq.toFixed(2)+' mq');addRow('Potenza',l.kw+' kW');addRow('N. Linee',''+lnShow);
-        addRow('Spessore laterale',l.lat+' mm');addRow('Spessore sotto',(typeof l.sotto==='number'?l.sotto+' mm':l.sotto));
-        y+=4;
-      });
-    }
-    const total=doc.getNumberOfPages();
-    for(let i=1;i<=total;i++){doc.setPage(i);doc.setDrawColor(230,230,235);doc.setLineWidth(0.3);doc.line(mg,ph-15,pw-mg,ph-15);doc.setFontSize(7.5);doc.setTextColor(sub.r,sub.g,sub.b);doc.setFont('helvetica','normal');doc.text('FORM.THE CREATIVE GROUP'+(nomeProg?' — '+nomeProg:'')+'  |  Calcolatore LED Wall',mg,ph-10);doc.text(i+' / '+total,pw-mg,ph-10,{align:'right'});}
-    doc.save('LED_Wall_Report_'+(nomeProg?nomeProg.replace(/\s/g,'_')+'_':'')+new Date().toISOString().split('T')[0]+'.pdf');
-  }catch(e){alert('Attendere il caricamento della libreria PDF e riprovare.');}
-}
-
 // ===== PDF LOTTO 5 =====
 function exportPDFLotto5(){
   if(!l5s1||!l5alt)return;
@@ -1015,6 +1018,206 @@ function renderSim(){
 
   document.getElementById('sim-elett-prima').innerHTML=`<div class="el">⭐ Prima scelta</div><div class="en">${prima.nome}</div><div class="ea"><strong>Accessorio:</strong> ${prima.acc}</div>${prima.warn?'<div class="ew">'+prima.warn+'</div>':''}`;
   document.getElementById('sim-elett-sec').innerHTML=sec.length?'<div style="font-size:12px;color:var(--tm);margin-bottom:6px;margin-top:8px">Seconda scelta</div>'+sec.map(s=>`<div class="es"><div class="ename">${s.nome}</div><div class="eacc"><strong>Accessorio:</strong> ${s.acc}</div></div>`).join(''):'';
+}
+
+// ===== EXPORT MODAL =====
+function openExportModal(){
+  // Update elettronica names
+  const prima=document.getElementById('elett-nome').textContent;
+  document.getElementById('exp-elett-prima-name').textContent=prima;
+  // Update sec list
+  const secEl=document.getElementById('elett-sec');
+  const secItems=secEl.querySelectorAll('.ename');
+  let secHtml='';
+  secItems.forEach((el,i)=>{
+    const name=el.textContent;
+    secHtml+=`<div class="exp-item"><input type="checkbox" id="exp-elett-sec-${i}" checked><label for="exp-elett-sec-${i}">${name}</label></div>`;
+  });
+  document.getElementById('exp-elett-sec-list').innerHTML=secHtml;
+
+  // Update lotti list
+  const vp=passo;
+  const allLotti=[
+    {nome:'LOTTO 0',p:2.6},{nome:'LOTTO 1',p:3.9},{nome:'LOTTO 2',p:3.9},
+    {nome:'LOTTO 3',p:3.9},{nome:'LOTTO 4',p:2.6},{nome:'LOTTO 5',p:2.6}
+  ];
+  let lottiHtml='';
+  allLotti.forEach((l,i)=>{
+    const compat=Math.abs(l.p-vp)<0.01;
+    lottiHtml+=`<div class="exp-item"><input type="checkbox" id="exp-lotto-${i}" ${compat?'checked':'disabled'}><label for="exp-lotto-${i}" ${compat?'':'class="disabled"'}>${l.nome} (${l.p}mm)${compat?'':' - non compatibile'}</label></div>`;
+  });
+  document.getElementById('exp-lotti-list').innerHTML=lottiHtml;
+
+  // Check linee tecniche
+  const ltMod=document.getElementById('lt-modulo').value;
+  const ltL=parseFloat(document.getElementById('lt-larg').value)||0;
+  const ltA=parseFloat(document.getElementById('lt-alt').value)||0;
+  const ltReady=ltMod&&ltL>0&&ltA>0;
+  document.getElementById('exp-linee').disabled=!ltReady;
+  document.getElementById('exp-linee').checked=ltReady;
+  document.getElementById('exp-linee-label').innerHTML=ltReady?'Calcolo Linee Tecniche':'Calcolo Linee Tecniche <span style="font-size:11px;color:var(--ts)">(non compilato)</span>';
+  document.getElementById('exp-linee-label').className=ltReady?'':'disabled';
+
+  document.getElementById('export-modal').classList.add('show');
+}
+function closeExportModal(){document.getElementById('export-modal').classList.remove('show');}
+function toggleExpSub(id){const el=document.getElementById(id);el.style.display=el.style.display==='none'?'block':'none';}
+
+function doExportPDF(){
+  closeExportModal();
+  const sel={
+    config:document.getElementById('exp-config').checked,
+    dim:document.getElementById('exp-dim').checked,
+    video:document.getElementById('exp-video').checked,
+    elett:document.getElementById('exp-elett').checked,
+    params:document.getElementById('exp-params').checked,
+    lotti:document.getElementById('exp-lotti').checked,
+    linee:document.getElementById('exp-linee').checked,
+    elettPrima:document.getElementById('exp-elett-prima').checked,
+  };
+  // Gather selected sec elettronica
+  sel.elettSec=[];
+  document.querySelectorAll('[id^=exp-elett-sec-]').forEach(cb=>{
+    if(cb.checked){const lbl=cb.nextElementSibling;if(lbl)sel.elettSec.push(lbl.textContent.trim());}
+  });
+  // Gather selected lotti
+  sel.lottiSelected=[];
+  const allLottiData=[
+    {nome:'LOTTO 0',p:2.6,idx:0},{nome:'LOTTO 1',p:3.9,idx:1},{nome:'LOTTO 2',p:3.9,idx:2},
+    {nome:'LOTTO 3',p:3.9,idx:3},{nome:'LOTTO 4',p:2.6,idx:4},{nome:'LOTTO 5',p:2.6,idx:5}
+  ];
+  allLottiData.forEach((l,i)=>{
+    const cb=document.getElementById('exp-lotto-'+i);
+    if(cb&&cb.checked)sel.lottiSelected.push(l);
+  });
+
+  generatePDFWithSelections(sel);
+}
+
+function generatePDFWithSelections(sel){
+  try{
+    const {jsPDF}=window.jspdf;
+    const doc=new jsPDF('p','mm','a4');
+    const pw=doc.internal.pageSize.getWidth(),ph=doc.internal.pageSize.getHeight();
+    const mg=18,cw=pw-2*mg;
+    const gold={r:190,g:160,b:80},dk={r:40,g:40,b:45},sub={r:120,g:120,b:130},lb={r:248,g:248,b:252};
+    const date=new Date().toLocaleDateString('it-IT',{day:'2-digit',month:'long',year:'numeric'});
+    const nomeProg=document.getElementById('nome-progetto').value||'';
+    let y=mg;
+    const addHeader=()=>{
+      doc.setFillColor(gold.r,gold.g,gold.b);doc.rect(0,0,pw,2,'F');
+      doc.setFillColor(255,255,255);doc.rect(0,2,pw,26,'F');
+      doc.setDrawColor(230,230,235);doc.setLineWidth(0.3);doc.line(mg,28,pw-mg,28);
+      doc.setTextColor(dk.r,dk.g,dk.b);doc.setFontSize(14);doc.setFont('helvetica','bold');
+      doc.text('FORM.THE CREATIVE GROUP',mg,13);
+      doc.setFontSize(9);doc.setFont('helvetica','normal');doc.setTextColor(sub.r,sub.g,sub.b);
+      const subtitle='Calcolatore LED Wall'+(nomeProg?' \u2014 '+nomeProg:'')+'  |  Report tecnico';
+      doc.text(subtitle,mg,19);
+      doc.setFontSize(8);doc.text(date,pw-mg,13,{align:'right'});
+      y=36;
+    };
+    const chk=(n)=>{if(y+n>ph-20){doc.addPage();addHeader();}};
+    const addSec=(t)=>{chk(18);doc.setFillColor(gold.r,gold.g,gold.b);doc.rect(mg,y,3,9,'F');doc.setFillColor(lb.r,lb.g,lb.b);doc.rect(mg+3,y,cw-3,9,'F');doc.setFontSize(11);doc.setFont('helvetica','bold');doc.setTextColor(dk.r,dk.g,dk.b);doc.text(t,mg+7,y+6.5);y+=14;};
+    const addRow=(l,v,hi=false)=>{chk(8);doc.setFontSize(9.5);if(hi){doc.setFillColor(245,248,255);doc.rect(mg+2,y-4,cw-4,7,'F');}doc.setDrawColor(235,235,240);doc.setLineWidth(0.15);doc.line(mg+4,y+1.5,pw-mg-4,y+1.5);doc.setFont('helvetica','normal');doc.setTextColor(sub.r,sub.g,sub.b);doc.text(l,mg+6,y);doc.setFont('helvetica',hi?'bold':'normal');doc.setTextColor(dk.r,dk.g,dk.b);doc.text(v,pw-mg-6,y,{align:'right'});y+=7;};
+
+    addHeader();
+    if(nomeProg){addSec('Progetto');addRow('Nome',nomeProg);y+=4;}
+
+    const vl=Math.max(0.1,larg||1),va=Math.max(0.1,alt||1),vp=passo;
+    const mq=Math.round(vl*va*100)/100,ppm=Math.floor(1000/vp),rx=Math.floor(ppm*vl),ry=Math.floor(ppm*va),tot=rx*ry;
+
+    if(sel.config){
+      addSec('Configurazione LED Wall');
+      addRow('Larghezza',vl+' m');addRow('Altezza',va+' m');addRow('Passo LED',vp+' mm');
+      if(isAmerica)addRow('Modalit\u00e0','America (60Hz)');y+=4;
+    }
+    if(sel.dim){
+      addSec('Dimensioni e Superficie');addRow('Superficie totale',mq.toFixed(2)+' mq',true);y+=4;
+    }
+    if(sel.video){
+      addSec('Specifiche Video');
+      addRow('Risoluzione orizzontale',rx.toLocaleString('it-IT')+' px');
+      addRow('Risoluzione verticale',ry.toLocaleString('it-IT')+' px');
+      addRow('Pixel totali',tot.toLocaleString('it-IT'),true);y+=4;
+    }
+    if(sel.elett){
+      const prod=rx*ry;
+      let primaName='VX1000pro',primaAcc='preparare la chiave usb con i filmati',secNames=[];
+      if(prod<6500000){primaName='VX1000pro';secNames=['VX1000','SENDER 4K','VX2000PRO'];}
+      else if(prod<8800000){primaName='SENDER 4K';primaAcc='BrightSign o Player';secNames=['VX2000PRO'];}
+      else if(prod<13000000){primaName='VX2000PRO';primaAcc='preparare la chiave usb con i filmati';secNames=[];}
+      else{primaName='Configurazione personalizzata';primaAcc='Contattare il supporto tecnico';}
+      if(prod<=2073600)secNames.push('SENDER 2K');
+      addSec('Elettronica Abbinata');
+      addRow('Risoluzione analizzata',rx.toLocaleString('it-IT')+' \u00d7 '+ry.toLocaleString('it-IT')+' px');
+      if(sel.elettPrima){
+        y+=2;doc.setFontSize(9);doc.setFont('helvetica','bold');doc.setTextColor(gold.r,gold.g,gold.b);doc.text('PRIMA SCELTA',mg+6,y);y+=5;
+        addRow(primaName,'Accessorio: '+primaAcc);y+=2;
+      }
+      const filteredSec=secNames.filter(n=>sel.elettSec.includes(n));
+      if(filteredSec.length){
+        doc.setFontSize(9);doc.setFont('helvetica','bold');doc.setTextColor(sub.r,sub.g,sub.b);doc.text('ALTERNATIVE',mg+6,y);y+=5;
+        filteredSec.forEach(n=>{
+          const acc=n==='VX1000pro'||n==='VX2000PRO'?'preparare la chiave usb con i filmati':'BrightSign o Player';
+          addRow(n,'Accessorio: '+acc);
+        });
+      }
+      y+=4;
+    }
+    if(sel.params){
+      addSec('Parametri Video Consigliati');
+      addRow('Formato file','MP4');addRow('Codec','H.264');
+      addRow('Bitrate',tot>4000000?'25 Mbps':'15 Mbps');
+      addRow('Frame rate',isAmerica?'30 fps':'25 fps');y+=4;
+    }
+    if(sel.lotti&&sel.lottiSelected.length){
+      const lottiCalc={
+        0:{kw:Math.round(mq*0.2*2*100)/100,l:Math.ceil((mq*0.2*2)/3),lat:80,sotto:70},
+        1:{kw:Math.round(mq*0.2*2*100)/100,l:Math.ceil((mq*0.2*2)/3),lat:80,sotto:70},
+        2:{kw:Math.round(mq*0.2*2*100)/100,l:Math.ceil((mq*0.2*2)/3),lat:80,sotto:70},
+        3:{kw:Math.round(mq*0.2*2*100)/100,l:Math.ceil((mq*0.2*2)/3),lat:80,sotto:70},
+        4:{kw:Math.round(mq*0.17*4*100)/100,l:Math.ceil((mq*0.17*4)/3),lat:70,sotto:'N/A'},
+        5:{kw:Math.round((mq*0.25)*2*100)/100,l:Math.ceil(((mq*0.25)*2)/3),lat:74,sotto:'N/A'},
+      };
+      addSec('Configurazioni Lotti Disponibili');
+      sel.lottiSelected.forEach(lt=>{
+        const d=lottiCalc[lt.idx];if(!d)return;
+        chk(40);doc.setFillColor(245,247,255);doc.rect(mg+2,y-4,cw-4,38,'F');
+        doc.setFontSize(11);doc.setFont('helvetica','bold');doc.setTextColor(dk.r,dk.g,dk.b);doc.text(lt.nome,mg+6,y);y+=6;
+        const lnShow=isAmerica?d.l*2:d.l;
+        addRow('Superficie',mq.toFixed(2)+' mq');addRow('Potenza',d.kw+' kW');addRow('N. Linee',''+lnShow);
+        addRow('Passo',lt.p+' mm');
+        addRow('Spessore laterale',d.lat+' mm');addRow('Spessore sotto',(typeof d.sotto==='number'?d.sotto+' mm':d.sotto));
+        y+=4;
+      });
+    }
+    if(sel.linee){
+      const mod=MODS.find(m=>m.id===document.getElementById('lt-modulo').value);
+      const lw=parseFloat(document.getElementById('lt-larg').value)||0;
+      const lh=parseFloat(document.getElementById('lt-alt').value)||0;
+      if(mod&&lw&&lh){
+        const altC=lh*100,largC=lw*100;
+        const mO=Math.ceil(largC/mod.mW),mV=Math.ceil(altC/mod.mH),totMod=mO*mV;
+        const ptX=mO*mod.pxX,ptY=mV*mod.pxY,ptot=ptX*ptY;
+        const linRete=Math.ceil(ptot/650000);
+        let linAlim;
+        if(mod.lotto==='4'){linAlim=Math.ceil((lw*lh*0.17*4)/3);}
+        else{const av=parseInt(mod.alimMax.includes('/')?mod.alimMax.split('/')[0]:mod.alimMax);linAlim=Math.ceil(totMod/av);}
+        addSec('Calcolo Linee Tecniche');
+        addRow('Passo',mod.passo+' mm');addRow('Modulo',mod.modulo+' cm');addRow('Pixel modulo',mod.pixel);
+        addRow('Dimensioni wall',lw+'m \u00d7 '+lh+'m');
+        addRow('Moduli totali',totMod+' ('+mO+'\u00d7'+mV+')');
+        addRow('Risoluzione wall',ptX.toLocaleString('it-IT')+' \u00d7 '+ptY.toLocaleString('it-IT'));
+        addRow('Pixel totali',ptot.toLocaleString('it-IT'),true);
+        addRow('Linee di rete',''+linRete);
+        addRow('Linee di alimentazione',''+linAlim);
+        y+=4;
+      }
+    }
+    const total=doc.getNumberOfPages();
+    for(let i=1;i<=total;i++){doc.setPage(i);doc.setDrawColor(230,230,235);doc.setLineWidth(0.3);doc.line(mg,ph-15,pw-mg,ph-15);doc.setFontSize(7.5);doc.setTextColor(sub.r,sub.g,sub.b);doc.setFont('helvetica','normal');doc.text('FORM.THE CREATIVE GROUP'+(nomeProg?' \u2014 '+nomeProg:'')+'  |  Calcolatore LED Wall',mg,ph-10);doc.text(i+' / '+total,pw-mg,ph-10,{align:'right'});}
+    doc.save('LED_Wall_Report_'+(nomeProg?nomeProg.replace(/\s/g,'_')+'_':'')+new Date().toISOString().split('T')[0]+'.pdf');
+  }catch(e){alert('Attendere il caricamento della libreria PDF e riprovare.');}
 }
 
 // ===== INIT =====
