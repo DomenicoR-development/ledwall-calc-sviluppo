@@ -957,20 +957,24 @@ function exportPDFLotto5(){
       doc.setFillColor(244,63,94);doc.rect(hLinEndP,pOy,pCW,pD,'F');
       // TAGLIATO trapezoid (simplified as rectangle in PDF)
       doc.setFillColor(74,222,128);doc.rect(hFlatEndP,pOy,pCW,pD,'F');
-      // Vertical blocks
+      // Vertical blocks - TAGLIATO then FLAT then linear
       const vLinP=seqP2.slice(2);
-      doc.setFillColor(74,222,128);doc.rect(innerXP,innerYP,pD,pCW-pD,'F');
-      doc.setFillColor(244,63,94);doc.rect(innerXP,innerYP+pCW-pD+pGap,pD,pCW,'F');
+      const vStartY=innerYP;
+      // TAGLIATO (right after corner)
+      doc.setFillColor(74,222,128);doc.rect(innerXP,vStartY,pD,pCW,'F');
+      // FLAT transition
+      doc.setFillColor(244,63,94);doc.rect(innerXP,vStartY+pCW+pGap,pD,pCW,'F');
+      // Linear vertical blocks
       vLinP.forEach((b,i)=>{
         const fc=b.type==='50x100FLAT'?[107,114,128]:b.type==='50x50FLAT'?[244,63,94]:[74,222,128];
         doc.setFillColor(fc[0],fc[1],fc[2]);
-        doc.rect(innerXP,innerYP+(i+1)*(pCW+pGap)+pCW,pD,pCW,'F');
+        doc.rect(innerXP,vStartY+(i+2)*(pCW+pGap),pD,pCW,'F');
       });
       // Labels
       doc.setFontSize(9);doc.setTextColor(100,160,240);doc.setFont('helvetica','bold');
       doc.text(l5s1+'m',pOx+(hLinP.length*(pCW+pGap)+pCW)/2,pOy+pD+8,{align:'center'});
-      const vTotalH=(vLinP.length+2)*(pCW+pGap)+pCW;
-      doc.text(l5s2+'m',outerXP+8,innerYP+vTotalH/2,{angle:90});
+      const vTotalH=(vLinP.length+2)*(pCW+pGap);
+      doc.text(l5s2+'m',outerXP+8,vStartY+vTotalH/2,{angle:90});
       y+=pD+vTotalH+14;
     }
     const total=doc.getNumberOfPages();
