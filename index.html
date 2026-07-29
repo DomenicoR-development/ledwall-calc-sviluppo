@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calcolatore LED Wall — FORM Enhanced</title>
 <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAvElEQVR4nGNgGGDAiE1w34KA/7SwzClhA4Z9LNgsjqm6Rwv74eYjO4QJXRGtLMdlNtwl+xYE/EdWsKRNyZbKlh9GMhseChghQAvL8ZmJ1QH0BKMOGHXA4HQAcp6lFsBlJgs2QVo5AhsY8CjAGQJL2pS2YhOPqbrnTa4cNvEBD4EBdwC+RIg1yCiRI8kBo2mAXmA0DQx4FAy4A0bTADwKnBI2MC5pU8LvXCoA5D4BigOQFdDScnQw4J3TAQcAL5dzWS5HdJgAAAAASUVORK5CYII=">
-
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--gold:#BEA050;--gold2:#d4b86a;--dark:#0f0f1a;--card:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.09);--tp:#e8e8e8;--tm:#9a9ab0;--ts:#5a5a75;--suc:#4ade80;--war:#f59e0b;--dan:#f43f5e;--inf:#60a5fa}
@@ -56,9 +55,6 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
 .lp{font-size:10px;color:var(--ts);margin-bottom:7px}
 .lr{display:flex;justify-content:space-between;font-size:11px;padding:2px 0;color:var(--tm)}
 .lr span:last-child{color:var(--tp);font-weight:500}
-
-
-
 /* ELETTRONICA */
 .ep{background:rgba(190,160,80,0.07);border:1.5px solid rgba(190,160,80,0.25);border-radius:12px;padding:13px;margin-bottom:10px}
 .el{font-size:10px;color:var(--gold);font-weight:600;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px}
@@ -215,7 +211,6 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
   #sim-result .g3>div{padding:16px !important}
   #sim-result .g3>div>div:nth-child(2){font-size:24px !important}
 }
-
 @media(max-width:400px){
   .hdr h1{font-size:16px}
   .hdr img{width:40px;height:40px}
@@ -262,15 +257,12 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
   </div>
   <div class="hdr-r"></div>
 </div>
-
 <div class="cnt">
-
 <!-- NOME PROGETTO (NUOVO) -->
 <div class="proj-bar">
   <span style="font-size:18px">📁</span>
   <input type="text" id="nome-progetto" placeholder="Nome progetto (opzionale — apparirà nel PDF)">
 </div>
-
 <!-- CONFIGURAZIONE -->
 <div class="card">
   <div class="ch"><div class="ct">⚙️ Configurazione LED Wall</div><div style="display:flex;gap:8px"><button class="btn" onclick="openExportModal()">📄 Esporta PDF</button><button class="btn btn-ghost" onclick="doReset()">↺ Reset</button></div></div>
@@ -291,7 +283,6 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
     </div>
   </div>
 </div>
-
 <!-- DIMENSIONI -->
 <div class="card">
   <div class="ch"><div class="ct">📏 Dimensioni e Superficie</div></div>
@@ -299,7 +290,6 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
     <div class="rbar"><span class="rl">Superficie totale:</span><span class="rv" id="res-mq">27.00 mq</span></div>
   </div>
 </div>
-
 <!-- SPECIFICHE VIDEO -->
 <div class="card">
   <div class="ch"><div class="ct">🎥 Specifiche Video</div></div>
@@ -307,8 +297,6 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
     <div class="mrow"><span class="ml">Risoluzione orizzontale:</span><span class="mv" id="res-x">3.456 px</span></div>
     <div class="mrow"><span class="ml">Risoluzione verticale:</span><span class="mv" id="res-y">1.152 px</span></div>
     <div class="rbar" style="margin-top:8px"><span class="rl">Pixel totali:</span><span class="rv" id="res-tot">3.981.312</span></div>
-
-
     <!-- ASPECT RATIO -->
     <div style="margin-top:12px">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
@@ -331,7 +319,6 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
     </div>
   </div>
 </div>
-
 <!-- ELETTRONICA -->
 <div class="card">
   <div class="ch"><div class="ct">🔌 Elettronica Abbinata</div></div>
@@ -347,15 +334,12 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
     </div>
     <div style="font-size:12px;color:var(--tm);margin-bottom:6px">Seconda scelta</div>
     <div id="elett-sec"></div>
-
     <div style="background:rgba(96,165,250,0.07);border:1px solid rgba(96,165,250,0.18);border-radius:10px;padding:10px 14px;margin-top:10px;font-size:12px;color:rgba(96,165,250,0.85)">
       ℹ️ I suggerimenti si aggiornano automaticamente quando modifichi le dimensioni del display.
     </div>
   </div>
 </div>
-
 <div class="divider"></div>
-
 <!-- PARAMETRI VIDEO -->
 <div class="card">
   <div class="ch"><div class="ct">📹 Parametri Video Consigliati</div></div>
@@ -366,9 +350,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
     <div class="mrow"><span class="ml">Frame rate:</span><span class="mv" id="param-fps">25 fps</span></div>
   </div>
 </div>
-
 <div class="divider"></div>
-
 <!-- LOTTI -->
 <div class="card">
   <div class="ch"><div class="ct">📦 Configurazioni Lotti Disponibili</div></div>
@@ -377,9 +359,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
     <div class="sb">✨ <strong>Aggiornamento Automatico:</strong> Tutti i valori si ricalcolano istantaneamente quando modifichi le dimensioni</div>
   </div>
 </div>
-
 <div class="divider"></div>
-
 <!-- LEDWALL AD ANGOLO LOTTO 5 -->
 <div class="card">
   <div class="ch">
@@ -416,9 +396,47 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
     </div>
   </div>
 </div>
-
 <div class="divider"></div>
-
+<!-- LEDWALL CURVO LOTTO 5 -->
+<div class="card">
+  <div class="ch">
+    <div class="ct">🌀 Ledwall Curvo Lotto 5</div>
+    <div style="display:flex;gap:8px">
+      <button class="btn" id="btn-exp-lc" style="display:none" onclick="exportPDFLottoCurvo()">📄 Esporta PDF</button>
+      <button class="btn btn-ghost" onclick="resetLottoCurvo()">↺ Reset</button>
+    </div>
+  </div>
+  <div class="cb">
+    <div class="g3">
+      <div class="fld"><label>Segmento 1 (metri)</label><input type="text" id="lc-s1" inputmode="decimal" placeholder="es. 4" oninput="renderLottoCurvo()"></div>
+      <div class="fld"><label>Segmento 2 (metri)</label><input type="text" id="lc-s2" inputmode="decimal" placeholder="es. 3" oninput="renderLottoCurvo()"></div>
+      <div class="fld"><label>Curva <span style="font-size:10px;color:var(--ts)">— N. moduli 50×50</span></label><input type="text" id="lc-curva" inputmode="numeric" placeholder="es. 6" oninput="renderLottoCurvo()"></div>
+    </div>
+    <div class="g3" style="margin-top:10px">
+      <div class="fld"><label>Altezza (metri)</label><input type="text" id="lc-alt" inputmode="decimal" placeholder="es. 2" oninput="renderLottoCurvo()"></div>
+    </div>
+    <div class="chk-row">
+      <input type="checkbox" id="chk-solo50-curvo" style="width:17px;height:17px;accent-color:#f59e0b;cursor:pointer" onchange="renderLottoCurvo()">
+      <label id="lbl-solo50-curvo" for="chk-solo50-curvo" style="font-size:13px;cursor:pointer;color:var(--tm)">Flaggare per usare solo moduli 50×50 nei tratti lineari <span style="font-size:10px;color:var(--ts)">— curva e transizioni sono sempre 50×50</span></label>
+    </div>
+  </div>
+</div>
+<div id="lc-result" style="display:none">
+  <div class="card">
+    <div class="ch"><div class="ct" id="lc-title">📊 Risultato</div></div>
+    <div class="cb">
+      <div class="sg" id="lc-summary"></div>
+      <div class="leg" id="lc-legend"></div>
+      <div class="fvw"><h4>📐 Vista Frontale</h4><div id="front-svg-curvo" style="overflow-x:auto"></div></div>
+      <div id="plan-wrap-curvo"></div>
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+        <div style="font-size:12px;font-weight:500;color:var(--tm);margin-bottom:10px">📦 Specifiche LOTTO 5 (curvo)</div>
+        <div class="lc act" id="lc-spec"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
 <!-- CALCOLO LINEE TECNICHE -->
 <div class="card">
   <div class="ch"><div class="ct">⚡ Calcolo Linee Tecniche</div></div>
@@ -463,10 +481,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
     </div>
   </div>
 </div>
-
-
 <div class="divider"></div>
-
 <!-- SIMULATORE PASSO LIBERO -->
 <div class="card">
   <div class="ch"><div class="ct">🔭 Simulatore Passo Libero</div></div>
@@ -492,7 +507,6 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
         <div style="background:rgba(190,160,80,0.1);border:1px solid rgba(190,160,80,0.25);border-radius:10px;padding:12px">
           <div style="font-size:11px;color:var(--tm);margin-bottom:4px">Pixel totali</div>
           <div style="font-size:20px;font-weight:700;color:var(--gold)" id="sim-tot">—</div>
-
         </div>
       </div>
       <!-- ASPECT RATIO SEMPLIFICATO -->
@@ -514,9 +528,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
     <div id="sim-empty" style="padding:20px 0;text-align:center;color:var(--ts);font-size:13px">Inserisci larghezza, altezza e passo per simulare</div>
   </div>
 </div>
-
 </div><!-- /cnt -->
-
 <!-- MODAL EXPORT PDF -->
 <div class="modal-overlay" id="export-modal">
   <div class="modal">
@@ -526,7 +538,6 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
     </div>
     <div class="modal-body">
       <div class="modal-sub">Seleziona le sezioni da includere nel PDF</div>
-
       <div class="exp-item">
         <input type="checkbox" id="exp-config" checked>
         <label for="exp-config">Configurazione LED Wall</label>
@@ -575,12 +586,10 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
   </div>
 </div>
 </div><!-- /app -->
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 // ===== LOGO BASE64 =====
-document.getElementById('logo').src = 'data:image/png;base64,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';
-
+document.getElementById('logo').src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAIAAAABc2X6AAABCGlDQ1BJQ0MgUHJvZmlsZQAAeJxjYGA8wQAELAYMDLl5JUVB7k4KEZFRCuwPGBiBEAwSk4sLGHADoKpv1yBqL+viUYcLcKakFicD6Q9ArFIEtBxopAiQLZIOYWuA2EkQtg2IXV5SUAJkB4DYRSFBzkB2CpCtkY7ETkJiJxcUgdT3ANk2uTmlyQh3M/Ck5oUGA2kOIJZhKGYIYnBncAL5H6IkfxEDg8VXBgbmCQixpJkMDNtbGRgkbiHEVBYwMPC3MDBsO48QQ4RJQWJRIliIBYiZ0tIYGD4tZ2DgjWRgEL7AwMAVDQsIHG5TALvNnSEfCNMZchhSgSKeDHkMyQx6QJYRgwGDIYMZAKbWPz9HbOBQAAAcp0lEQVR42sV8a6ylZ3Xes9b77X0uc/WMZ8ae8WWMbWwD5VIcMA5QICQ0gdJKbUlCgvqjpeFHVSWp1ChtfwQpQVGTSo2SVEgtVWkatbFaSEtDFJoWaCFcjQ22MRjfPR4P9tw8M+f2vWutpz/W+3177zPGNsYtWzNz9uyzz3e+9a7bs5311ye3bkK1JQyPEqLC1u3rEC1zBnRGKGGkoI2DDsA9Xg6DFmg4rYq2fXBWCHNBmJKQxx41TQqmuABXaEQ/xGSQD/1Cn5eIVDGkNQEK9UvA5YEXxKLBIGgqW6iOQGaqSVR7cwOA0BsSVEzECjSKGVIB0xh0BhAGVMxwHnGMSkbwCUXAtQY0okhQEEQK8Q9Q2QIExgxOoADhU0lChBqEEdT1AoTQvARhOKzDgLIkl0LO2/z5hCcM0YMz+MoM+r+8oX3UcvgqfVc+D1bmXCLbGiKGz3nkKfrz/pKvBcQpDdU6L1jBjcnQIkOfWFhkbkZKZLIhoUgEuFJIfl1wkVKJhSGOsqYY0LpNSyOw4RLIQlIY5Bf+9lqzTtvzoq1Aokw4ozUuVJIZbfz5c5DYkQ0mlDgIzUFDrY9WvXkyEmm2QykMEfDsiqSA9k8AljISKQOZXR8+GcpJYUYogJT7l4NULgOGSD8UlvSN5NwPqYE1jJPHmKqmYVmGIDMLPXvY4yQ0RUqLKVvz8CBXcz5AT3wchGw3o0mv58tSSFCXFRSyKrjDGGXbCPq6RyDwm2HqUdaupwuvUFEHZLIcYU9L34sQ3jNCXk7yjEnf6BXnRDiCLBOEs5lJ8LiQKSMscZ7aUYYo1Ohkj0ELIZQyGwYWaZ1kQKVXvJoIVWjHV2jI/RmDb5HW48oqjyimHhs17oWAiiO8lxEV3sPhCEXY7fpqTd0mCa27tQ3+eOTJ3xJuVpuOD5eXQFq2c1FUpVw2Wu69fkPKPX3n/8Nj4mCUZo0hCJnLE9tYqzeaK8p1DAkP0/Do0DVGiHkuTGVSPtnv3LEpTMYbfPuJa+/HRcSGrfImHXH7YpWTA4rBQyXlSpDAzY4MFwZg1UOsxpm6/3wLc3Ge3zc5xEAP7pxTh3lM26zdMdBSSslnhBOEt3P3fWH/33Ptcf/HKk3+YQwG3XmtusRDkEUprSNKY7CBILEg67Vd/N7fejYRxnU91uPCkA36J4sirHu9GnfZuNJoyw+I0ZbXX5lQqXLD4dGYbFyMg9zPmUKGpEbEEgkm+fLLnCDInc0OZ4XSWZnV0dPqz//aq9//eeYcDLQpAOEDktEUsy2Lm9UNCFwvIcvwT0Ec/3nrPeM9bfvvvVQlKM+kNz3lHmTuTaSbGjaByyN1PbxWy4wxIWNnCS8+wD//O9r/6O//zx1cRvV3nlHFH5jybXR+H4hEJmEqTgqXWabk7A4qLLfnT9OGr3nfj7VUKzq1BXwiXfaW9UpTBiwaKcbfEsAJqBaQGuOAy8dyF4Cd0BbFuqk86CQxOtvvfj5V7z/HZfMZovnlwZ+/8bcpaHESAI/BJ/4+K7lSSuoElLJgAoMoQF1MFP5/kACnzKmrqLBvKTJTU5zLp3AbF14MEmzL5tBmpJgTHwGBH3sD7bd8ZUnb7prc1uQMV5wIQoDIRQAgSBOLAxUCZIA8jVfe3rHXO+Sc5cvvXjZqmVQrpEQVLFwZ5UF1e5+VzO1IUlHwr61lRoZTr3jjnvvv3vkNb+/ODmqURuUpJgYbnDNaW1lztKB6ZH4omtaJvxuFtdMy+YAsFwd7NwYvv3Wpe/9/9v3vWLrRacYNoutQ/AlNRACR8lPUojEuFwqmzp75DhIt7HR2/z1XePvvHfhxjc94jUOF6uUJZUxA1ZbQBn8ID3lIWmYQGGpTUXcTX7/RwsbGjt+7dziQpQBFCAlIRESaSItVIVQlq6RgSyBvGYFQfPmL+Y+ftmi94wceWnLRTMhChJcUnwORkQZm5Fce6xVK7bWvvzoQVv7wA/mv3XV6h9fusMRZBCEsdRIYlq52plZmkojBLScC8+Xat9E4XU2v3d75ZoP7rt5Zbd39aH+9pRDx0zNqbtmMktoW0GdIvFXmyDbxJ2ozzcvfeXklz45+7NnLl98X7fS8UwrbSVWjFCbklJEJdVUYVCOVUmyoJZOOaWQTQZnj/T0T9lnJ6Wc1WCQtx3TE8gLPa+jRatZ12PxLcm4qy0WMe9RJZ5rvLnZ2LDgpxNODCVvY1U2mUq3yJXFvT4pjLoFvtRQqp2FBBLR1O0h7iiCiXIiSPvBGxXcOxOFo76b13JMKtEXFFhmk/3PfR76P7oaR2lrEUwhIQdVIU3q0iRoUnAdIrpKyDs2LZ7CoOtHDCdE8AR7kSf6bhSFyvGO2Y3AlsQZUqB5/j1PYWLrIu78mvUKtG5U0lTaCEr8gqqUUKD8pgnBEsIFhCPk3nlpDR60TQoRE3YZKmqp5DXY7AJTHW1sq06Wm4gpaqDPU5KYNqm00pXohtaz08+/6//Rl3+ZQ/z8+e0TnnvcbcVMKNRJZOm81ZmqLqDpTgcNbHwKKAmDR5Ki9jgqzZ8oQAmwCVCsCkeUgg+r0uf++uPzL7vAr7VtIiF1KfARCg1D9INtdY5xtGtHiEjJHIH2Nx5RJRISkDlvE7EmSZgn5BM0OuEgqkFqzT4Rf1Sm5RRk4XjkmqM6JcXK7T90/OZDLQFhIsm5H1FWatVsEIWvVEXFtNQioAF64QVjcQQU/xGRWo8VJmDElGKrKt8LTRO8ANN3Iiff/w+9/CTIiwUggQKMTshBiw2QQdcC6+LCfMHVAcQyorOR2SgBWKDqwQGoMWlvL8/2wLu6xU07r2GJcU30cRAoNMDpHJ44JgOxTVdgz4UZzIiwqM4l7pukiZAgTFA4YIRR/DEuDgVDhVjOWiOb3F3sVdJ0iSXvfLcvhcuKvBBaFhg5CDTM0jkQx53WGvHrpNMYFmgQ2skcVAPl8I2IUUgQfXcGpqHOaZpJnrGrmVs68qLzWvvXfnb45q0FYRJhErEsRIlAqRe3LLQhxT9GHXGoFfmg35yPmYK76a9zylmg0iRAigmYtIROmn31E8+3XjZWgUFtYqQI0EFqNRK1RwGQNPU5FF6TS/CmZ4WvXNZtOxajM5AcyoBz4Hea7cJC0iTKlFrCEQCJIkQmpHi1CIRUXQmuGCiEeAdLPGvOZuoLdkxXktqbtNbHfKAoMsMUqEfNwEBfAgVvVvZKlYcHQlbSGuJ6vg51i4WFhKQBqCiaTMJDLQAApuQpAJmA0EQVSj0Kkfsog1hxMOK4LhULlkoJoJBHz2wa4dv//uv/1Xj+i7BOMwKQoK0OyeYYVDrqmVOSMkjuAEETlfJhLKKtQhbahzTdAA0VE7pAJIibIN8xnUVLSb/ecaeydtdgpvXpNL+/RB7z9NVLYFtGuKPgSlpuTeWpWiaXpe1oOm8DhVQU/mHDzhZ72zZDkzOELPT47eLU19Q3JeAg8Z3jhU4XdIeK6q4Xdd8DzZuvBqUR0bJRz1QypQwOOoTrl+9SW3xoJRXf6iYSajUqspbEKBixw34PBpNhZ2GKl1zj0FyJlLtICJfN5Xj2n8bPmyjqfN6t3z83PSjRPuipumBAKPnZ+r2r22PdgYQKAJIomcVJUaR/DlpCbLGaFvKHiwQGkyDLLKUqSSj2wkVaeQ8YuypDpVPZq7Kw9Ke+4vWNBdN71LcbHmZv/dRDf9pTIggV2FF7DwUpZ2XUBBd0nvhKzKtc82D0zEG4evP4b/6iPjcxYzoSJXH5rt0OeM+HpJPuQb7wxg3RGQEV6ZQ4ONdM0OwFdC0MDpztDf3fk3lDPBK7YKZgtE+RwaEkMxs7Uz3EOAA10DlXHfIYcJUbnJlDxjMGKMK4YBcpioZ4XZ0DL3bhWuiJyTaTG9sZ4YYVW6qKdIiiIe0YAy0aYZDN2CvY9DixjR9L26zJmnDWnnBcQNzOMS/QjZkKq6/JX/vzJnk7VkyF2Alpjz5uETV0YZphKxUSg9j2/1XLc3upoCLDzRFTdKgBiCA5RVKjbAqQWMr6UgEz+wr8UnhLfgIzOoGXR6EIYQKlrblhTBNYUZaWvPBIYuHFYyLg2LqQAaMoy6vzXaVKF0YE0GcOoNCEy1EE5AbZQ42J8U5nrEExGXpxoswrCEQ5F2z4nBnU2ZXNL1JzEkR0zPB8kZgH0ncw3jCWSPCUJqJKAAALLQnpAe8gaFN0RfnFqO2FdWCBb3fWjPzz8FbPQF9YKJdohR6GQCIrixgKlD24TvBOdU0EPjjPCLPjPIbrGiC5tD22txYRq53qhBiKNMYctcKFrf2iw2c8w/pf3wJfXwm9BAiXJfHzX2h/98/BX9+9sMWnjVA0IhF66w8W94xkpwq7d3fN2LK2vLDkbldbaOF5vLpAOc4wUmYkfsl4KFxaOnfWnjq7cSyRlLNBQ7yV2ftfa11+z8k+/tfrTP9tw6Q5nHo0BqGkzn3rgg8N7+6MJDMwr1xJKA8kBLL4YCIIJvXpr8Ip1e69yaOe1Vzn0N7cW7v/l2ItPje6/emzf6fZzTk1eeqz3lQO9tzws3IcT7cq9SXcNJNqTQ4v3P7Nm7wc2N/fO7f3Kje1PdnbfeXzhi88J//tzwifvatgWJx5PnBnfvXhwfPHRoy9c37N/vHnLQzPn7hpZOnGrQmL33mZzZfXKvTMLd3fPzL3nDwfL7trbfr3ZWJ+d3+jvbCw92fnw/eF3D+/asnJZ8nDXqtaXpo59/YWl5/aN3Ry66IqmT+xY++uD5tzTGrs4Ov+SxUhcm/O/f4jrDs6Ojw98a+GB2fufmTt3ZWfmvsAKm2SjTeSKkTHrsVaz9v6uZLIrKI9Hc5wWc3ac2VjbatfaVoODVIuazJYb+kFTOaFRcayzuG7v0OoZjfBTSXfvHzO3f3Xz/qsGtvzTd2z94R9m9v96/wtP7Dvz4WvOfHhVpb6xdvcHm/1//4PZs59svHVw+q7f+2h+9/OU/T6+4wsPjR3etW9pv0Bg/6+ee/y+U69uH1t9U/eBPXt/e2zi5onN29d+eGF6+8HWnhcOr96/f6pnbGtLb0dgy7reQ+2s9YXH+u/aeqcnpFH55u4t0zbdc4Ni8dHegVfWbT+w+YFHtjy19bBjfHXX0S1nzq9ub55rzt40MHt+YOu5W7fq5DrvsjLPQffn8FSPQ8Iz9L/aP3jVLzat/nztAZFyUb/JcHTx5C0vXBnfeMzUW3tOvbtl+lTP4hMzz1z97AOX/e1vXzsQfNXi41vP3n3/3Cf3Hb4Q99K5+eDMH39/T+8jd+9YXHhqz2dvL9UNXLU4v/eqx1eu/8HDzY2xk/uzR7oW1v98rvfW9bvvGCu+1a5f7juzfvvrY/tHc/qcOXfDpvsGpx8+7btrb/Aznrn5vh8u3Ntre3ZjxpLK66Zf/dz2Vc5tzbbb5cw3Q2yLzGdb5r5vzc7fW7z/xC1v+e50FI4vTx7omX+8+55XLh/atviyxpZO7ONlLTWpVvxNPYt6bJTuiUJQEGuI4imBSjTKbCa1PvamzUnzXQccx7d0F45ZvfXKZ97sO1u/2ppfrqPTs5t1kSGjKt09lZ5t/9M4V+n5vNKKPQBK6iH1YHu8XkAP7qYVAT3vI+bOEfWivKX7ZAcS+/XdvnzOd7Cvj04c8sTNJ/8+vzX52qOHUlUdgKIiI+8ah9fk2xGZQlA7NyFXbwvLB57fdmDT/n0j8fT58sYt+56b13tRPvnI5uW7VZ1XwSMB/YlbjuJVVBxq0lPeVsyU3ZI6JkT8kDpVOvVFYRZgnHm2WlPvpvo11PmVXQZMedFDzaZaVKgqZUFVDMR0eDvhOn9UzWU5o/GJmpXaHrqSNfe3d5vw5x9jHrgeMSGZjOR2v0aa3ITTEIRoVjaYb1O5G9Nb3F6BsUXCoBAKjENhI5NsWfPDoXDbklsyBW0uzJqbmpFOICNmYNOoiI1EW3QMHfeoVRhtWFa1jHqXEC6f0LOwbNbjkkMc2SkNSJETh0aRDgtqLpG3rmnPy/QQFPmxTGqiZLaWQnLGmk7RRDXvxb8+ZZ/pnj+Vr7SkyIiLFhpuNvj/YY8OT4qKgvbG5umyu+cWKvGdhk9EAJTPmiqUeSvbEZP/8P/qYXqIekwRKPQAAAABJRU5ErkJggg==';
 // ===== DATI MODULI =====
 const MODS = [
   {id:'2-3',lotto:'2-3',passo:'3.9',modulo:'100x50',mW:50,mH:100,pxX:128,pxY:256,pixel:'256x128',reteMax:'18/19',alimMax:'14'},
@@ -589,16 +598,14 @@ const MODS = [
   {id:'5-50x50',lotto:'5',passo:'2.6',modulo:'50x50',mW:50,mH:50,pxX:192,pxY:192,pixel:'192x192',reteMax:'16',alimMax:'24'},
   {id:'5-100x50',lotto:'5',passo:'2.6',modulo:'100x50',mW:50,mH:100,pxX:192,pxY:384,pixel:'384x192',reteMax:'8',alimMax:'12'},
 ];
-const COL={'50x100FLAT':'#6b7280','50x50FLAT':'#f43f5e','50x50TAGLIATO':'#4ade80'};
+const COL={'50x100FLAT':'#6b7280','50x50FLAT':'#f43f5e','50x50TAGLIATO':'#4ade80','50x50CURVO':'#a855f7'};
 const TR=1920/1080;
-
 // ===== STATE =====
 let larg=9,alt=3,passo=2.6,isAmerica=false;
 let l5s1=0,l5s2=0,l5alt=0,solo50=false;
-
+let lcs1=0,lcs2=0,lccurve=0,lcalt=0,lcsolo50=false;
 // ===== PARSE DECIMAL =====
 function pd(s){return parseFloat((s||'').replace(',','.'))||0;}
-
 // ===== MAIN CALC =====
 function onInput(){
   larg=pd(document.getElementById('inp-larg').value);
@@ -610,22 +617,15 @@ function onInput(){
   lbl.style.color=isAmerica?'#ef4444':'var(--tm)';
   calculate();
 }
-
 function calculate(){
   const vl=Math.max(0.1,larg||1),va=Math.max(0.1,alt||1),vp=passo;
   const mq=Math.round(vl*va*100)/100;
   const ppm=Math.floor(1000/vp);
   const rx=Math.floor(ppm*vl),ry=Math.floor(ppm*va),tot=rx*ry;
-
   document.getElementById('res-mq').textContent=mq.toFixed(2)+' mq';
   document.getElementById('res-x').textContent=rx.toLocaleString('it-IT')+' px';
   document.getElementById('res-y').textContent=ry.toLocaleString('it-IT')+' px';
   document.getElementById('res-tot').textContent=tot.toLocaleString('it-IT');
-
-
-
-
-
   // ASPECT RATIO
   const cr=rx/ry,dev=Math.abs(cr-TR),norm=Math.min(dev/2,1),pct=Math.round((1-norm)*100);
   const bar=document.getElementById('ar-bar');
@@ -635,11 +635,9 @@ function calculate(){
   const arl=document.getElementById('ar-label');
   arl.textContent=pct+'% — '+(norm<0.02?'≈ 16:9':norm<0.10?'Vicino al 16:9':norm<0.20?'Accettabile':'Stretch elevato');
   arl.style.color=bc;
-
   // PARAMS VIDEO
   document.getElementById('param-fps').textContent=isAmerica?'30 fps':'25 fps';
   document.getElementById('param-bitrate').textContent=tot>4000000?'25 Mbps':'15 Mbps';
-
   // ELETTRONICA
   document.getElementById('elett-res').textContent=rx.toLocaleString('it-IT')+' × '+ry.toLocaleString('it-IT')+' px';
   const prod=rx*ry;
@@ -654,9 +652,6 @@ function calculate(){
   const ew=document.getElementById('elett-warn');
   ew.textContent=prima.warn||'';ew.style.display=prima.warn?'block':'none';
   document.getElementById('elett-sec').innerHTML=sec.map(s=>`<div class="es"><div class="ename">${s.nome}</div><div class="eacc"><strong>Accessorio:</strong> ${s.acc}</div></div>`).join('');
-
-
-
   // LOTTI
   const lotti=[
     {nome:'LOTTO 0',passo:2.6,kw:Math.round(mq*0.2*2*100)/100,linee:Math.ceil((mq*0.2*2)/3),lat:80,sotto:70},
@@ -681,7 +676,6 @@ function calculate(){
     </div>`;
   }).join('');
 }
-
 // ===== LOTTO 5 ANGOLO =====
 function buildSeq(segM,isBefore,solo){
   const blocks=[],segCm=Math.round(segM*100),transC=100;
@@ -693,7 +687,18 @@ function buildSeq(segM,isBefore,solo){
   return blocks;
 }
 function colH(h){const n100=Math.floor(h),rem=Math.max(0,h-n100),n50ex=Math.round(rem/0.5),n50=Math.round(h/0.5);return{n100,n50ex,n50};}
-
+// ===== LOTTO 5 CURVO =====
+// Come buildSeq, ma la zona di transizione per lato è di un solo modulo 50x50 FLAT (50cm, non 100)
+// perché non c'è TAGLIATO: la curva (N moduli 50x50 CURVO) è condivisa fra i due segmenti.
+function buildSeqCurvo(segM,isBefore,solo){
+  const blocks=[],segCm=Math.round(segM*100),transC=50;
+  if(segCm<transC)return[];
+  const linC=segCm-transC,numLin=Math.floor(linC/50);
+  const ft=solo?'50x50FLAT':'50x100FLAT';
+  if(isBefore){for(let i=0;i<numLin;i++)blocks.push({type:ft});blocks.push({type:'50x50FLAT'});}
+  else{blocks.push({type:'50x50FLAT'});for(let i=0;i<numLin;i++)blocks.push({type:ft});}
+  return blocks;
+}
 function renderL5(){
   l5s1=pd(document.getElementById('l5-s1').value);
   l5s2=pd(document.getElementById('l5-s2').value);
@@ -705,7 +710,6 @@ function renderL5(){
   const res=document.getElementById('l5-result');
   if(!l5s1||!l5alt){res.style.display='none';document.getElementById('btn-exp-l5').style.display='none';return;}
   res.style.display='block';document.getElementById('btn-exp-l5').style.display='inline-flex';
-
   const hasAngle=l5s2>0;
   let seq,totalMq,mq100,mq50f,mq50t;
   if(hasAngle){
@@ -720,10 +724,8 @@ function renderL5(){
     const {n100,n50ex,n50}=colH(l5alt);
     if(solo50){mq100=0;mq50f=nc*n50*0.25;mq50t=0;}else{mq100=nc*n100*0.5;mq50f=nc*n50ex*0.25;mq50t=0;}
   }
-
   const label=hasAngle?`angolo ${l5s1}+${l5s2} h${l5alt}${solo50?' (solo 50×50)':''}`:`dritto ${l5s1}m h${l5alt}${solo50?' (solo 50×50)':''}`;
   document.getElementById('l5-title').textContent='📊 Risultato: '+label;
-
   // Summary
   const items=[];
   if(!solo50)items.push({c:'#6b7280',l:'50x100 FLAT',v:mq100+' mq'});
@@ -731,11 +733,9 @@ function renderL5(){
   items.push({c:'#4ade80',l:'50x50 TAGLIATO',v:mq50t+' mq'});
   items.push({c:null,l:'TOTALE',v:totalMq+' mq',hi:true});
   document.getElementById('l5-summary').innerHTML=items.map(it=>`<div class="sc${it.hi?' shi':''}"><div class="sl">${it.c?`<div class="ld" style="background:${it.c}"></div>`:''}<span>${it.l}</span></div><div class="sv">${it.v}</div></div>`).join('');
-
   // Legend
   const legItems=[{c:'#6b7280',l:'50x100 FLAT'},{c:'#f43f5e',l:'50x50 FLAT'},{c:'#4ade80',l:'50x50 TAGLIATO'}];
   document.getElementById('l5-legend').innerHTML=legItems.filter(li=>!solo50||li.c!=='#6b7280').map(li=>`<div class="li"><div class="ld" style="background:${li.c}"></div><span>${li.l}</span></div>`).join('');
-
   // Front view — FIX: 50x50 FLAT rosso IN ALTO
   const bW=54,bH100=110,bH50=55,pad=8;
   const svgW=seq.length*bW+pad*2,svgH=Math.ceil(l5alt)*bH100+pad*2+20;
@@ -762,7 +762,6 @@ function renderL5(){
     }
   });
   document.getElementById('front-svg').innerHTML=`<svg viewBox="0 0 ${svgW} ${svgH}" width="100%" style="max-height:280px">${rects}</svg>`;
-
   // Plan view
   const planC=document.getElementById('plan-wrap');
   if(hasAngle&&seq.length>=4){
@@ -785,7 +784,6 @@ function renderL5(){
     if(vLin.length>0){const vMidY=(vTagBot+vTagBot+(vLin.length)*(40+gap))/2;out+=`<text x="${outerX+14}" y="${vMidY}" text-anchor="middle" font-size="10" fill="rgba(96,165,250,0.8)" font-weight="600" transform="rotate(90,${outerX+14},${vMidY})">${l5s2}m</text>`;}
     planC.innerHTML=`<div class="pvw"><h4>🗺️ Vista in Pianta (dall'alto)</h4><div style="overflow-x:auto"><svg viewBox="0 0 ${svgW2} ${svgH2}" width="100%" style="max-height:400px">${out}</svg></div></div>`;
   }else{planC.innerHTML='';}
-
   // Lotto 5 spec
   const kw=Math.round((totalMq*0.25)*2*100)/100,linee=Math.ceil(((totalMq*0.25)*2)/3);
   document.getElementById('l5-spec').innerHTML=`
@@ -797,7 +795,6 @@ function renderL5(){
     <div class="lr"><span>📏 Fasc. solo a terra:</span><span>no</span></div>
     <div class="lr"><span>💡 Potenza:</span><span>${kw} kW</span></div>`;
 }
-
 // ===== LINEE TECNICHE =====
 function updateLtModuli(){
   const p=document.getElementById('lt-passo').value;
@@ -820,9 +817,7 @@ function renderLt(){
   let linAlim;
   if(mod.lotto==='4'){linAlim=Math.ceil((lw*lh*0.17*4)/3);}
   else{const av=parseInt(mod.alimMax.includes('/')?mod.alimMax.split('/')[0]:mod.alimMax);linAlim=Math.ceil(totMod/av);}
-
   let warnHtml='';
-
   res.innerHTML=`
     <div class="mig">
       <div class="mc"><div class="mcl">Passo (mm)</div><div class="mcv">${mod.passo}</div></div>
@@ -845,7 +840,6 @@ function renderLt(){
       <div class="lcard alim"><div class="lbg">⚡</div><div class="llbl">Linee di Alimentazione</div><div class="lnum">${linAlim}</div><div class="lsub">max ${mod.alimMax} moduli/linea</div></div>
     </div>`;
 }
-
 // ===== RESET =====
 function doReset(){
   larg=9;alt=3;passo=2.6;isAmerica=false;
@@ -865,7 +859,6 @@ function resetLotto5(){
   document.getElementById('lbl-solo50').style.color='var(--tm)';
   renderL5();
 }
-
 // ===== PDF LOTTO 5 =====
 function exportPDFLotto5(){
   if(!l5s1||!l5alt)return;
@@ -983,7 +976,228 @@ function exportPDFLotto5(){
     doc.save('Ledwall_Angolo_Lotto5_'+cfg+'_'+new Date().toISOString().split('T')[0]+'.pdf');
   }catch(e){alert('Attendere il caricamento della libreria PDF e riprovare.');}
 }
-
+// ===== LOTTO 5 CURVO — RENDER =====
+function resetLottoCurvo(){
+  lcs1=0;lcs2=0;lccurve=0;lcalt=0;lcsolo50=false;
+  ['lc-s1','lc-s2','lc-curva','lc-alt'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('chk-solo50-curvo').checked=false;
+  document.getElementById('lbl-solo50-curvo').innerHTML='Flaggare per usare solo moduli 50×50 nei tratti lineari <span style="font-size:10px;color:var(--ts)">— curva e transizioni sono sempre 50×50</span>';
+  document.getElementById('lbl-solo50-curvo').style.color='var(--tm)';
+  renderLottoCurvo();
+}
+function renderLottoCurvo(){
+  lcs1=pd(document.getElementById('lc-s1').value);
+  lcs2=pd(document.getElementById('lc-s2').value);
+  lccurve=Math.round(pd(document.getElementById('lc-curva').value));
+  lcalt=pd(document.getElementById('lc-alt').value);
+  lcsolo50=document.getElementById('chk-solo50-curvo').checked;
+  const lbl=document.getElementById('lbl-solo50-curvo');
+  lbl.innerHTML=(lcsolo50?'Solo moduli 50×50 nei tratti lineari attivo':'Flaggare per usare solo moduli 50×50 nei tratti lineari')+' <span style="font-size:10px;color:var(--ts)">— curva e transizioni sono sempre 50×50</span>';
+  lbl.style.color=lcsolo50?'#f59e0b':'var(--tm)';
+  const res=document.getElementById('lc-result');
+  if(!lcs1||!lcs2||!lccurve||!lcalt){res.style.display='none';document.getElementById('btn-exp-lc').style.display='none';return;}
+  res.style.display='block';document.getElementById('btn-exp-lc').style.display='inline-flex';
+  const s1b=buildSeqCurvo(lcs1,true,lcsolo50),s2b=buildSeqCurvo(lcs2,false,lcsolo50);
+  const curveB=Array.from({length:lccurve},()=>({type:'50x50CURVO'}));
+  const seq=[...s1b,...curveB,...s2b];
+  const totalMq=Math.round((lcs1+lcs2+lccurve*0.5)*lcalt*100)/100;
+  const c100=seq.filter(b=>b.type==='50x100FLAT').length,c50f=seq.filter(b=>b.type==='50x50FLAT').length,c50c=seq.filter(b=>b.type==='50x50CURVO').length;
+  const {n100,n50ex,n50}=colH(lcalt);
+  const mq100=c100*n100*0.5,mq50f=(c50f*n50+c100*n50ex)*0.25,mq50c=c50c*n50*0.25;
+  const label=`curvo ${lcs1}+${lccurve}c+${lcs2} h${lcalt}${lcsolo50?' (solo 50×50)':''}`;
+  document.getElementById('lc-title').textContent='📊 Risultato: '+label;
+  // Summary
+  const items=[];
+  if(!lcsolo50)items.push({c:'#6b7280',l:'50x100 FLAT',v:mq100+' mq'});
+  items.push({c:'#f43f5e',l:'50x50 FLAT',v:mq50f+' mq'});
+  items.push({c:'#a855f7',l:'50x50 CURVO',v:mq50c+' mq'});
+  items.push({c:null,l:'TOTALE',v:totalMq+' mq',hi:true});
+  document.getElementById('lc-summary').innerHTML=items.map(it=>`<div class="sc${it.hi?' shi':''}"><div class="sl">${it.c?`<div class="ld" style="background:${it.c}"></div>`:''}<span>${it.l}</span></div><div class="sv">${it.v}</div></div>`).join('');
+  // Legend
+  const legItems=[{c:'#6b7280',l:'50x100 FLAT'},{c:'#f43f5e',l:'50x50 FLAT'},{c:'#a855f7',l:'50x50 CURVO'}];
+  document.getElementById('lc-legend').innerHTML=legItems.filter(li=>!lcsolo50||li.c!=='#6b7280').map(li=>`<div class="li"><div class="ld" style="background:${li.c}"></div><span>${li.l}</span></div>`).join('');
+  // Front view — stessa logica della sezione Angolo: fila piatta, riusa colH
+  const bW=54,bH100=110,bH50=55,pad=8;
+  const svgW=seq.length*bW+pad*2,svgH=Math.ceil(lcalt)*bH100+pad*2+20;
+  let rects='';
+  seq.forEach((b,ci)=>{
+    const x=pad+ci*bW;
+    if(b.type==='50x100FLAT'){
+      for(let i=0;i<n50ex;i++){const y=pad+i*bH50;rects+=`<rect x="${x}" y="${y}" width="${bW-1}" height="${bH50-1}" fill="${COL['50x50FLAT']}" rx="2"/>`;}
+      for(let i=0;i<n100;i++){const y=pad+n50ex*bH50+i*bH100;rects+=`<rect x="${x}" y="${y}" width="${bW-1}" height="${bH100-1}" fill="${COL['50x100FLAT']}" rx="2"/>`;}
+    }else{
+      for(let i=0;i<n50;i++){const y=pad+i*bH50;rects+=`<rect x="${x}" y="${y}" width="${bW-1}" height="${bH50-1}" fill="${COL[b.type]||'#888'}" rx="2"/>`;}
+    }
+  });
+  document.getElementById('front-svg-curvo').innerHTML=`<svg viewBox="0 0 ${svgW} ${svgH}" width="100%" style="max-height:280px">${rects}</svg>`;
+  // Plan view — arco con divisori radiali equidistanti (geometria validata su mockup_pianta_curva.html)
+  const planC=document.getElementById('plan-wrap-curvo');
+  const hLin=s1b.slice(0,-1),hFlat=s1b[s1b.length-1];
+  const vFlat=s2b[0],vLin=s2b.slice(1);
+  const cW=40,d=16,gap=1,oy=10,ox=10;
+  const N=lccurve;
+  const R=Math.max(60,50+N*9); // raggio schematico, cresce con N (come il TAGLIATO nell'Angolo non è a scala reale)
+  const hLinEnd=ox+hLin.length*(cW+gap);
+  const cx=hLinEnd+cW; // l'arco parte subito dopo il FLAT (stessa larghezza modulo cW)
+  const cy=oy+R+d/2; // allineato al centro verticale della riga Seg.1 (fix validato sul mockup)
+  const rInner=R-d/2,rOuter=R+d/2;
+  const vStartY=cy+cW+gap;
+  const svgW2=cx+rOuter+70;
+  const svgH2=vStartY+vLin.length*(cW+gap)+40;
+  const stroke='rgba(255,255,255,0.3)';
+  let out='';
+  hLin.forEach((b,i)=>{out+=`<rect x="${ox+i*(cW+gap)}" y="${oy}" width="${cW}" height="${d}" fill="${COL[b.type]||'#888'}" stroke="${stroke}" stroke-width="0.8" rx="1"/>`;});
+  if(hFlat)out+=`<rect x="${hLinEnd}" y="${oy}" width="${cW}" height="${d}" fill="${COL[hFlat.type]||'#888'}" stroke="${stroke}" stroke-width="0.8" rx="1"/>`;
+  out+=`<path d="M ${cx} ${cy-rOuter} A ${rOuter} ${rOuter} 0 0 1 ${cx+rOuter} ${cy} L ${cx+rInner} ${cy} A ${rInner} ${rInner} 0 0 0 ${cx} ${cy-rInner} Z" fill="${COL['50x50CURVO']}" opacity="0.22"/>`;
+  out+=`<path d="M ${cx} ${cy-rOuter} A ${rOuter} ${rOuter} 0 0 1 ${cx+rOuter} ${cy}" fill="none" stroke="${COL['50x50CURVO']}" stroke-width="0.8"/>`;
+  out+=`<path d="M ${cx} ${cy-rInner} A ${rInner} ${rInner} 0 0 1 ${cx+rInner} ${cy}" fill="none" stroke="${COL['50x50CURVO']}" stroke-width="0.8"/>`;
+  for(let j=0;j<=N;j++){
+    const angle=(Math.PI/2)*j/N;
+    const x1=cx+rInner*Math.sin(angle),y1=cy-rInner*Math.cos(angle);
+    const x2=cx+rOuter*Math.sin(angle),y2=cy-rOuter*Math.cos(angle);
+    out+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${COL['50x50CURVO']}" stroke-width="${(j===0||j===N)?0.9:0.5}"/>`;
+  }
+  out+=`<text x="${cx+rOuter+8}" y="${cy-R/2}" font-size="10" fill="${COL['50x50CURVO']}">${N} mod 50×50 CURVO</text>`;
+  if(vFlat)out+=`<rect x="${cx+R-d/2}" y="${cy}" width="${d}" height="${cW}" fill="${COL[vFlat.type]||'#888'}" stroke="${stroke}" stroke-width="0.8" rx="1"/>`;
+  vLin.forEach((b,i)=>{out+=`<rect x="${cx+R-d/2}" y="${vStartY+i*(cW+gap)}" width="${d}" height="${cW}" fill="${COL[b.type]||'#888'}" stroke="${stroke}" stroke-width="0.8" rx="1"/>`;});
+  out+=`<text x="${ox+(hLin.length*(cW+gap)+cW)/2}" y="${oy+d+14}" text-anchor="middle" font-size="10" fill="rgba(96,165,250,0.8)" font-weight="600">${lcs1}m</text>`;
+  if(vLin.length>0){const vMidY=vStartY+(vLin.length*(cW+gap))/2;out+=`<text x="${cx+R+d/2+14}" y="${vMidY}" text-anchor="middle" font-size="10" fill="rgba(96,165,250,0.8)" font-weight="600" transform="rotate(90,${cx+R+d/2+14},${vMidY})">${lcs2}m</text>`;}
+  planC.innerHTML=`<div class="pvw"><h4>🗺️ Vista in Pianta (dall'alto)</h4><div style="overflow-x:auto"><svg viewBox="0 0 ${svgW2} ${svgH2}" width="100%" style="max-height:420px">${out}</svg></div></div>`;
+  // Spec box
+  const kw=Math.round((totalMq*0.25)*2*100)/100,linee=Math.ceil(((totalMq*0.25)*2)/3);
+  document.getElementById('lc-spec').innerHTML=`
+    <div class="lbadge ba" style="margin-bottom:5px">LOTTO 5</div>
+    <div class="lp">PASSO: 2.6 mm</div>
+    <div class="lr"><span>📐 Superficie:</span><span>${totalMq.toFixed(2)} mq</span></div>
+    <div class="lr"><span>⚡ Linee:</span><span>${linee}</span></div>
+    <div class="lr"><span>📦 Fascetta lat.:</span><span>74mm</span></div>
+    <div class="lr"><span>📏 Fasc. solo a terra:</span><span>no</span></div>
+    <div class="lr"><span>💡 Potenza:</span><span>${kw} kW</span></div>`;
+}
+// ===== PDF LOTTO 5 CURVO =====
+function exportPDFLottoCurvo(){
+  if(!lcs1||!lcs2||!lccurve||!lcalt)return;
+  try{
+    const {jsPDF}=window.jspdf;
+    const doc=new jsPDF('p','mm','a4');
+    const pw=doc.internal.pageSize.getWidth(),ph=doc.internal.pageSize.getHeight();
+    const mg=18,cw=pw-2*mg;
+    const gold={r:190,g:160,b:80},dk={r:40,g:40,b:45},sub={r:120,g:120,b:130},lb={r:248,g:248,b:252};
+    const date=new Date().toLocaleDateString('it-IT',{day:'2-digit',month:'long',year:'numeric'});
+    const nomeProg=document.getElementById('nome-progetto').value||'';
+    let y=mg;
+    const addHeader=()=>{doc.setFillColor(gold.r,gold.g,gold.b);doc.rect(0,0,pw,2,'F');doc.setFillColor(255,255,255);doc.rect(0,2,pw,26,'F');doc.setDrawColor(230,230,235);doc.setLineWidth(0.3);doc.line(mg,28,pw-mg,28);doc.setTextColor(dk.r,dk.g,dk.b);doc.setFontSize(14);doc.setFont('helvetica','bold');doc.text('FORM.THE CREATIVE GROUP',mg,13);doc.setFontSize(9);doc.setFont('helvetica','normal');doc.setTextColor(sub.r,sub.g,sub.b);doc.text('Ledwall Curvo Lotto 5'+(nomeProg?' — '+nomeProg:'')+'  |  Report tecnico',mg,19);doc.setFontSize(8);doc.text(date,pw-mg,13,{align:'right'});y=36;};
+    const chk=(n)=>{if(y+n>ph-20){doc.addPage();addHeader();}};
+    const addSec=(t)=>{chk(18);doc.setFillColor(gold.r,gold.g,gold.b);doc.rect(mg,y,3,9,'F');doc.setFillColor(lb.r,lb.g,lb.b);doc.rect(mg+3,y,cw-3,9,'F');doc.setFontSize(11);doc.setFont('helvetica','bold');doc.setTextColor(dk.r,dk.g,dk.b);doc.text(t,mg+7,y+6.5);y+=14;};
+    const addRow=(l,v,hi=false)=>{chk(8);doc.setFontSize(9.5);if(hi){doc.setFillColor(245,248,255);doc.rect(mg+2,y-4,cw-4,7,'F');}doc.setDrawColor(235,235,240);doc.setLineWidth(0.15);doc.line(mg+4,y+1.5,pw-mg-4,y+1.5);doc.setFont('helvetica','normal');doc.setTextColor(sub.r,sub.g,sub.b);doc.text(l,mg+6,y);doc.setFont('helvetica',hi?'bold':'normal');doc.setTextColor(dk.r,dk.g,dk.b);doc.text(v,pw-mg-6,y,{align:'right'});y+=7;};
+    addHeader();
+    const s1b=buildSeqCurvo(lcs1,true,lcsolo50),s2b=buildSeqCurvo(lcs2,false,lcsolo50);
+    const curveB=Array.from({length:lccurve},()=>({type:'50x50CURVO'}));
+    const seq=[...s1b,...curveB,...s2b];
+    const totalMq=Math.round((lcs1+lcs2+lccurve*0.5)*lcalt*100)/100;
+    const c100=seq.filter(b=>b.type==='50x100FLAT').length,c50f=seq.filter(b=>b.type==='50x50FLAT').length,c50c=seq.filter(b=>b.type==='50x50CURVO').length;
+    const {n100,n50ex,n50}=colH(lcalt);
+    const mq100=c100*n100*0.5,mq50f=(c50f*n50+c100*n50ex)*0.25,mq50c=c50c*n50*0.25;
+    if(nomeProg){addSec('Progetto');addRow('Nome',nomeProg);y+=4;}
+    addSec('Configurazione Curva');
+    addRow('Segmento 1',lcs1+' m');
+    addRow('Segmento 2',lcs2+' m');
+    addRow('Moduli curvi',''+lccurve);
+    addRow('Altezza',lcalt+' m');
+    if(lcsolo50)addRow('Modalità','Solo moduli 50×50 nei tratti lineari');y+=4;
+    addSec('Impegno Moduli');
+    if(!lcsolo50)addRow('50x100 FLAT',mq100+' mq');
+    addRow('50x50 FLAT',mq50f+' mq');
+    addRow('50x50 CURVO',mq50c+' mq');
+    addRow('Superficie totale',totalMq+' mq',true);y+=4;
+    const r100=Math.floor(lcalt),r50ex=Math.round(Math.max(0,lcalt-r100)/0.5),r50=Math.round(lcalt/0.5);
+    const cab100=c100*r100,cab50f=c50f*r50+c100*r50ex,cab50c=c50c*r50,cabTot=cab100+cab50f+cab50c;
+    addSec('Conteggio Cabinet');
+    if(!lcsolo50&&cab100>0)addRow('Cabinet 50x100 FLAT',''+cab100);
+    if(cab50f>0)addRow('Cabinet 50x50 FLAT',''+cab50f);
+    if(cab50c>0)addRow('Cabinet 50x50 CURVO',''+cab50c);
+    addRow('Totale cabinet',''+cabTot,true);y+=4;
+    const kw=Math.round((totalMq*0.25)*2*100)/100,linee=Math.ceil(((totalMq*0.25)*2)/3);
+    addSec('Specifiche LOTTO 5');
+    addRow('Superficie',totalMq.toFixed(2)+' mq');addRow('Potenza',kw+' kW');addRow('N. Linee',''+linee);
+    addRow('Fascetta laterale','74 mm');addRow('Fascetta solo con ledwall a terra','N/A');addRow('Passo','2.6 mm');
+    // Vista frontale nel PDF — dimensionamento proporzionale (identica logica alla sezione Angolo)
+    doc.addPage();addHeader();addSec('Vista Frontale');
+    const maxPdfW=cw-4;
+    const numCols=seq.length;
+    const pBW=Math.min(12,Math.floor(maxPdfW/numCols));
+    const pBH100=pBW*2,pBH50=pBW;
+    seq.forEach((b,ci)=>{
+      const x=mg+2+ci*pBW;
+      if(b.type==='50x100FLAT'){
+        doc.setFillColor(244,63,94);for(let i=0;i<n50ex;i++)doc.rect(x,y+i*pBH50,pBW-0.5,pBH50-0.5,'F');
+        doc.setFillColor(107,114,128);for(let i=0;i<n100;i++)doc.rect(x,y+n50ex*pBH50+i*pBH100,pBW-0.5,pBH100-0.5,'F');
+      }else{
+        const fc=b.type==='50x50FLAT'?[244,63,94]:[168,85,247];
+        doc.setFillColor(fc[0],fc[1],fc[2]);for(let i=0;i<n50;i++)doc.rect(x,y+i*pBH50,pBW-0.5,pBH50-0.5,'F');
+      }
+    });
+    const frontH=Math.max(n100*pBH100+n50ex*pBH50,n50*pBH50);
+    y+=frontH+8;
+    // Vista in pianta nel PDF — stessa geometria ad arco della vista live (non più appiattita in riga)
+    chk(110);addSec('Vista in Pianta');
+    const hLin=s1b.slice(0,-1),hFlat=s1b[s1b.length-1];
+    const vFlat=s2b[0],vLin=s2b.slice(1);
+    const N=lccurve;
+    let pCW=8,pD=3.2,pGap=0.3;
+    let pR=Math.max(15,12.5+N*2.25);
+    const pOx=mg+2,pOy=y;
+    let hLinEndP=pOx+hLin.length*(pCW+pGap);
+    let pcx=hLinEndP+pCW;
+    let pcy=pOy+pR+pD/2;
+    let rInnerP=pR-pD/2,rOuterP=pR+pD/2;
+    let vStartYP=pcy+pCW+pGap;
+    const neededW=pcx+rOuterP+40-pOx;
+    const neededH=(vStartYP+vLin.length*(pCW+pGap))-pOy;
+    const scaleF=Math.min(1,maxPdfW/neededW,(ph-30-pOy)/neededH);
+    if(scaleF<1){
+      pCW*=scaleF;pD*=scaleF;pGap*=scaleF;pR=Math.max(9,pR*scaleF);
+      hLinEndP=pOx+hLin.length*(pCW+pGap);pcx=hLinEndP+pCW;pcy=pOy+pR+pD/2;
+      rInnerP=pR-pD/2;rOuterP=pR+pD/2;vStartYP=pcy+pCW+pGap;
+    }
+    // tratti lineari orizzontali (Segmento 1)
+    hLin.forEach((b,i)=>{
+      const fc=b.type==='50x100FLAT'?[107,114,128]:[244,63,94];
+      doc.setFillColor(fc[0],fc[1],fc[2]);
+      doc.rect(pOx+i*(pCW+pGap),pOy,pCW,pD,'F');
+    });
+    // FLAT rosso prima della curva
+    doc.setFillColor(244,63,94);doc.rect(hLinEndP,pOy,pCW,pD,'F');
+    // banda curva: N quadrilateri lungo l'arco (stessa formula angolare della vista live)
+    doc.setFillColor(168,85,247);
+    for(let i=0;i<N;i++){
+      const a1=(Math.PI/2)*i/N,a2=(Math.PI/2)*(i+1)/N;
+      const p1x=pcx+rInnerP*Math.sin(a1),p1y=pcy-rInnerP*Math.cos(a1);
+      const p2x=pcx+rOuterP*Math.sin(a1),p2y=pcy-rOuterP*Math.cos(a1);
+      const p3x=pcx+rOuterP*Math.sin(a2),p3y=pcy-rOuterP*Math.cos(a2);
+      const p4x=pcx+rInnerP*Math.sin(a2),p4y=pcy-rInnerP*Math.cos(a2);
+      doc.lines([[p2x-p1x,p2y-p1y],[p3x-p2x,p3y-p2y],[p4x-p3x,p4y-p3y],[p1x-p4x,p1y-p4y]],p1x,p1y,[1,1],'F',true);
+    }
+    // FLAT rosso dopo la curva (orientamento verticale)
+    doc.setFillColor(244,63,94);doc.rect(pcx+pR-pD/2,pcy,pD,pCW,'F');
+    // tratti lineari verticali (Segmento 2)
+    vLin.forEach((b,i)=>{
+      const fc=b.type==='50x100FLAT'?[107,114,128]:[244,63,94];
+      doc.setFillColor(fc[0],fc[1],fc[2]);
+      doc.rect(pcx+pR-pD/2,vStartYP+i*(pCW+pGap),pD,pCW,'F');
+    });
+    // etichette
+    doc.setFontSize(8);doc.setTextColor(100,160,240);doc.setFont('helvetica','bold');
+    doc.text(lcs1+'m',pOx+(hLin.length*(pCW+pGap))/2,pOy-3,{align:'center'});
+    const vTotalHP=pCW+pGap+vLin.length*(pCW+pGap);
+    doc.text(lcs2+'m',pcx+pR+pD/2+8,pcy+vTotalHP/2,{angle:90});
+    y=Math.max(pOy+pD,vStartYP+vLin.length*(pCW+pGap))+14;
+    const total=doc.getNumberOfPages();
+    for(let i=1;i<=total;i++){doc.setPage(i);doc.setDrawColor(230,230,235);doc.setLineWidth(0.3);doc.line(mg,ph-15,pw-mg,ph-15);doc.setFontSize(7.5);doc.setTextColor(sub.r,sub.g,sub.b);doc.setFont('helvetica','normal');doc.text('FORM.THE CREATIVE GROUP  |  Ledwall Curvo Lotto 5'+(nomeProg?' — '+nomeProg:''),mg,ph-10);doc.text(i+' / '+total,pw-mg,ph-10,{align:'right'});}
+    const cfg=`curvo_${lcs1}+${lccurve}c+${lcs2}`;
+    doc.save('Ledwall_Curvo_Lotto5_'+cfg+'_'+new Date().toISOString().split('T')[0]+'.pdf');
+  }catch(e){alert('Attendere il caricamento della libreria PDF e riprovare.');}
+}
 // ===== SIMULATORE PASSO LIBERO =====
 function renderSim(){
   const vl=pd(document.getElementById('sim-larg').value);
@@ -993,26 +1207,19 @@ function renderSim(){
   const empty=document.getElementById('sim-empty');
   if(!vl||!va||!vp||vp<0.5||vp>20){res.style.display='none';empty.style.display='block';return;}
   res.style.display='block';empty.style.display='none';
-
   const ppm=Math.floor(1000/vp);
   const rx=Math.floor(ppm*vl),ry=Math.floor(ppm*va),tot=rx*ry;
   const mq=Math.round(vl*va*100)/100;
-
   document.getElementById('sim-rx').textContent=rx.toLocaleString('it-IT');
   document.getElementById('sim-ry').textContent=ry.toLocaleString('it-IT');
   document.getElementById('sim-tot').textContent=tot.toLocaleString('it-IT');
-
-
-
   // Aspect ratio
   const cr=rx/ry,dev=Math.abs(cr-1.7778),norm=Math.min(dev/2,1),pct=Math.round((1-norm)*100);
   const bc=pct>=98?'#4ade80':pct>=90?'#eab308':pct>=80?'#f97316':'#ef4444';
   const arEl=document.getElementById('sim-ar');
   arEl.textContent=cr.toFixed(2)+' ('+pct+'% vs 16:9)';
   arEl.style.color=bc;
-
   document.getElementById('sim-mq').textContent=mq.toFixed(2)+' mq';
-
   // Elettronica
   const prod=rx*ry;
   let prima,sec=[];
@@ -1021,11 +1228,9 @@ function renderSim(){
   else if(prod<13000000){prima={nome:'VX2000PRO',acc:'preparare la chiave usb con i filmati',warn:'⚠️ In caso di regia o palinsesto interattivo rivolgersi ai tecnici.',tipo:'pro'};sec=[];}
   else{prima={nome:'Configurazione personalizzata',acc:'Contattare il supporto tecnico',warn:'',tipo:'custom'};sec=[];}
   if(prod<=2073600)sec.push({nome:'SENDER 2K',acc:'BrightSign o Player'});
-
   document.getElementById('sim-elett-prima').innerHTML=`<div class="el">⭐ Prima scelta</div><div class="en">${prima.nome}</div><div class="ea"><strong>Accessorio:</strong> ${prima.acc}</div>${prima.warn?'<div class="ew">'+prima.warn+'</div>':''}`;
   document.getElementById('sim-elett-sec').innerHTML=sec.length?'<div style="font-size:12px;color:var(--tm);margin-bottom:6px;margin-top:8px">Seconda scelta</div>'+sec.map(s=>`<div class="es"><div class="ename">${s.nome}</div><div class="eacc"><strong>Accessorio:</strong> ${s.acc}</div></div>`).join(''):'';
 }
-
 // ===== EXPORT MODAL =====
 function openExportModal(){
   // Update elettronica names
@@ -1040,7 +1245,6 @@ function openExportModal(){
     secHtml+=`<div class="exp-item"><input type="checkbox" id="exp-elett-sec-${i}" checked><label for="exp-elett-sec-${i}">${name}</label></div>`;
   });
   document.getElementById('exp-elett-sec-list').innerHTML=secHtml;
-
   // Update lotti list
   const vp=passo;
   const allLotti=[
@@ -1053,7 +1257,6 @@ function openExportModal(){
     lottiHtml+=`<div class="exp-item"><input type="checkbox" id="exp-lotto-${i}" ${compat?'checked':'disabled'}><label for="exp-lotto-${i}" ${compat?'':'class="disabled"'}>${l.nome} (${l.p}mm)${compat?'':' - non compatibile'}</label></div>`;
   });
   document.getElementById('exp-lotti-list').innerHTML=lottiHtml;
-
   // Check linee tecniche
   const ltMod=document.getElementById('lt-modulo').value;
   const ltL=parseFloat(document.getElementById('lt-larg').value)||0;
@@ -1063,12 +1266,10 @@ function openExportModal(){
   document.getElementById('exp-linee').checked=ltReady;
   document.getElementById('exp-linee-label').innerHTML=ltReady?'Calcolo Linee Tecniche':'Calcolo Linee Tecniche <span style="font-size:11px;color:var(--ts)">(non compilato)</span>';
   document.getElementById('exp-linee-label').className=ltReady?'':'disabled';
-
   document.getElementById('export-modal').classList.add('show');
 }
 function closeExportModal(){document.getElementById('export-modal').classList.remove('show');}
 function toggleExpSub(id){const el=document.getElementById(id);el.style.display=el.style.display==='none'?'block':'none';}
-
 function doExportPDF(){
   closeExportModal();
   const sel={
@@ -1096,10 +1297,8 @@ function doExportPDF(){
     const cb=document.getElementById('exp-lotto-'+i);
     if(cb&&cb.checked)sel.lottiSelected.push(l);
   });
-
   generatePDFWithSelections(sel);
 }
-
 function generatePDFWithSelections(sel){
   try{
     const {jsPDF}=window.jspdf;
@@ -1117,7 +1316,7 @@ function generatePDFWithSelections(sel){
       doc.setTextColor(dk.r,dk.g,dk.b);doc.setFontSize(14);doc.setFont('helvetica','bold');
       doc.text('FORM.THE CREATIVE GROUP',mg,13);
       doc.setFontSize(9);doc.setFont('helvetica','normal');doc.setTextColor(sub.r,sub.g,sub.b);
-      const subtitle='Calcolatore LED Wall'+(nomeProg?' \u2014 '+nomeProg:'')+'  |  Report tecnico';
+      const subtitle='Calcolatore LED Wall'+(nomeProg?' — '+nomeProg:'')+'  |  Report tecnico';
       doc.text(subtitle,mg,19);
       doc.setFontSize(8);doc.text(date,pw-mg,13,{align:'right'});
       y=36;
@@ -1125,17 +1324,14 @@ function generatePDFWithSelections(sel){
     const chk=(n)=>{if(y+n>ph-20){doc.addPage();addHeader();}};
     const addSec=(t)=>{chk(18);doc.setFillColor(gold.r,gold.g,gold.b);doc.rect(mg,y,3,9,'F');doc.setFillColor(lb.r,lb.g,lb.b);doc.rect(mg+3,y,cw-3,9,'F');doc.setFontSize(11);doc.setFont('helvetica','bold');doc.setTextColor(dk.r,dk.g,dk.b);doc.text(t,mg+7,y+6.5);y+=14;};
     const addRow=(l,v,hi=false)=>{chk(8);doc.setFontSize(9.5);if(hi){doc.setFillColor(245,248,255);doc.rect(mg+2,y-4,cw-4,7,'F');}doc.setDrawColor(235,235,240);doc.setLineWidth(0.15);doc.line(mg+4,y+1.5,pw-mg-4,y+1.5);doc.setFont('helvetica','normal');doc.setTextColor(sub.r,sub.g,sub.b);doc.text(l,mg+6,y);doc.setFont('helvetica',hi?'bold':'normal');doc.setTextColor(dk.r,dk.g,dk.b);doc.text(v,pw-mg-6,y,{align:'right'});y+=7;};
-
     addHeader();
     if(nomeProg){addSec('Progetto');addRow('Nome',nomeProg);y+=4;}
-
     const vl=Math.max(0.1,larg||1),va=Math.max(0.1,alt||1),vp=passo;
     const mq=Math.round(vl*va*100)/100,ppm=Math.floor(1000/vp),rx=Math.floor(ppm*vl),ry=Math.floor(ppm*va),tot=rx*ry;
-
     if(sel.config){
       addSec('Configurazione LED Wall');
       addRow('Larghezza',vl+' m');addRow('Altezza',va+' m');addRow('Passo LED',vp+' mm');
-      if(isAmerica)addRow('Modalit\u00e0','America (60Hz)');y+=4;
+      if(isAmerica)addRow('Modalità','America (60Hz)');y+=4;
     }
     if(sel.dim){
       addSec('Dimensioni e Superficie');addRow('Superficie totale',mq.toFixed(2)+' mq',true);y+=4;
@@ -1155,7 +1351,7 @@ function generatePDFWithSelections(sel){
       else{primaName='Configurazione personalizzata';primaAcc='Contattare il supporto tecnico';}
       if(prod<=2073600)secNames.push('SENDER 2K');
       addSec('Elettronica Abbinata');
-      addRow('Risoluzione analizzata',rx.toLocaleString('it-IT')+' \u00d7 '+ry.toLocaleString('it-IT')+' px');
+      addRow('Risoluzione analizzata',rx.toLocaleString('it-IT')+' × '+ry.toLocaleString('it-IT')+' px');
       if(sel.elettPrima){
         y+=2;doc.setFontSize(9);doc.setFont('helvetica','bold');doc.setTextColor(gold.r,gold.g,gold.b);doc.text('PRIMA SCELTA',mg+6,y);y+=5;
         addRow(primaName,'Accessorio: '+primaAcc);y+=2;
@@ -1211,9 +1407,9 @@ function generatePDFWithSelections(sel){
         else{const av=parseInt(mod.alimMax.includes('/')?mod.alimMax.split('/')[0]:mod.alimMax);linAlim=Math.ceil(totMod/av);}
         addSec('Calcolo Linee Tecniche');
         addRow('Passo',mod.passo+' mm');addRow('Modulo',mod.modulo+' cm');addRow('Pixel modulo',mod.pixel);
-        addRow('Dimensioni wall',lw+'m \u00d7 '+lh+'m');
-        addRow('Moduli totali',totMod+' ('+mO+'\u00d7'+mV+')');
-        addRow('Risoluzione wall',ptX.toLocaleString('it-IT')+' \u00d7 '+ptY.toLocaleString('it-IT'));
+        addRow('Dimensioni wall',lw+'m × '+lh+'m');
+        addRow('Moduli totali',totMod+' ('+mO+'×'+mV+')');
+        addRow('Risoluzione wall',ptX.toLocaleString('it-IT')+' × '+ptY.toLocaleString('it-IT'));
         addRow('Pixel totali',ptot.toLocaleString('it-IT'),true);
         addRow('Linee di rete',''+linRete);
         addRow('Linee di alimentazione',''+linAlim);
@@ -1221,11 +1417,10 @@ function generatePDFWithSelections(sel){
       }
     }
     const total=doc.getNumberOfPages();
-    for(let i=1;i<=total;i++){doc.setPage(i);doc.setDrawColor(230,230,235);doc.setLineWidth(0.3);doc.line(mg,ph-15,pw-mg,ph-15);doc.setFontSize(7.5);doc.setTextColor(sub.r,sub.g,sub.b);doc.setFont('helvetica','normal');doc.text('FORM.THE CREATIVE GROUP'+(nomeProg?' \u2014 '+nomeProg:'')+'  |  Calcolatore LED Wall',mg,ph-10);doc.text(i+' / '+total,pw-mg,ph-10,{align:'right'});}
+    for(let i=1;i<=total;i++){doc.setPage(i);doc.setDrawColor(230,230,235);doc.setLineWidth(0.3);doc.line(mg,ph-15,pw-mg,ph-15);doc.setFontSize(7.5);doc.setTextColor(sub.r,sub.g,sub.b);doc.setFont('helvetica','normal');doc.text('FORM.THE CREATIVE GROUP'+(nomeProg?' — '+nomeProg:'')+'  |  Calcolatore LED Wall',mg,ph-10);doc.text(i+' / '+total,pw-mg,ph-10,{align:'right'});}
     doc.save('LED_Wall_Report_'+(nomeProg?nomeProg.replace(/\s/g,'_')+'_':'')+new Date().toISOString().split('T')[0]+'.pdf');
   }catch(e){alert('Attendere il caricamento della libreria PDF e riprovare.');}
 }
-
 // ===== INIT =====
 calculate();
 </script>
