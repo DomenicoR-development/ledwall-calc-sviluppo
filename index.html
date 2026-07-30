@@ -659,7 +659,7 @@ function calculate(){
     {nome:'LOTTO 2',passo:3.9,kw:Math.round(mq*0.2*2*100)/100,linee:Math.ceil((mq*0.2*2)/3),lat:80,sotto:70},
     {nome:'LOTTO 3',passo:3.9,kw:Math.round(mq*0.2*2*100)/100,linee:Math.ceil((mq*0.2*2)/3),lat:80,sotto:70},
     {nome:'LOTTO 4',passo:2.6,kw:Math.round(mq*0.17*4*100)/100,linee:Math.ceil((mq*0.17*4)/3),lat:70,sotto:'no'},
-    {nome:'LOTTO 5',passo:2.6,kw:Math.round((mq*0.25)*2*100)/100,linee:Math.ceil(((mq*0.25)*2)/3),lat:74,sotto:'no'},
+    {nome:'LOTTO 5',passo:2.6,kw:Math.round((mq*0.24)*2*100)/100,linee:Math.ceil(((mq*0.24)*2)/3),lat:74,sotto:'no'},
   ];
   const lG=document.getElementById('lotti-grid');
   lG.innerHTML=lotti.map(l=>{
@@ -785,7 +785,7 @@ function renderL5(){
     planC.innerHTML=`<div class="pvw"><h4>🗺️ Vista in Pianta (dall'alto)</h4><div style="overflow-x:auto"><svg viewBox="0 0 ${svgW2} ${svgH2}" width="100%" style="max-height:400px">${out}</svg></div></div>`;
   }else{planC.innerHTML='';}
   // Lotto 5 spec
-  const kw=Math.round((totalMq*0.25)*2*100)/100,linee=Math.ceil(((totalMq*0.25)*2)/3);
+  const kw=Math.round((totalMq*0.24)*2*100)/100,linee=Math.ceil(((totalMq*0.24)*2)/3);
   document.getElementById('l5-spec').innerHTML=`
     <div class="lbadge ba" style="margin-bottom:5px">LOTTO 5</div>
     <div class="lp">PASSO: 2.6 mm</div>
@@ -900,7 +900,7 @@ function exportPDFLotto5(){
     if(cab50f>0)addRow('Cabinet 50x50 FLAT',''+cab50f);
     if(cab50t>0)addRow('Cabinet 50x50 TAGLIATO',''+cab50t);
     addRow('Totale cabinet',''+cabTot,true);y+=4;
-    const kw=Math.round((totalMq*0.25)*2*100)/100,linee=Math.ceil(((totalMq*0.25)*2)/3);
+    const kw=Math.round((totalMq*0.24)*2*100)/100,linee=Math.ceil(((totalMq*0.24)*2)/3);
     addSec('Specifiche LOTTO 5');
     addRow('Superficie',totalMq.toFixed(2)+' mq');addRow('Potenza',kw+' kW');addRow('N. Linee',''+linee);
     addRow('Fascetta laterale','74 mm');addRow('Fascetta solo con ledwall a terra','N/A');addRow('Passo','2.6 mm');
@@ -1064,7 +1064,7 @@ function renderLottoCurvo(){
   if(vLin.length>0){const vMidY=vStartY+(vLin.length*(cW+gap))/2;out+=`<text x="${cx+R+d/2+14}" y="${vMidY}" text-anchor="middle" font-size="10" fill="rgba(96,165,250,0.8)" font-weight="600" transform="rotate(90,${cx+R+d/2+14},${vMidY})">${lcs2}m</text>`;}
   planC.innerHTML=`<div class="pvw"><h4>🗺️ Vista in Pianta (dall'alto)</h4><div style="overflow-x:auto"><svg viewBox="0 0 ${svgW2} ${svgH2}" width="100%" style="max-height:420px">${out}</svg></div></div>`;
   // Spec box
-  const kw=Math.round((totalMq*0.25)*2*100)/100,linee=Math.ceil(((totalMq*0.25)*2)/3);
+  const kw=Math.round((totalMq*0.24)*2*100)/100,linee=Math.ceil(((totalMq*0.24)*2)/3);
   document.getElementById('lc-spec').innerHTML=`
     <div class="lbadge ba" style="margin-bottom:5px">LOTTO 5</div>
     <div class="lp">PASSO: 2.6 mm</div>
@@ -1117,7 +1117,7 @@ function exportPDFLottoCurvo(){
     if(cab50f>0)addRow('Cabinet 50x50 FLAT',''+cab50f);
     if(cab50c>0)addRow('Cabinet 50x50 CURVO',''+cab50c);
     addRow('Totale cabinet',''+cabTot,true);y+=4;
-    const kw=Math.round((totalMq*0.25)*2*100)/100,linee=Math.ceil(((totalMq*0.25)*2)/3);
+    const kw=Math.round((totalMq*0.24)*2*100)/100,linee=Math.ceil(((totalMq*0.24)*2)/3);
     addSec('Specifiche LOTTO 5');
     addRow('Superficie',totalMq.toFixed(2)+' mq');addRow('Potenza',kw+' kW');addRow('N. Linee',''+linee);
     addRow('Fascetta laterale','74 mm');addRow('Fascetta solo con ledwall a terra','N/A');addRow('Passo','2.6 mm');
@@ -1379,7 +1379,7 @@ function generatePDFWithSelections(sel){
         2:{kw:Math.round(mq*0.2*2*100)/100,l:Math.ceil((mq*0.2*2)/3),lat:80,sotto:70},
         3:{kw:Math.round(mq*0.2*2*100)/100,l:Math.ceil((mq*0.2*2)/3),lat:80,sotto:70},
         4:{kw:Math.round(mq*0.17*4*100)/100,l:Math.ceil((mq*0.17*4)/3),lat:70,sotto:'N/A'},
-        5:{kw:Math.round((mq*0.25)*2*100)/100,l:Math.ceil(((mq*0.25)*2)/3),lat:74,sotto:'N/A'},
+        5:{kw:Math.round((mq*0.24)*2*100)/100,l:Math.ceil(((mq*0.24)*2)/3),lat:74,sotto:'N/A'},
       };
       addSec('Configurazioni Lotti Disponibili');
       sel.lottiSelected.forEach(lt=>{
