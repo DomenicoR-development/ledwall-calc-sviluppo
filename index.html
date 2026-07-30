@@ -390,6 +390,10 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
       <div class="fvw"><h4>📐 Vista Frontale</h4><div id="front-svg" style="overflow-x:auto"></div></div>
       <div id="plan-wrap"></div>
       <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+        <div style="font-size:12px;font-weight:500;color:var(--tm);margin-bottom:10px">📺 Risoluzione Pixel</div>
+        <div class="sg" id="l5-pixel"></div>
+      </div>
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
         <div style="font-size:12px;font-weight:500;color:var(--tm);margin-bottom:10px">📦 Specifiche LOTTO 5</div>
         <div class="lc act" id="l5-spec"></div>
       </div>
@@ -784,6 +788,17 @@ function renderL5(){
     if(vLin.length>0){const vMidY=(vTagBot+vTagBot+(vLin.length)*(40+gap))/2;out+=`<text x="${outerX+14}" y="${vMidY}" text-anchor="middle" font-size="10" fill="rgba(96,165,250,0.8)" font-weight="600" transform="rotate(90,${outerX+14},${vMidY})">${l5s2}m</text>`;}
     planC.innerHTML=`<div class="pvw"><h4>🗺️ Vista in Pianta (dall'alto)</h4><div style="overflow-x:auto"><svg viewBox="0 0 ${svgW2} ${svgH2}" width="100%" style="max-height:400px">${out}</svg></div></div>`;
   }else{planC.innerHTML='';}
+  // Risoluzione pixel (passo fisso Lotto 5 = 2.6mm)
+  const ppmL5=Math.floor(1000/2.6);
+  const ryL5=Math.floor(ppmL5*l5alt);
+  const rxTotL5=Math.floor(ppmL5*(hasAngle?(l5s1+l5s2):l5s1));
+  const pixItems=[{l:'Pixel Totali',v:`${rxTotL5.toLocaleString('it-IT')} × ${ryL5.toLocaleString('it-IT')} px`,hi:true}];
+  if(hasAngle){
+    const rx1L5=Math.floor(ppmL5*l5s1),rx2L5=Math.floor(ppmL5*l5s2);
+    pixItems.push({l:`Segmento 1 (${l5s1}m)`,v:`${rx1L5.toLocaleString('it-IT')} × ${ryL5.toLocaleString('it-IT')} px`});
+    pixItems.push({l:`Segmento 2 (${l5s2}m)`,v:`${rx2L5.toLocaleString('it-IT')} × ${ryL5.toLocaleString('it-IT')} px`});
+  }
+  document.getElementById('l5-pixel').innerHTML=pixItems.map(it=>`<div class="sc${it.hi?' shi':''}"><div class="sl"><span>${it.l}</span></div><div class="sv">${it.v}</div></div>`).join('');
   // Lotto 5 spec
   const kw=Math.round((totalMq*0.24)*2*100)/100,linee=Math.ceil(((totalMq*0.24)*2)/3);
   document.getElementById('l5-spec').innerHTML=`
@@ -900,6 +915,17 @@ function exportPDFLotto5(){
     if(cab50f>0)addRow('Cabinet 50x50 FLAT',''+cab50f);
     if(cab50t>0)addRow('Cabinet 50x50 TAGLIATO',''+cab50t);
     addRow('Totale cabinet',''+cabTot,true);y+=4;
+    const ppmL5pdf=Math.floor(1000/2.6);
+    const ryL5pdf=Math.floor(ppmL5pdf*l5alt);
+    const rxTotL5pdf=Math.floor(ppmL5pdf*(hasAngle?(l5s1+l5s2):l5s1));
+    addSec('Risoluzione Pixel');
+    addRow('Pixel Totali',rxTotL5pdf.toLocaleString('it-IT')+' × '+ryL5pdf.toLocaleString('it-IT')+' px',true);
+    if(hasAngle){
+      const rx1L5pdf=Math.floor(ppmL5pdf*l5s1),rx2L5pdf=Math.floor(ppmL5pdf*l5s2);
+      addRow('Segmento 1 ('+l5s1+'m)',rx1L5pdf.toLocaleString('it-IT')+' × '+ryL5pdf.toLocaleString('it-IT')+' px');
+      addRow('Segmento 2 ('+l5s2+'m)',rx2L5pdf.toLocaleString('it-IT')+' × '+ryL5pdf.toLocaleString('it-IT')+' px');
+    }
+    y+=4;
     const kw=Math.round((totalMq*0.24)*2*100)/100,linee=Math.ceil(((totalMq*0.24)*2)/3);
     addSec('Specifiche LOTTO 5');
     addRow('Superficie',totalMq.toFixed(2)+' mq');addRow('Potenza',kw+' kW');addRow('N. Linee',''+linee);
