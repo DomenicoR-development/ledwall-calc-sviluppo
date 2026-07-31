@@ -281,8 +281,10 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
       <input type="checkbox" id="chk-america" style="width:17px;height:17px;accent-color:#ef4444;cursor:pointer" onchange="onInput()">
       <label id="lbl-america" for="chk-america" style="font-size:13px;cursor:pointer;color:var(--tm)">Flaggare se il ledwall è installato in America</label>
     </div>
+    <div id="cfg-invalid" class="lt-warn danger"></div>
   </div>
 </div>
+<div id="main-result">
 <!-- DIMENSIONI -->
 <div class="card">
   <div class="ch"><div class="ct">📏 Dimensioni e Superficie</div></div>
@@ -360,6 +362,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
   </div>
 </div>
 <div class="divider"></div>
+</div>
 <!-- LEDWALL AD ANGOLO LOTTO 5 -->
 <div class="card">
   <div class="ch">
@@ -379,6 +382,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
       <input type="checkbox" id="chk-solo50" style="width:17px;height:17px;accent-color:#f59e0b;cursor:pointer" onchange="renderL5()">
       <label id="lbl-solo50" for="chk-solo50" style="font-size:13px;cursor:pointer;color:var(--tm)">Flaggare per usare solo moduli 50×50</label>
     </div>
+    <div id="l5-invalid" class="lt-warn danger"></div>
   </div>
 </div>
 <div id="l5-result" style="display:none">
@@ -423,6 +427,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
       <input type="checkbox" id="chk-solo50-curvo" style="width:17px;height:17px;accent-color:#f59e0b;cursor:pointer" onchange="renderLottoCurvo()">
       <label id="lbl-solo50-curvo" for="chk-solo50-curvo" style="font-size:13px;cursor:pointer;color:var(--tm)">Flaggare per usare solo moduli 50×50 nei tratti lineari <span style="font-size:10px;color:var(--ts)">— curva e transizioni sono sempre 50×50</span></label>
     </div>
+    <div id="lc-invalid" class="lt-warn danger"></div>
   </div>
 </div>
 <div id="lc-result" style="display:none">
@@ -468,6 +473,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
           <div class="fld"><label style="color:var(--gold)">Larghezza (m)</label><input type="number" id="lt-larg" min="0" step="0.5" placeholder="0" oninput="renderLt()"></div>
           <div class="fld"><label style="color:var(--gold)">Altezza (m)</label><input type="number" id="lt-alt" min="0" step="0.5" placeholder="0" oninput="renderLt()"></div>
         </div>
+        <div id="lt-invalid" class="lt-warn danger"></div>
       </div>
       <div class="card" style="padding:14px;margin-bottom:0;border-color:rgba(190,160,80,0.25)">
         <div style="font-size:14px;font-weight:500;margin-bottom:12px">Risultati</div>
@@ -500,6 +506,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color
       <div class="fld"><label>Altezza (metri)</label><input type="text" id="sim-alt" inputmode="decimal" placeholder="es. 3" oninput="renderSim()"></div>
       <div class="fld"><label>Passo LED libero (mm)</label><input type="text" id="sim-passo" inputmode="decimal" placeholder="es. 1.9" oninput="renderSim()"></div>
     </div>
+    <div id="sim-invalid" class="lt-warn danger"></div>
     <div id="sim-result" style="display:none;margin-top:16px">
       <div class="g3" style="margin-bottom:12px">
         <div style="background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;padding:12px">
@@ -623,6 +630,21 @@ function onInput(){
   const lbl=document.getElementById('lbl-america');
   lbl.textContent=isAmerica?'Ledwall installato in America':'Flaggare se il ledwall è installato in America';
   lbl.style.color=isAmerica?'#ef4444':'var(--tm)';
+  // I moduli LOTTO sono tutti larghi 50cm: dimensioni fuori griglia 0,5m non sono valide per i moduli fisici.
+  const invElCfg=document.getElementById('cfg-invalid');
+  const mainRes=document.getElementById('main-result');
+  const onGridCfg=v=>Math.round(v*100)%50===0;
+  const badCfg=[];
+  if(larg&&!onGridCfg(larg))badCfg.push('Larghezza');
+  if(alt&&!onGridCfg(alt))badCfg.push('Altezza');
+  if(badCfg.length){
+    mainRes.style.display='none';
+    invElCfg.textContent=`⚠️ Dato non valido: ${badCfg.join(', ')} deve essere un multiplo di 0,5m.`;
+    invElCfg.classList.add('show');
+    return;
+  }
+  invElCfg.classList.remove('show');invElCfg.textContent='';
+  mainRes.style.display='';
   calculate();
 }
 function calculate(){
@@ -716,9 +738,23 @@ function renderL5(){
   lbl.textContent=solo50?'Solo moduli 50×50 attivo':'Flaggare per usare solo moduli 50×50';
   lbl.style.color=solo50?'#f59e0b':'var(--tm)';
   const res=document.getElementById('l5-result');
+  const invEl5=document.getElementById('l5-invalid');
+  invEl5.classList.remove('show');invEl5.textContent='';
   if(!l5s1||!l5alt){res.style.display='none';document.getElementById('btn-exp-l5').style.display='none';return;}
-  res.style.display='block';document.getElementById('btn-exp-l5').style.display='inline-flex';
   const hasAngle=l5s2>0;
+  // Validazione: dimensioni devono essere multipli di 0,5m (griglia fisica dei moduli)
+  const onGridL5=v=>Math.round(v*100)%50===0;
+  const badFieldsL5=[];
+  if(!onGridL5(l5s1))badFieldsL5.push('Segmento 1');
+  if(hasAngle&&!onGridL5(l5s2))badFieldsL5.push('Segmento 2');
+  if(!onGridL5(l5alt))badFieldsL5.push('Altezza');
+  if(badFieldsL5.length){
+    res.style.display='none';document.getElementById('btn-exp-l5').style.display='none';
+    invEl5.textContent=`⚠️ Dato non valido: ${badFieldsL5.join(', ')} deve essere un multiplo di 0,5m.`;
+    invEl5.classList.add('show');
+    return;
+  }
+  res.style.display='block';document.getElementById('btn-exp-l5').style.display='inline-flex';
   let seq,totalMq,mq100,mq50f,mq50t;
   if(hasAngle){
     const s1=buildSeq(l5s1,true,solo50),s2=buildSeq(l5s2,false,solo50);seq=[...s1,...s2];
@@ -827,8 +863,20 @@ function renderLt(){
   const lw=parseFloat(document.getElementById('lt-larg').value)||0;
   const lh=parseFloat(document.getElementById('lt-alt').value)||0;
   const res=document.getElementById('lt-results');
+  const invElLt=document.getElementById('lt-invalid');
+  invElLt.classList.remove('show');invElLt.textContent='';
   const mod=MODS.find(m=>m.id===mid);
   if(!mod||!lw||!lh){res.innerHTML=`<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:160px;color:var(--tm);text-align:center"><div style="font-size:36px;opacity:0.4;margin-bottom:8px">ℹ️</div><p style="font-size:13px">Seleziona passo, lotto/modulo<br>e inserisci le dimensioni</p></div>`;return;}
+  const onGridLt=v=>Math.round(v*100)%50===0;
+  const badFieldsLt=[];
+  if(!onGridLt(lw))badFieldsLt.push('Larghezza');
+  if(!onGridLt(lh))badFieldsLt.push('Altezza');
+  if(badFieldsLt.length){
+    res.innerHTML='';
+    invElLt.textContent=`⚠️ Dato non valido: ${badFieldsLt.join(', ')} deve essere un multiplo di 0,5m.`;
+    invElLt.classList.add('show');
+    return;
+  }
   const altC=lh*100,largC=lw*100;
   const mO=Math.ceil(largC/mod.mW),mV=Math.ceil(altC/mod.mH),totMod=mO*mV;
   const ptX=mO*mod.pxX,ptY=mV*mod.pxY,ptot=ptX*ptY;
@@ -868,6 +916,8 @@ function doReset(){
   document.getElementById('chk-america').checked=false;
   document.getElementById('lbl-america').textContent='Flaggare se il ledwall è installato in America';
   document.getElementById('lbl-america').style.color='var(--tm)';
+  const invElCfg=document.getElementById('cfg-invalid');invElCfg.classList.remove('show');invElCfg.textContent='';
+  document.getElementById('main-result').style.display='';
   calculate();
 }
 function resetLotto5(){
@@ -876,11 +926,14 @@ function resetLotto5(){
   document.getElementById('chk-solo50').checked=false;
   document.getElementById('lbl-solo50').textContent='Flaggare per usare solo moduli 50×50';
   document.getElementById('lbl-solo50').style.color='var(--tm)';
+  const invEl5=document.getElementById('l5-invalid');invEl5.classList.remove('show');invEl5.textContent='';
   renderL5();
 }
 // ===== PDF LOTTO 5 =====
 function exportPDFLotto5(){
   if(!l5s1||!l5alt)return;
+  const onGridL5pdf=v=>Math.round(v*100)%50===0;
+  if(!onGridL5pdf(l5s1)||(l5s2>0&&!onGridL5pdf(l5s2))||!onGridL5pdf(l5alt))return;
   try{
     const {jsPDF}=window.jspdf;
     const doc=new jsPDF('p','mm','a4');
@@ -1013,6 +1066,7 @@ function resetLottoCurvo(){
   document.getElementById('chk-solo50-curvo').checked=false;
   document.getElementById('lbl-solo50-curvo').innerHTML='Flaggare per usare solo moduli 50×50 nei tratti lineari <span style="font-size:10px;color:var(--ts)">— curva e transizioni sono sempre 50×50</span>';
   document.getElementById('lbl-solo50-curvo').style.color='var(--tm)';
+  const invEl=document.getElementById('lc-invalid');invEl.classList.remove('show');invEl.textContent='';
   renderLottoCurvo();
 }
 function renderLottoCurvo(){
@@ -1025,7 +1079,22 @@ function renderLottoCurvo(){
   lbl.innerHTML=(lcsolo50?'Solo moduli 50×50 nei tratti lineari attivo':'Flaggare per usare solo moduli 50×50 nei tratti lineari')+' <span style="font-size:10px;color:var(--ts)">— curva e transizioni sono sempre 50×50</span>';
   lbl.style.color=lcsolo50?'#f59e0b':'var(--tm)';
   const res=document.getElementById('lc-result');
+  const invEl=document.getElementById('lc-invalid');
+  invEl.classList.remove('show');invEl.textContent='';
   if(!lcs1||!lcs2||!lccurve||!lcalt){res.style.display='none';document.getElementById('btn-exp-lc').style.display='none';return;}
+  // Validazione: Segmento 1/2 e Altezza devono essere multipli di 0,5m (griglia fisica dei moduli).
+  // Un valore fuori griglia (es. 0,8m) verrebbe troncato silenziosamente dal calcolo, quindi va segnalato.
+  const onGrid=v=>Math.round(v*100)%50===0;
+  const badFields=[];
+  if(!onGrid(lcs1))badFields.push('Segmento 1');
+  if(!onGrid(lcs2))badFields.push('Segmento 2');
+  if(!onGrid(lcalt))badFields.push('Altezza');
+  if(badFields.length){
+    res.style.display='none';document.getElementById('btn-exp-lc').style.display='none';
+    invEl.textContent=`⚠️ Dato non valido: ${badFields.join(', ')} deve essere un multiplo di 0,5m.`;
+    invEl.classList.add('show');
+    return;
+  }
   res.style.display='block';document.getElementById('btn-exp-lc').style.display='inline-flex';
   const s1b=buildSeqCurvo(lcs1,true,lcsolo50),s2b=buildSeqCurvo(lcs2,false,lcsolo50);
   const curveB=Array.from({length:lccurve},()=>({type:'50x50CURVO'}));
@@ -1120,6 +1189,8 @@ function renderLottoCurvo(){
 // ===== PDF LOTTO 5 CURVO =====
 function exportPDFLottoCurvo(){
   if(!lcs1||!lcs2||!lccurve||!lcalt)return;
+  const onGridPdf=v=>Math.round(v*100)%50===0;
+  if(!onGridPdf(lcs1)||!onGridPdf(lcs2)||!onGridPdf(lcalt))return;
   try{
     const {jsPDF}=window.jspdf;
     const doc=new jsPDF('p','mm','a4');
@@ -1257,6 +1328,17 @@ function renderSim(){
   const vp=pd(document.getElementById('sim-passo').value);
   const res=document.getElementById('sim-result');
   const empty=document.getElementById('sim-empty');
+  const invElSim=document.getElementById('sim-invalid');
+  const onGridSim=v=>Math.round(v*100)%50===0;
+  const badSim=[];
+  if(vl&&!onGridSim(vl))badSim.push('Larghezza');
+  if(va&&!onGridSim(va))badSim.push('Altezza');
+  if(badSim.length){
+    invElSim.textContent=`⚠️ Dato non valido: ${badSim.join(', ')} non è un multiplo di 0,5m (utile solo se il materiale valutato usa moduli standard da 50cm).`;
+    invElSim.classList.add('show');
+  }else{
+    invElSim.classList.remove('show');invElSim.textContent='';
+  }
   if(!vl||!va||!vp||vp<0.5||vp>20){res.style.display='none';empty.style.display='block';return;}
   res.style.display='block';empty.style.display='none';
   const ppm=Math.floor(1000/vp);
