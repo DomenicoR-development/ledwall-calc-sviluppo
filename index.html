@@ -1093,12 +1093,13 @@ function renderLottoCurvo(){
   out+=`<text x="${ox+(hLin.length*(cW+gap)+cW)/2}" y="${oy+d+14}" text-anchor="middle" font-size="10" fill="rgba(96,165,250,0.8)" font-weight="600">${lcs1}m</text>`;
   if(vLin.length>0){const vMidY=vStartY+(vLin.length*(cW+gap))/2;out+=`<text x="${cx+R+d/2+14}" y="${vMidY}" text-anchor="middle" font-size="10" fill="rgba(96,165,250,0.8)" font-weight="600" transform="rotate(90,${cx+R+d/2+14},${vMidY})">${lcs2}m</text>`;}
   planC.innerHTML=`<div class="pvw"><h4>🗺️ Vista in Pianta (dall'alto)</h4><div style="overflow-x:auto"><svg viewBox="0 0 ${svgW2} ${svgH2}" width="100%" style="max-height:420px">${out}</svg></div></div>`;
-  // Risoluzione pixel (passo fisso Lotto 5 = 2.6mm) — segmento 1, segmento 2 e curva separati
-  const ppmLC=Math.floor(1000/2.6);
-  const ryLC=Math.floor(ppmLC*lcalt);
-  const rx1LC=Math.floor(ppmLC*lcs1);
-  const rx2LC=Math.floor(ppmLC*lcs2);
-  const rxCurvaLC=Math.floor(ppmLC*(N*0.5));
+  // Risoluzione pixel — basata sui moduli fisici (192px per modulo 0.5m, Lotto 5 passo 2.6mm), non su una densità continua
+  const pxModLC=192;
+  const n50LC=Math.round(lcalt/0.5);
+  const ryLC=n50LC*pxModLC;
+  const rx1LC=s1b.length*pxModLC;
+  const rx2LC=s2b.length*pxModLC;
+  const rxCurvaLC=N*pxModLC;
   const pixItemsLC=[
     {l:`Segmento 1 (${lcs1}m)`,v:`${rx1LC.toLocaleString('it-IT')} × ${ryLC.toLocaleString('it-IT')} px`},
     {l:`Curva (${N} moduli)`,v:`${rxCurvaLC.toLocaleString('it-IT')} × ${ryLC.toLocaleString('it-IT')} px`},
@@ -1159,9 +1160,10 @@ function exportPDFLottoCurvo(){
     if(cab50f>0)addRow('Cabinet 50x50 FLAT',''+cab50f);
     if(cab50c>0)addRow('Cabinet 50x50 CURVO',''+cab50c);
     addRow('Totale cabinet',''+cabTot,true);y+=4;
-    const ppmLCpdf=Math.floor(1000/2.6);
-    const ryLCpdf=Math.floor(ppmLCpdf*lcalt);
-    const rx1LCpdf=Math.floor(ppmLCpdf*lcs1),rx2LCpdf=Math.floor(ppmLCpdf*lcs2),rxCurvaLCpdf=Math.floor(ppmLCpdf*(lccurve*0.5));
+    const pxModLCpdf=192;
+    const n50LCpdf=Math.round(lcalt/0.5);
+    const ryLCpdf=n50LCpdf*pxModLCpdf;
+    const rx1LCpdf=s1b.length*pxModLCpdf,rx2LCpdf=s2b.length*pxModLCpdf,rxCurvaLCpdf=lccurve*pxModLCpdf;
     addSec('Risoluzione Pixel');
     addRow('Segmento 1 ('+lcs1+'m)',rx1LCpdf.toLocaleString('it-IT')+' × '+ryLCpdf.toLocaleString('it-IT')+' px');
     addRow('Curva ('+lccurve+' moduli)',rxCurvaLCpdf.toLocaleString('it-IT')+' × '+ryLCpdf.toLocaleString('it-IT')+' px');
